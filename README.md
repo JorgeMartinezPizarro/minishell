@@ -1,4 +1,4 @@
-### Minishell word for 42
+### Minishell work for 42
 
 Aqui podemos dejarnos  comentarios o explicaciones de como van yendo las cosas.
 
