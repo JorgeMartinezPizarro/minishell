@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_command.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/28 00:23:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/11/28 22:02:07 by jomarti3         ###   ########.fr       */
+/*   Created: 2025/11/28 21:58:05 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/11/28 22:11:09 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "minishell.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //
 ///////////////////////////////////////////////////////////////////////////////
-int	main(void)
+void	parse_command(char *line)
 {
-	char	*line;
-	ft_printf(LINE_BEGIN);
-	line = get_next_line(0);
-	while (line)
-	{
-		if (line[0] != '\n')
-		{
-			line[ft_strlen(line) - 1] = '\0';
-			parse_command(line);
-		}
-		free(line);
-		ft_printf(LINE_BEGIN);
-		line = get_next_line(0);
-	}
-	free(line);
-	return (0);
+	char **strings;
+
+	strings = ft_split(line, ' ');
+	if (ft_strncmp(strings[0], "echo", 4) == 0)
+		ft_printf("%s\n", strings[1]);
+	else
+		ft_printf("Command '%s' not found\n", strings[0]);
+	
 }
