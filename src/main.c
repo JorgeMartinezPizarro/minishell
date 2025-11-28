@@ -6,14 +6,14 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 00:23:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/11/28 01:04:44 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/11/28 01:09:12 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-const char *line_begin = "\033[1;32muser@MINISHELL-1:\033[0m: ";
+const char *line_begin = "\033[1;32muser@MINISHELL-1:\033[0m ";
 
 int	main(void)
 {
