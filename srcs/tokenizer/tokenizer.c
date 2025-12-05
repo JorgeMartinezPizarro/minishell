@@ -1,16 +1,5 @@
 #include "../../includes/minishell.h"
 
-/*
-cuando encuentra comillas salta a la siguiente
-ocurrencia y si no existe el string no es válido
-
-redefino el valor de line porque así pasa a estar
-en las posición de la siguiente comilla de su tipo
-
-de esta forma en caso de encontrar el otro tipo de comillas
-las ignora al igual que la shell
-*/
-
 int	valid_quotes(char *line)
 {
 	while (*line)
@@ -33,7 +22,7 @@ int	valid_quotes(char *line)
 */
 void	add_operator(char *line, t_tokens_line *tokenized_line)
 {
-	//si es > o < mirar el siguiente caracter 
+	
 }
 
 /*
