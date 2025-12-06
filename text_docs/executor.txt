@@ -32,3 +32,5 @@ estructura global que contenga todo
 En los hijos si falla algo liberar memoria de los hijos y de los padres valgrind --trace-children=yes
 
 Gestionar si no hay permisos, etc.
+
+Cuando hay "<<" primero esperar el output

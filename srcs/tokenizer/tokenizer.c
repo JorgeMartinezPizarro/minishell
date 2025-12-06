@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
+/*   Updated: 2025/12/06 01:48:11 by maanguit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	valid_quotes(char *line)
@@ -15,14 +27,39 @@ int	valid_quotes(char *line)
 	return (1);
 }
 
-/*	identifica qué operador es y lo añade a la estructura
-	primero compara con los operadores multicaracter y luego
-	los de un caracter
-	
-*/
-void	add_operator(char *line, t_tokens_line *tokenized_line)
+int	which_operator(char *line)
 {
-	
+	if (!ft_strncmp("<<", line, 2))
+		return (HEREDOC);
+	if (!ft_strncmp(">>", line, 2))
+		return (APPEND);
+	if (!ft_strncmp("&&", line, 2))
+		return (AND);
+	if (!ft_strncmp("||", line, 2))
+		return (OR);
+	if (*line == '>' || *line == '<' || *line == '|')
+		return (*line);
+	return (0);
+}
+
+/*
+1 añadir al final de la lista un nuevo nodo
+2 
+*/
+void	add_token(t_token_list *tokens, char *str, int type)
+{
+	t_token_list *new_token;
+
+	new_token = malloc(sizeof(t_token_list));
+	if (!new_token)
+		free_and_exit();
+	if (type == WORD)
+		;
+	else if (type <= 4)
+		new_token->str = ft_substr(str, 0, 2);
+	else
+		new_token->str = ft_substr(str, 0, 1);
+	new_token->type = type;
 }
 
 /*
@@ -51,10 +88,10 @@ después el cual no sea un espacio
 
 add_operator un operador (el tipo depende de qué operador sea)
 
-add_until_space añade un string expandible(tipo word) hasta el siguiente ' '
+add_word añade un string expandible(tipo word) hasta el siguiente ' ' o operador
 */
 
-int	tokenize(char *line, t_tokens_line *tokenized_line)
+int	tokenize(char *line, t_token_list *tokens)
 {
 	if (!valid_quotes(line))
 		return (0);
@@ -63,13 +100,13 @@ int	tokenize(char *line, t_tokens_line *tokenized_line)
 	while (*line)
 	{
 		if (is_quote(*line))
-			line = add_quotes(line, tokenized_line);
-		else if (is_operator(line))
-			add_operator(line, tokenized_line);
+			line = add_quotes(line, tokens);
+		else if (which_operator(line))
+			add_operator(line, tokens);
 		else if (*line == ' ')//no hay que gestionar tabs y viceversa
-			add_space(tokenized_line);
+			add_space(" ", tokens);
 		else
-			add_until_space(line, tokenized_line);
+			add_word(line, tokens);
 		iter_line(&line);
 	}
 	return (1);
