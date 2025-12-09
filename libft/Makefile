@@ -29,7 +29,8 @@ FUNCTIONS = \
 	ft_strchr ft_strrchr ft_calloc ft_substr \
 	ft_putnbr_fd ft_itoa ft_strjoin ft_strtrim \
 	ft_split ft_strmapi ft_striteri ft_putchar_fd \
-	ft_putstr_fd ft_putendl_fd ft_itoa_base ft_utoa_base
+	ft_putstr_fd ft_putendl_fd ft_itoa_base ft_utoa_base \
+	ft_strcmp
 
 BONUS_FUNCTIONS = \
 	ft_lstnew ft_lstadd_front ft_lstsize ft_lstdelone \

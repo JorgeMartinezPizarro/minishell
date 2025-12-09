@@ -32,6 +32,7 @@ char			*ft_strdup(const char *src);
 unsigned int	ft_strlcat(char *dest, const char *src, unsigned int size);
 unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size);
 int				ft_strlen(const char *str);
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
