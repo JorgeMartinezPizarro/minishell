@@ -6,7 +6,13 @@ typedef struct s_command
 	char	*command;
 	char	**args;
 	int		argc;
-	char	**env;
+	t_variable	*env; 
 } t_command;
+
+typedef struct s_variable
+{
+	char	*name;
+	char	*value;
+} t_variable;
 
 int run_command(t_command *com);
