@@ -83,4 +83,5 @@ char			*ft_utoa_base(uintmax_t number, const char *base);
 char			*ft_itoa_base(int nb, const char *base);
 int				ft_printf(const char *format, ...);
 char			*get_next_line(int fd);
+char			*ft_strreplace(const char *s, const char *a, const char *b);
 #endif

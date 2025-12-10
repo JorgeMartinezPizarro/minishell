@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/10 00:46:53 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/10 14:41:48 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int run_echo(t_command *com)
 		ft_printf("What to echo?");
 		return 0;
 	}
-	ft_printf("%s\n", com->args[1]);
+	ft_printf("%s\n", expand_vars(com->args[1], com->env));
 	return 1;
 }
 
@@ -40,7 +40,7 @@ int run_command(t_command *com)
 	else if (ft_strcmp(com->command, "env") == 0)
 		return run_env(com);
 	else {
-		ft_printf("What do you mean?\n");
+		ft_printf("What do you mean with '%s'?\n", com->command);
 		return 0;
 	}
 }
