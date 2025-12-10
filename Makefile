@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/10 14:41:57 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/10 15:39:21 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ test: jorge
 	./jorge "echo hola"
 	./jorge "echo" || true
 	./jorge "env"
-	./jorge "$HOME"
+	./jorge "${HOME}" || true
 	
 clean:
 	make -C libft clean
