@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/06 01:48:11 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/10 03:59:06 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,56 @@ int	which_operator(char *line)
 	return (0);
 }
 
-/*
-1 añadir al final de la lista un nuevo nodo
-2 
-*/
-void	add_token(t_token_list *tokens, char *str, int type)
+void	add_last_token(t_token_list **tokens, t_token_list *new_token)
 {
-	t_token_list *new_token;
+	t_token_list	*tmp;
 
+	if (!tokens || !*tokens)
+	{
+		*tokens = new_token;
+		return ;
+	}
+	tmp = *tokens;
+	while (tmp && tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_token;
+}
+
+void	add_token_to_list(t_token_list *tokens, char *str, int type)
+{
+	t_token_list	*new_token;
+	
 	new_token = malloc(sizeof(t_token_list));
 	if (!new_token)
 		free_and_exit();
-	if (type == WORD)
-		;
-	else if (type <= 4)
-		new_token->str = ft_substr(str, 0, 2);
-	else
-		new_token->str = ft_substr(str, 0, 1);
 	new_token->type = type;
+	new_token->str = str;
+	new_token->next = NULL;
+	add_last_token(&tokens, new_token);
+}
+
+/*
+1 añadir al final de la lista un nuevo nodo
+2 necesito una función que añada al final de la lista un token con string y tipo
+*/
+void	add_tokens(t_token_list *tokens, char *str, int type)
+{
+	char	token_str;
+	int		i;
+
+	i = 0;
+	if (type == WORD)
+	{
+		while (which_operator(str[i]) == 0)
+			i++;
+		token_str = ft_substr(str, 0, i);
+
+	}
+	else if (type <= 4)
+		token_str = ft_substr(str, 0, 2);
+	else
+		token_str = ft_substr(str, 0, 1);
+	tokens->type = type;
 }
 
 /*
