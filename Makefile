@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/11 19:48:05 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/11 21:07:42 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,9 +51,9 @@ run: all
 ## TEMPORARY COMMANDS JORGE
 NOMBRE = jorge
 
-MY_LIST = parser/run_command jorges_main \
+MY_LIST = utils/run_command jorges_main \
 	environ/expand_vars environ/extract_variables \
-	environ/environments
+	environ/environments utils/join_paths
 
 OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 

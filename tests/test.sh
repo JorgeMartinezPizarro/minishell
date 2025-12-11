@@ -10,15 +10,19 @@ make jorge > /dev/null
 echo " -> Running different tests"
 
 ./jorge "echo hola"
+
 ## Comando que falla, lo silenciamos
 ./jorge "echo" || true
+
 ./jorge "env"
+
 ## Comando que falla, lo silenciamos
 ./jorge "${HOME}" || true
-## Comando que falla, lo silenciamos
-./jorge "cd \$(HOME)" || true
+
+./jorge "cd \$(HOME)"
 ./jorge "echo \$(HOME)"
 ./jorge "echo \${HOME}"
+./jorge "pwd"
 
 echo " -> Cleanup"
 make fclean > /dev/null
