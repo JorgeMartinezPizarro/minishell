@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/10 14:41:48 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/11 17:40:01 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,13 @@ int run_echo(t_command *com)
 
 int	run_env(t_command *com)
 {
-	for (char **p = com->env; *p != NULL; p++) {
-		ft_printf("%s\n", *p);
+	t_variable *v;
+
+	v = com->env;
+	while (v->name != NULL)
+	{
+		ft_printf("%s=%s\n", v->name, v->value);
+		v++;
     }
     return 1;
 }

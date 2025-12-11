@@ -18,9 +18,10 @@ int main(int argc, char **args, char **env)
 		tmp++;
 	}	
 	com.argc = c;
-	com.env = env;
+	com.env = load_env_values(env); // Inicializarlos sobre env, con malloc
 	int exit_code = run_command(&com);
 
+	free_env(com.env);
 	if (exit_code == 1)
 		return 0;
 	else
