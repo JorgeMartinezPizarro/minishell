@@ -6,7 +6,7 @@ int main(int argc, char **args, char **env)
 {
 	(void)argc;
 	t_command com;
-	// TODO: First trivial version, isspace and more have to be taken into consideration here!
+	//
 	char **words = ft_split(args[1], ' ');
 	com.command = words[0];
 	com.args = words;
@@ -21,7 +21,7 @@ int main(int argc, char **args, char **env)
 	com.env = load_env_values(env);
 	int exit_code = run_command(&com);
 
-	free_env_list(&com.env);
+	free_env(&com.env);
 	if (exit_code == 1)
 		return 0;
 	else

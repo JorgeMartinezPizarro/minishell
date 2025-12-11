@@ -19,13 +19,11 @@ typedef struct s_command
 int		run_command(t_command *com);
 
 char	*expand_vars(char *s, t_list *env);
-
-// String manipulation
-char	**find_vars_in_string(char *str);
+t_list	*extract_variables(const char *str);
 
 // Env management
-void	*set_env_value(t_list *env, char *name, char *value);
-void	*del_env_value(t_list *env, char *value);
+void	set_env_value(t_list **env, char *name, char *value);
+void	del_env_value(t_list **env, char *value);
 char	*get_env_value(t_list *env, char *name);
-void	free_env_list(t_list **env);
+void	free_env(t_list **env);
 t_list	*load_env_values(char **env);

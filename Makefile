@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/10 15:39:21 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/11 19:48:05 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,19 +51,17 @@ run: all
 ## TEMPORARY COMMANDS JORGE
 NOMBRE = jorge
 
-MY_LIST = run_command expand_vars find_vars_in_string jorges_main \
-	environments
+MY_LIST = parser/run_command jorges_main \
+	environ/expand_vars environ/extract_variables \
+	environ/environments
 
 OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 
 $(NOMBRE): $(LIBFT) $(OBJETOS)
 	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -o $(NOMBRE)
 
-test: jorge
-	./jorge "echo hola"
-	./jorge "echo" || true
-	./jorge "env"
-	./jorge "${HOME}" || true
+test:
+	@./tests/test.sh
 	
 clean:
 	make -C libft clean
@@ -74,3 +72,4 @@ fclean: clean
 	rm -f $(NOMBRE)
 	rm -f minishell
 
+.PHONY = test

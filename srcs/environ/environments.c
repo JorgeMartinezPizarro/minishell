@@ -78,7 +78,7 @@ size_t env_len_list(t_list *vars)
 
 /* ---------------- OBTENER VALOR ---------------- */
 
-char *get_env_value_list(t_list *vars, char *name)
+char *get_env_value(t_list *vars, char *name)
 {
     while (vars)
     {
@@ -92,7 +92,7 @@ char *get_env_value_list(t_list *vars, char *name)
 
 /* ---------------- AÑADIR / ACTUALIZAR ---------------- */
 
-void set_env_value_list(t_list **vars, char *name, char *value)
+void set_env_value(t_list **vars, char *name, char *value)
 {
     t_list *node = *vars;
 
@@ -117,7 +117,7 @@ void set_env_value_list(t_list **vars, char *name, char *value)
 
 /* ---------------- ELIMINAR ---------------- */
 
-void del_env_value_list(t_list **vars, char *name)
+void del_env_value(t_list **vars, char *name)
 {
     t_list *prev = NULL;
     t_list *curr = *vars;
@@ -153,7 +153,7 @@ void del_variable(void *content)
     free(v);
 }
 
-void free_env_list(t_list **vars)
+void free_env(t_list **vars)
 {
     ft_lstclear(vars, del_variable);
 }
