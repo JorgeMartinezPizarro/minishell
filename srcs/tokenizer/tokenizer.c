@@ -6,41 +6,11 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/10 03:59:06 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/11 04:39:52 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-int	valid_quotes(char *line)
-{
-	while (*line)
-	{
-		if (*line == '\"')
-			line = ft_strchr(++line, '\"');
-		else if (*line == '\'')
-			line = ft_strchr(++line, '\'');
-		if (!line)
-			return (0);
-		line++;
-	}
-	return (1);
-}
-
-int	which_operator(char *line)
-{
-	if (!ft_strncmp("<<", line, 2))
-		return (HEREDOC);
-	if (!ft_strncmp(">>", line, 2))
-		return (APPEND);
-	if (!ft_strncmp("&&", line, 2))
-		return (AND);
-	if (!ft_strncmp("||", line, 2))
-		return (OR);
-	if (*line == '>' || *line == '<' || *line == '|')
-		return (*line);
-	return (0);
-}
+#include "../../includes/tokenizer.h"
 
 void	add_last_token(t_token_list **tokens, t_token_list *new_token)
 {
@@ -57,89 +27,97 @@ void	add_last_token(t_token_list **tokens, t_token_list *new_token)
 	tmp->next = new_token;
 }
 
-void	add_token_to_list(t_token_list *tokens, char *str, int type)
+void	add_token_to_list(t_token_list **tokens, char *str, int type)
 {
 	t_token_list	*new_token;
-	
+
+	if (!str)
+		free_and_exit(*tokens);
 	new_token = malloc(sizeof(t_token_list));
 	if (!new_token)
-		free_and_exit();
+		free_and_exit(*tokens);
 	new_token->type = type;
 	new_token->str = str;
 	new_token->next = NULL;
-	add_last_token(&tokens, new_token);
+	add_last_token(tokens, new_token);
 }
 
 /*
-1 añadir al final de la lista un nuevo nodo
-2 necesito una función que añada al final de la lista un token con string y tipo
+añade al final de la lista un nuevo nodo que contiene la información
+de qué tipo de token es, el string del token y la dirección del siguiente nodo
 */
-void	add_tokens(t_token_list *tokens, char *str, int type)
+void	add_token(t_token_list **tokens, char *str)
 {
-	char	token_str;
+	char	*token_str;
+	int		type;
 	int		i;
 
 	i = 0;
+	type = which_operator(str);
 	if (type == WORD)
 	{
-		while (which_operator(str[i]) == 0)
+		while (str[i] != ' ' && which_operator(str + i) == WORD)
 			i++;
 		token_str = ft_substr(str, 0, i);
-
 	}
 	else if (type <= 4)
 		token_str = ft_substr(str, 0, 2);
 	else
 		token_str = ft_substr(str, 0, 1);
-	tokens->type = type;
+	add_token_to_list(tokens, token_str, type);
 }
 
-/*
-iter_line cambia la dirección de memoria de line y si no hay nada después *line = 0
-identifica el elemento actual, cuanto avanzar dependiendo de su longitud y
-si es el último **line = 0
-
-Ejemplo: avanzar dos si el actual es >> y si el elemento actual es el último
-marcar el caracter actual como '\0' y salir del bucle
-*/
-void	iter_line(char **line)
+void	add_quotes(t_token_list **tokens, char *str)
 {
+	char	quote;
+	int		type;
+	int		len;
 
+	quote = *str;
+	str++;
+	len = 0;
+	while (str[len] != quote)
+		len++;
+	if (len == 0)
+		return ;
+	if (quote == '\"')
+		type = DOUBLE_QUOTE;
+	else
+		type = SINGLE_QUOTE;
+	add_token_to_list(tokens, ft_substr(str, 0, len), type);
 }
 
 /*
-esta función devuelve un array de tokens y cuya estructura
-será una estructura será un string y el tipo de token que es
-(el tipo de token se puede añadir al tener todo separado)
-
-add_quotes copia el contenido hasta la siguiente comilla y su tipo
-de token puede ser comilla doble o simple para luego expandir o no
-
-add_space añade un espacio(tipo space o word)cuando hay algún elemento
-después el cual no sea un espacio
-
-add_operator un operador (el tipo depende de qué operador sea)
-
-add_word añade un string expandible(tipo word) hasta el siguiente ' ' o operador
+esta función crea una lista enlazada en la cual cada nodo contiene
+un string, el tipo de token y la dirección del siguiente nodo
 */
-
-int	tokenize(char *line, t_token_list *tokens)
+int	tokenize(char *line, t_token_list **tokens)
 {
 	if (!valid_quotes(line))
-		return (0);
-	//iter_line para ignorar espacios iniciales
-	iter_line(&line);
-	while (*line)
+		return (write(2, "Invalid quotes\n", 15), 0);
+	if (*line == ' ')
+		line = iter_line(line);
+	while (line && *line)
 	{
-		if (is_quote(*line))
-			line = add_quotes(line, tokens);
-		else if (which_operator(line))
-			add_operator(line, tokens);
-		else if (*line == ' ')//no hay que gestionar tabs y viceversa
-			add_space(" ", tokens);
+		if (*line == '\"' || *line == '\'')
+			add_quotes(tokens, line);
+		else if (which_operator(line) != WORD)
+			add_token(tokens, line);
+		else if (*line == ' ')
+			add_token_to_list(tokens, " ", WORD);
 		else
-			add_word(line, tokens);
-		iter_line(&line);
+			add_token(tokens, line);
+		line = iter_line(line);
 	}
 	return (1);
+}
+
+int main()
+{
+	t_token_list	*tokens;
+
+	tokens = NULL;
+	tokenize("  \"hola\"  echo | hel*lo", &tokens);
+	print_tokens(tokens);
+	return (0);
 }
