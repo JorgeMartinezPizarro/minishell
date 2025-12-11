@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/11 17:40:01 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:25:53 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ int run_echo(t_command *com)
 	return 1;
 }
 
-int	run_env(t_command *com)
+int run_env(t_list *env)
 {
-	t_variable *v;
+    t_list *node;
 
-	v = com->env;
-	while (v->name != NULL)
-	{
-		ft_printf("%s=%s\n", v->name, v->value);
-		v++;
+	node = env;
+    while (node)
+    {
+        t_variable *v = (t_variable *)node->content;
+        ft_printf("%s=%s\n", v->name, v->value);
+        node = node->next;
     }
     return 1;
 }
@@ -43,7 +44,7 @@ int run_command(t_command *com)
 	if (ft_strcmp(com->command, "echo") == 0)
 		return run_echo(com);
 	else if (ft_strcmp(com->command, "env") == 0)
-		return run_env(com);
+		return run_env(com->env);
 	else {
 		ft_printf("What do you mean with '%s'?\n", com->command);
 		return 0;

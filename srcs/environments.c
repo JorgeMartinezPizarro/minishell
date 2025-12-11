@@ -2,157 +2,36 @@
 #include "minishell_jorge.h"
 #include "libft.h"
 
-// TODO: write code
-
-/*
-
-t_variable *env is a list of pairs of strings, finished with 
-NULL. replace char **env properly.
-
-*/
-size_t env_len(char **env)
+static void *dup_env_var(void *content)
 {
-	size_t i;
-
-	i = 0;
-	while (*(env++) != NULL)
-		i++;
-	return i;
-}
-
-// add value to env and return the new vars
-// free and malloc
-t_variable *set_env_value(t_variable *vars, char *name, char *value)
-{
-    int i = 0;
-    // buscar si ya existe la variable
-    while (vars && vars[i].name)
-    {
-        if (ft_strcmp(vars[i].name, name) == 0)
-        {
-            free(vars[i].value);
-            vars[i].value = ft_strdup(value);
-            return vars;
-        }
-        i++;
-    }
-
-    // contar elementos existentes
-    int count = i;
-
-    // crear nuevo array con espacio para uno más + NULL
-    t_variable *new_vars = malloc((count + 2) * sizeof(t_variable));
-    if (!new_vars)
+    t_variable *v = (t_variable *)content;
+    t_variable *copy = malloc(sizeof(t_variable));
+    if (!copy)
         return NULL;
 
-    // copiar los existentes
-    for (i = 0; i < count; i++)
+    copy->name = ft_strdup(v->name);
+    copy->value = ft_strdup(v->value);
+    if (!copy->name || !copy->value)
     {
-        new_vars[i].name = ft_strdup(vars[i].name);
-        new_vars[i].value = ft_strdup(vars[i].value);
-    }
-
-    // añadir la nueva variable
-    new_vars[count].name = ft_strdup(name);
-    new_vars[count].value = ft_strdup(value);
-
-    // NULL final
-    new_vars[count + 1].name = NULL;
-    new_vars[count + 1].value = NULL;
-
-    // liberar array antiguo
-    for (i = 0; i < count; i++)
-    {
-        free(vars[i].name);
-        free(vars[i].value);
-    }
-    free(vars);
-
-    return new_vars;
-}
-
-// del a value from env and return the new vars
-// free and malloc
-t_variable *del_env_value(t_variable *vars, char *name)
-{
-    if (!vars)
+        free(copy->name);
+        free(copy->value);
+        free(copy);
         return NULL;
-
-    int i = 0, j = 0;
-    // contar elementos existentes
-    while (vars[i].name)
-        i++;
-    int count = i;
-
-    // crear nuevo array
-    t_variable *new_vars = malloc(count * sizeof(t_variable)); // -1 + NULL
-    if (!new_vars)
-        return NULL;
-
-    for (i = 0, j = 0; i < count; i++)
-    {
-        if (ft_strcmp(vars[i].name, name) != 0)
-        {
-            new_vars[j].name = ft_strdup(vars[i].name);
-            new_vars[j].value = ft_strdup(vars[i].value);
-            j++;
-        }
-        free(vars[i].name);
-        free(vars[i].value);
     }
-    free(vars);
 
-    // NULL final
-    new_vars[j].name = NULL;
-    new_vars[j].value = NULL;
-
-    return new_vars;
+    return copy;
 }
 
-char *get_env_value(t_variable *vars, char *name)
+t_list *ft_clone_env(t_list *env)
 {
-    int i = 0;
-    while (vars && vars[i].name)
-    {
-        if (ft_strcmp(vars[i].name, name) == 0)
-            return vars[i].value;
-        i++;
-    }
-    return NULL; // no encontrada
+    return ft_lstclone(env, dup_env_var);
 }
 
-// cleanup all env
-// free
-void free_env(t_variable *vars)
+t_list *load_env_values(char **env)
 {
-    if (!vars)
-        return;
+    t_list *vars = NULL;
 
-    int i = 0;
-    while (vars[i].name)
-    {
-        free(vars[i].name);
-        free(vars[i].value);
-        i++;
-    }
-    free(vars);
-}
-
-// load static env array into malloc memory
-// malloc
-t_variable *load_env_values(char **env)
-{
-    t_variable *var;
-    int len;
-    int i;
-	int j;
-	
-    len = env_len(env);
-    var = malloc((1 + len) * sizeof(t_variable));
-    if (!var)
-        return NULL;
-    i = 0;
-    while (*env != NULL)
+    while (*env)
     {
         char **s = ft_split(*env, '=');
         if (!s || !s[0])
@@ -160,21 +39,121 @@ t_variable *load_env_values(char **env)
             env++;
             continue;
         }
-        var[i].name = ft_strdup(s[0]);
-		if (s[1])
-        	var[i].value = ft_strdup(s[1]);
-		else
-			var[i].value = ft_strdup("");
-        j = 0;
-        while (s[j])
+
+        t_variable *v = malloc(sizeof(t_variable));
+        if (!v)
         {
-            free(s[j]);
-            j++;
+            if (s)
+            {
+                int j = 0;
+                while (s[j])
+                    free(s[j++]);
+                free(s);
+            }
+            ft_lstclear(&vars, free);
+            return NULL;
         }
+
+        v->name = ft_strdup(s[0]);
+        v->value = s[1] ? ft_strdup(s[1]) : ft_strdup("");
+
+        ft_lstadd_back(&vars, ft_lstnew(v));
+
+        int j = 0;
+        while (s[j])
+            free(s[j++]);
         free(s);
+
         env++;
-        i++;
+    }
+    return vars;
+}
+
+/* ---------------- LONGITUD ---------------- */
+
+size_t env_len_list(t_list *vars)
+{
+    return ft_lstsize(vars);
+}
+
+/* ---------------- OBTENER VALOR ---------------- */
+
+char *get_env_value_list(t_list *vars, char *name)
+{
+    while (vars)
+    {
+        t_variable *v = (t_variable *)vars->content;
+        if (ft_strcmp(v->name, name) == 0)
+            return v->value;
+        vars = vars->next;
+    }
+    return NULL;
+}
+
+/* ---------------- AÑADIR / ACTUALIZAR ---------------- */
+
+void set_env_value_list(t_list **vars, char *name, char *value)
+{
+    t_list *node = *vars;
+
+    while (node)
+    {
+        t_variable *v = (t_variable *)node->content;
+        if (ft_strcmp(v->name, name) == 0)
+        {
+            free(v->value);
+            v->value = ft_strdup(value);
+            return;
+        }
+        node = node->next;
     }
 
-    return var;
+    // No existe, crear nuevo
+    t_variable *v_new = malloc(sizeof(t_variable));
+    v_new->name = ft_strdup(name);
+    v_new->value = ft_strdup(value);
+    ft_lstadd_back(vars, ft_lstnew(v_new));
+}
+
+/* ---------------- ELIMINAR ---------------- */
+
+void del_env_value_list(t_list **vars, char *name)
+{
+    t_list *prev = NULL;
+    t_list *curr = *vars;
+
+    while (curr)
+    {
+        t_variable *v = (t_variable *)curr->content;
+        if (ft_strcmp(v->name, name) == 0)
+        {
+            if (prev)
+                prev->next = curr->next;
+            else
+                *vars = curr->next;
+
+            free(v->name);
+            free(v->value);
+            free(v);
+            free(curr);
+            return;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+}
+
+/* ---------------- LIMPIAR TODAS ---------------- */
+
+void del_variable(void *content)
+{
+    t_variable *v = (t_variable *)content;
+    free(v->name);
+    free(v->value);
+    free(v);
+}
+
+void free_env_list(t_list **vars)
+{
+    ft_lstclear(vars, del_variable);
 }
