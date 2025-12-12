@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/12 12:05:41 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/12 20:27:35 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ int	run_cd(t_command *com)
 	return 1;
 }
 
+int run_export(t_command *com)
+{
+	char **item = ft_split(ft_strreplace(com->args[1], "\n", ""), '=');
+	set_env_value(&com->env, item[0], item[1]);
+	return 1;
+}
+
+int run_set(t_command *com)
+{
+	char **item = ft_split(com->command, '=');
+	set_env_value(&com->env, item[0], item[1]);
+	return 1;
+}
+
+int run_unset(t_command *com)
+{
+	de_env_value(&com->env, ft_strreplace(com->args[1], "\n", ""));
+	return 1;
+}
+
 // TODO: Hay mas codigos de error?
 // return 1 => true, 0 => false
 int run_command(t_command *com)
@@ -66,6 +86,12 @@ int run_command(t_command *com)
 		return run_pwd(com);
 	else if (ft_strcmp(com->command, "cd") == 0)
 		return run_cd(com);
+	else if (ft_strcmp(com->command, "export") == 0)
+		return run_export(com);
+	else if (ft_strcmp(com->command, "unset") == 0)
+		return run_unset(com);
+	else if (ft_strchr(com->command, '=') != NULL)
+		return run_set(com);
 	else {
 		ft_printf("What do you mean with '%s'?\n", com->command);
 		return 0;
