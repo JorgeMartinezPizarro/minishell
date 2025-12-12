@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/11 04:39:52 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 04:08:49 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ un string, el tipo de token y la dirección del siguiente nodo
 */
 int	tokenize(char *line, t_token_list **tokens)
 {
-	if (!valid_quotes(line))
+	if (!valid_quotes(line))//también se debe comprobar si los paréntesis son inválidos
 		return (write(2, "Invalid quotes\n", 15), 0);
 	if (*line == ' ')
 		line = iter_line(line);
@@ -103,8 +103,6 @@ int	tokenize(char *line, t_token_list **tokens)
 			add_quotes(tokens, line);
 		else if (which_operator(line) != WORD)
 			add_token(tokens, line);
-		else if (*line == ' ')
-			add_token_to_list(tokens, " ", WORD);
 		else
 			add_token(tokens, line);
 		line = iter_line(line);

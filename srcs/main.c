@@ -6,16 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/11 04:49:25 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 04:38:10 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	execution(t_parsed_line *parsed_line)
+void	execution(t_tree *tree)
 {
-	//ejecutar los comandos en orden como el pipex pero redireccionando
-
 	//expandir variables durante la ejecución justo antes de ejecutar el comando
 
 	//gestionar los errores y los códigos de salida durante la ejecución
@@ -23,15 +21,16 @@ void	execution(t_parsed_line *parsed_line)
 
 int	exec_line(char *line)
 {
-	t_parsed_line	*parsed_line;
 	t_token_list	*tokens;
+	t_tree			*tree;
 
 	tokens = NULL;
+	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return ;
-	if (!parse(&parsed_line, tokens))
+	if (!parse(&tree, tokens))
 		return ;//si tokenize o parse devuelve 0 saltar ejecución
-	execution(parsed_line);
+	execution(tree);
 }
 
 int	main(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:23:03 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/11 04:24:39 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 00:57:51 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "minishell.h"
 
-char	*iter_line(char *line);
-int		valid_quotes(char *line);
-int		which_operator(char *line);
-void	print_tokens(t_token_list *tokens);
 void	free_and_exit(t_token_list *tokens);
+void	print_tokens(t_token_list *tokens);
+bool	valid_quotes(char *line);
+char	*iter_line(char *line);
+int		which_operator(char *line);
 
 #endif

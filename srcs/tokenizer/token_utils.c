@@ -6,13 +6,13 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/11 04:01:15 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 04:12:14 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tokenizer.h"
 
-int	valid_quotes(char *line)
+bool	valid_quotes(char *line)
 {
 	while (*line)
 	{
@@ -21,10 +21,10 @@ int	valid_quotes(char *line)
 		else if (*line == '\'')
 			line = ft_strchr(++line, '\'');
 		if (!line)
-			return (0);
+			return (false);
 		line++;
 	}
-	return (1);
+	return (true);
 }
 
 int	which_operator(char *line)
@@ -40,7 +40,7 @@ int	which_operator(char *line)
 	if (!ft_strncmp("||", line, 2))
 		return (OR);
 	if (*line == '>' || *line == '<' || *line == '|' || *line == '('
-		|| *line == ')' || *line == '*' || *line == '\"' || *line == '\'')
+		|| *line == ')' || *line == '\"' || *line == '\'')
 		return (*line);
 	return (WORD);
 }
@@ -61,26 +61,21 @@ char	*iter_line(char *line)
 {
 	char	quote;
 	int		type;
-	int		i;
 
 	quote = *line;
 	if (*line == '\"' || *line == '\'')
 		line = ft_strchr(++line, quote);
 	type = which_operator(line);
-	i = 0;
 	if (type > 4)
 		line += 1;
-	else if (*line == ' ')
-		while (*line == ' ')
-			line++;
 	else if (type == WORD)
 		while (*line != ' ' && which_operator(line) == WORD)
 			line++;
 	else if (type != EOF)
 		line += 2;
-	while (line[i] == ' ')
-		i++;
-	if (!line[i])
+	while (*line == ' ')
+		line++;
+	if (!*line)
 		return (NULL);
 	return (line); 
 }
