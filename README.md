@@ -69,7 +69,7 @@ Por ultimo, dado char *command y char **args, he creado una funcion:
 int run_command(t_command *com)
 ```
 
-Que centraliza y separa por casos, falta aun la asignacion de variables, A=15 es un comando valido que define un env, igual que export A = 15.
+Que centraliza y separa por casos, falta aun la asignacion de variables, `A=15` es un comando valido que define un env, igual que `export A=15`.
 
 Mi estructura de momento es
 
