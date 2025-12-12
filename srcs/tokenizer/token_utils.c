@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 04:12:14 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 20:46:57 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	valid_quotes(char *line)
 
 int	which_operator(char *line)
 {
-	if (!*line)
+	if (!*line || *line == '\n')
 		return (EOF);
 	if (!ft_strncmp("<<", line, 2))
 		return (HEREDOC);
@@ -75,7 +75,7 @@ char	*iter_line(char *line)
 		line += 2;
 	while (*line == ' ')
 		line++;
-	if (!*line)
+	if (!*line || *line == '\n')
 		return (NULL);
 	return (line); 
 }
