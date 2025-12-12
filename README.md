@@ -93,3 +93,5 @@ typedef struct s_command
 La lista t_list (\*env) castea content de (void\*) a (t_variable\*).
 
 Debemos encontrar un punto comun entre `t_command` y tu `t_parsed_line`. 
+
+He dejado terminado como prototipo unset, export y A=b, aun no hay control de errores ni parseo de argumentos, eso deberiamos hacerlo en una fase previa, el tokenizer, que genere la estructura t_command lista para usar. En la misma definicion de t_command se puede eliminar el \n final y los caracteres que sea necesario, los "" de un string por ejemplo, no se imprimen en echo.
