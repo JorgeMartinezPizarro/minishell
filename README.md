@@ -61,7 +61,7 @@ Para `echo` y para otros comandos en general, he creado usando las environment v
 char	*expand_vars(char *s, t_list *env);
 ```
 
-Este comando reemplaza cada \$1 o \${var} por su valor respectivo en el string.
+Este comando reemplaza cada `$1` o `${var}` por su valor respectivo en el string.
 
 Por ultimo, dado char *command y char **args, he creado una funcion:
 
