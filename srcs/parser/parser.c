@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 03:32:21 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 05:09:15 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse(t_tree **tree, t_token_list *tokens)
 	free_tokens(tokens);
 	
 	if (invalid_input(tree))//guardar si es válido para la ejecución
-		return (write(2, "Invalid input"), 0);
+		return (write(2, "Invalid input\n", 15), 0);
 }
 
 /*

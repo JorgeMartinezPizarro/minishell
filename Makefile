@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/11 21:07:42 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/12 05:29:51 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,5 +71,18 @@ fclean: clean
 	make -C libft fclean
 	rm -f $(NOMBRE)
 	rm -f minishell
+
+token:
+	@make -C libft -s
+	@cc srcs/tokenizer/token_utils.c srcs/tokenizer/tokenizer.c libft/libft.a -Wall -Wextra -Werror -g
+	@./a.out "  \"hola\"  echo | hel*lo  "
+	@echo "next test:\n"
+	@./a.out "ls -l /tmp"
+	@echo "next test:\n"
+	@./a.out "echo 'hola mundo' "user $USER""
+
+tclean:
+	make fclean -C libft
+	rm a.out
 
 .PHONY = test

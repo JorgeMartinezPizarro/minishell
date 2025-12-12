@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 04:08:49 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/12 05:27:09 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,14 @@ int	tokenize(char *line, t_token_list **tokens)
 	return (1);
 }
 
-int main()
+int main(int ac, char **av)
 {
 	t_token_list	*tokens;
 
+	if (ac < 1)
+		return (1);
 	tokens = NULL;
-	tokenize("  \"hola\"  echo | hel*lo", &tokens);
+	tokenize(av[1], &tokens);
 	print_tokens(tokens);
 	return (0);
 }
