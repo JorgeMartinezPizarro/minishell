@@ -60,8 +60,8 @@ OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 $(NOMBRE): $(LIBFT) $(OBJETOS)
 	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -o $(NOMBRE)
 
-test:
-	@./tests/test.sh
+tests:
+	@./tests/tests.sh
 	
 clean:
 	make -C libft clean
@@ -85,4 +85,4 @@ tclean:
 	make fclean -C libft
 	rm a.out
 
-.PHONY = test
+.PHONY = tests

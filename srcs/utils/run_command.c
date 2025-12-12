@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/12 20:27:35 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/12 22:22:09 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int run_set(t_command *com)
 
 int run_unset(t_command *com)
 {
-	de_env_value(&com->env, ft_strreplace(com->args[1], "\n", ""));
+	del_env_value(&com->env, ft_strreplace(com->args[1], "\n", ""));
 	return 1;
 }
 

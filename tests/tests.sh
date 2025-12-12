@@ -6,7 +6,7 @@
 ## Add new code, add here a working example
 
 echo " -> Compiling minishell"
-make jorge > /dev/null
+make jorge
 echo " -> Running different tests"
 
 ./jorge "echo hola"
@@ -25,7 +25,6 @@ echo " -> Running different tests"
 ./jorge "export A=5"
 ./jorge "B=8"
 ./jorge "echo \${HOME}/dir"
-.
 
 echo " -> Cleanup"
 make fclean > /dev/null
