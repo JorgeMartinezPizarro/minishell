@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/11 21:16:29 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:48:23 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int run_echo(t_command *com)
 		ft_printf("What to echo?");
 		return 0;
 	}
-	ft_printf("%s\n", expand_vars(com->args[1], com->env));
+	ft_printf("%s\n", expand_vars(ft_strreplace(com->args[1], "\n", ""), com->env));
 	return 1;
 }
 
@@ -48,7 +48,7 @@ int run_pwd(t_command *com)
 
 int	run_cd(t_command *com)
 {
-	char *new_path = join_paths(com->cwd, com->args[1]);
+	char *new_path = join_paths(com->cwd, expand_vars(ft_strreplace(com->args[1], "\n", ""), com->env));
 	set_env_value(&com->env, "PWD", new_path);
 	com->cwd = ft_strdup(new_path);
 	return 1;

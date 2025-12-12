@@ -12,7 +12,7 @@ typedef struct s_command
 	char		*command;
 	char		*cwd;
 	char		**args;
-	int			argc;
+	size_t		argc;
 	t_list		*env;
 }	t_command;
 
@@ -24,7 +24,10 @@ t_list	*extract_variables(const char *str);
 
 char	*join_paths(const char *base, const char *relative);
 
+size_t	strarr_len(char **strs);
+
 // Env management
+size_t	env_len_list(t_list *vars);
 t_list	*ft_clone_env(t_list *env);
 void	set_env_value(t_list **env, char *name, char *value);
 void	del_env_value(t_list **env, char *value);

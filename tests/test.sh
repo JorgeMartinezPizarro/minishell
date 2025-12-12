@@ -20,7 +20,6 @@ echo " -> Running different tests"
 ./jorge "${HOME}" || true
 
 ./jorge "cd \$(HOME)"
-./jorge "echo \$(HOME)"
 ./jorge "echo \${HOME}"
 ./jorge "pwd"
 

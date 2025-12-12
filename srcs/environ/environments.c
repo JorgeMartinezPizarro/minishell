@@ -2,6 +2,16 @@
 #include "minishell_jorge.h"
 #include "libft.h"
 
+size_t	strarr_len(char **strs)
+{
+	size_t	i;
+
+	i = 0;
+	while (strs[i])
+		i++;
+	return (i);
+}
+
 static void *dup_env_var(void *content)
 {
     t_variable *v = (t_variable *)content;

@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/11 19:01:27 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:51:51 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ static t_list *build_var_formats(const char *var)
     // ${VAR}
     tmp = ft_strjoin("${", var);
     s = ft_strjoin(tmp, "}");
-    free(tmp);
-    ft_lstadd_back(&formats, ft_lstnew(s));
-
-    // $(VAR)
-    tmp = ft_strjoin("$(", var);
-    s = ft_strjoin(tmp, ")");
     free(tmp);
     ft_lstadd_back(&formats, ft_lstnew(s));
 
