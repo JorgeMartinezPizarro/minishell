@@ -95,3 +95,10 @@ La lista t_list (\*env) castea content de (void\*) a (t_variable\*).
 Debemos encontrar un punto comun entre `t_command` y tu `t_parsed_line`. 
 
 He dejado terminado como prototipo unset, export y A=b, aun no hay control de errores ni parseo de argumentos, eso deberiamos hacerlo en una fase previa, el tokenizer, que genere la estructura t_command lista para usar. En la misma definicion de t_command se puede eliminar el \n final y los caracteres que sea necesario, los "" de un string por ejemplo, no se imprimen en echo.
+
+Lo suyo es que la estructura t_command contenga los tokens, las env, el comando, y toda la informacion estructurada. Yo puse char *command y char **args para los demas, pero ahi es donde lo podemos cambiar por t_parsed_line.
+
+Fijate bien si podemos juntar ambos codigos usando esta estrategia.
+
+En el arbol binario de comandos, al traversar el arbol (ejecutar el comando compuesto), en cada paso cambiamos el comando y los args pero mantenemos las variables de entorno, el cwd, no haria falta hacer clone, solo pasamos la estructura y cada iteracion en el arbol de comandos, ejecutamos un t_command que va cambiando.
+
