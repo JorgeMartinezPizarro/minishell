@@ -91,3 +91,5 @@ typedef struct s_command
 ```
 
 La lista t_list (\*env) castea content de (void\*) a (t_variable\*).
+
+Debemos encontrar un punto comun entre `t_command` y tu `t_parsed_line`. 
