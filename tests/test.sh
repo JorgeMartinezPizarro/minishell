@@ -22,6 +22,10 @@ echo " -> Running different tests"
 ./jorge "cd \$(HOME)"
 ./jorge "echo \${HOME}"
 ./jorge "pwd"
+./jorge "export A=5"
+./jorge "B=8"
+./jorge "echo \${HOME}/dir"
+.
 
 echo " -> Cleanup"
 make fclean > /dev/null
