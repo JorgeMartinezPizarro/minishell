@@ -16,10 +16,10 @@ typedef enum e_token_type
 	HEREDOC,
 	PIPE = '|',
 	REDIR = '>',
+	O_PAREN = '(',
+	C_PAREN = ')',
 	SINGLE_QUOTE = '\'',
-	DOUBLE_QUOTE = '\"',
-	OPEN_PARENTHESIS = '(',
-	CLOSE_PARENTHESIS = ')'
+	DOUBLE_QUOTE = '\"'
 }	e_token_type;
 
 typedef struct	s_token_list
@@ -49,10 +49,12 @@ en el parseo hay que definir el outfile y el infile
 typedef struct	s_tree
 {
 	t_parse_list	*parse;
-	struct s_tree	*left;
 	struct s_tree	*right;
-	bool			valid_line;
+	struct s_tree	*left;
 	bool			subproccess;
+	bool			valid_line;
+	bool			and;
+	bool			or;
 }	t_tree;
 /*
 En cada hoja del árbol quiero saber si es un proceso hijo y a partir de ahí crear el proceso hijo
