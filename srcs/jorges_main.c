@@ -1,9 +1,21 @@
 #include "minishell_jorge.h"
 #include "libft.h"
-#include <unistd.h>
+
 
 // Just a prototype on what to be run on every build in command.
 // TODO: Merge with other main.c code.
+
+// Del readline se obtiene una estructura t_tree que tenemos que definir,
+// cada rama tiene un puntero al entorno (ejemplo: un comando define A y el siguiente lo usa)
+// run_tree recibe el arbol de comandos y segun el codigo de exit de cada uno, va al siguiente
+// o termina.
+// No tengo pensado como procesar los pipes, en verdad es una secuencia de t_commands, cada uno
+// lleva el valor de retorno del anterior como ultimo parametro.
+
+// Usaremos para manejar los comandos:
+
+// 		readline, rl_clear_history, rl_on_new_line
+//		rl_replace_line, rl_redisplay, add_history
 int main(int argc, char **args, char **env)
 {
 	t_command com;
@@ -25,8 +37,7 @@ int main(int argc, char **args, char **env)
 	}
 	else if (argc < 2)
 	{
-		write(1, ">> ", 3);
-		char *line = get_next_line(0);
+		char *line = readline(">>> ");
 		
 		while (line)
 		{
@@ -36,8 +47,7 @@ int main(int argc, char **args, char **env)
 			com.argc = strarr_len(words);
 			int exit_code = run_command(&com);
 			(void)exit_code;			
-			write(1, ">> ", 3);
-			line = get_next_line(0);
+			line = readline(">>> ");
 		}
 		free_env(&com.env);
 	}

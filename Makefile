@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/12 05:29:51 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/14 20:06:19 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all: $(NAME)
 
 ${NAME}: $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) \
-		-L./$(LIBFT_DIR) -lft -o minishell
+		-lreadline -L./$(LIBFT_DIR) -lft -o minishell
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -58,7 +58,7 @@ MY_LIST = utils/run_command jorges_main \
 OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 
 $(NOMBRE): $(LIBFT) $(OBJETOS)
-	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -o $(NOMBRE)
+	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -lreadline -o $(NOMBRE)
 
 tests:
 	@./tests/tests.sh
