@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/14 20:06:19 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/14 21:13:29 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ fclean: clean
 token:
 	@make -C libft -s
 	@cc srcs/tokenizer/token_utils.c srcs/tokenizer/tokenizer.c libft/libft.a -Wall -Wextra -Werror -g
-	@./a.out "  \"hola\"  echo | hel*lo  "
+	@./a.out "  \"hola\"  echo|hel*lo  "
 	@echo "next test:\n"
 	@./a.out "ls -l /tmp"
 	@echo "next test:\n"

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 20:46:57 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/14 01:51:06 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*iter_line(char *line)
 	return (line); 
 }
 
-void	print_tokens(t_token_list *tokens)
+void	print_tokens(t_token_list *tokens)//borrar antes de entregar
 {
 	while (tokens)
 	{
@@ -90,7 +90,7 @@ void	print_tokens(t_token_list *tokens)
 	}
 }
 
-void	free_and_exit(t_token_list *tokens)
+void	free_tokens(t_token_list *tokens)
 {
 	t_token_list	*tmp;
 
@@ -101,6 +101,4 @@ void	free_and_exit(t_token_list *tokens)
 		tokens = tokens->next;
 		free(tmp);
 	}
-	perror("malloc error");
-	exit(1);
 }

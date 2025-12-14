@@ -6,82 +6,74 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/13 06:05:32 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/14 05:30:11 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parser.h"
-/*
-	durante la fase de parsing los errores que se detectan son:
 
-	1 tokens en posiciones ilegales 		| ls
-	2 operadores binarios mal colocados		ls &&
-	3 
-*/
-int	invalid_input(t_tree *tree)
+t_token_list	*copy_left(t_token_list *tokens)
 {
 	
 }
 
-/*
-(cmd && cmd) -> indicar que es un subproceso y cada comando a una rama
-(    &&    ) -> al entrar aquí ya estamos dentro de un subproceso
-cmd     cmd  -> se ejecutan el primero y si funciona, el segundo
-
-1 mirar si operador después de el paréntesis -> DESPUÉS declaramos subprocces = true, quitamos el paréntesis y ahora se comprueba si hay operador (paso 2)
-2 si hay operador va a la rama izquierda todo lo anterior al operador
-3 si no hay operador se parsea en la hoja actual
-
-Un subproceso solo se declara cuando no hay operadores fuera del paréntesis
-
-La condición para ejecutar una hoja es que no hay más hojas a su izquierda
-*/
-void	make_tree(t_tree **tree, t_token_list *tokens)
+t_token_list	*manage_paren(t_parse *parse, t_token_list *tokens)
 {
-	(*tree)->parse = NULL;
-	create_and_assign_left_leaf(tree, tokens);
-	right_leaf(tree, tokens);
-	set_b_op(tree, tokens);
-	
-	//si hay operador lógico se asigna a la hoja actual
+	t_token_list	*new;
+	int				opened;
+
+//si solo hay paréntesis hacer una copia de todo pero sin paréntesis
+	if (tokens->type != O_PAREN)
+		return (tokens);
+	opened = 1;
+	tokens = tokens->next;
+//si todo está contenido entre paréntesis quitarlos y devolver otra lista de tokens
+	while (tokens && opened != 0)
+	{
+		if (tokens->type == O_PAREN)
+			opened++;
+		else if (tokens->type == C_PAREN)
+			opened--;
+		tokens = tokens->next;
+	}
 }
 /*
-si no hay b_op se parsea todo en la hoja actual -> se parsea todo
+para la hoja izquierda necesito copiar toda la línea hasta que encuentre un
+operador lógico 
 
-si hay b_op 2 opciones
-	1 dentro de paren
-	2 fuera -> se copia el paréntesis a hoja izquierda
-
-si hay paréntesis se parsea 
-si no hay paréntesis se parsea hasta el b_op en la hoja actual
-
-necesito una función que me copie todo el contenido de los paréntesis incluidos
-una función que itere paréntesis
-una función que me diga si hay paréntesis y si después hay operador
-
+igual me viene bien asignar dos listas una para la hoja izquierda y otra para la derecha
+copy_left y copy_right
 */
-
-int	parse(t_tree **tree, t_token_list *tokens)
+t_tree	*make_tree(t_tree **tree, t_token_list *tokens)
 {
-	make_tree(tree, tokens);
-	free_tokens(tokens);
+	t_token_list	*tmp;
 	
-	if (invalid_input(tree))//guardar si es válido para la ejecución
-		return (write(2, "Invalid input\n", 15), 0);
+	*tree = ft_calloc(sizeof(t_tree), 1);
+	if (!*tree)
+		free_all_exit();//se podría poner un malloc error
+	if (!tokens)
+		return (free_tree(tree), NULL);
+	tmp = manage_paren(&(*tree)->parse, tokens);//si todo está contenido entre paréntesis quitarlos y subproces = true
+	if (to_parse(tmp) == true)//parsear si la lista de tmp no tiene paréntesis ni b_op
+		parse(&(*tree)->parse, &tmp);//poner tmp = NULL
+	(*tree)->left = make_tree(&(*tree)->left, copy_left(tmp));
+	set_b_op(&(*tree)->parse, &tmp);
+	(*tree)->right = make_tree(&(*tree)->right, tmp);
+	return (tree);
+}
+//Por hacer: manage_paren, to_parse, parse, copy_left, *set_b_op
+
+void	parse(t_parse *parse, t_token_list **tokens)
+{
+	//aquí creo y asigno la estructura parse 
 }
 
 /*
 0 VALIDACIÓN DE LÍNEA DE TOKENS: validar los casos que no se puedan durante la formación del árbol
-	(se puede hacer en la tokenización)
+	(se puede hacer en la tokenización) ->
 
-1 CREAR ARBOL: si tokens && o || entonces hasta && al nodo izquierdo, && al actual y el resto al nodo derecho
+1 CREAR Y PARSEAR ÁRBOL: 
 
-2 PARSEAR ARBOL: 
-
-3 VALIDAR INPUT EN HOJAS
-
-creación y parseo en etapas distintas? creo que lo mejor es hacer el parseo con los datos existentes
-
-como crear el arbol a la vez que le pones sus datos?   solo hace falta saber por donde va del tokenizer
+VALIDAR INPUT EN HOJAS(parte del parseo)
 
 */

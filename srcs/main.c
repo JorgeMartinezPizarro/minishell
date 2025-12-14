@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 04:38:10 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/14 04:44:11 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execution(t_tree *tree)
 	//gestionar los errores y los códigos de salida durante la ejecución
 }
 
-int	exec_line(char *line)
+int	exec_line(char *line, char **env)
 {
 	t_token_list	*tokens;
 	t_tree			*tree;
@@ -28,33 +28,30 @@ int	exec_line(char *line)
 	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return ;
-	if (!parse(&tree, tokens))
-		return ;//si tokenize o parse devuelve 0 saltar ejecución
+	make_tree(&tree, tokens);
+	//free_tokens();
 	execution(tree);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	char	**env;
 	char	*line;
 	char	*user;
 
-	/*obtener la variable de entorno
-	mirar como lo gestiona bash porque hay casos en los
+/*
+	mirar como gestiona bash env porque hay casos en los
 	que necesita dos variables de entorno al hacer exports y
 	en algunos casos de fallo
-
-	además hacer funciones para usar la variable de entorno
-	*/
-	env = getenv();
-	//sacar el valor de $USER para imprimirlo en pantalla
-	user = get_user();
+*/
+	env = getenv(envp);
+	user = expand_user();
 	if (ft_strncmp(av[1], "-c", 3))
-		exec_line(av[2]);
+		exec_line(av[2], env);
 	while (1)
 	{
 		line = readline(user);
-		exec_line(line);
+		exec_line(line, env);
 	}
 	return (0);
 }

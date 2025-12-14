@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/12 05:27:09 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/14 03:18:50 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	add_token_to_list(t_token_list **tokens, char *str, int type)
 {
 	t_token_list	*new_token;
 
-	if (!str)
-		free_and_exit(*tokens);
 	new_token = malloc(sizeof(t_token_list));
 	if (!new_token)
-		free_and_exit(*tokens);
+	{
+		free_tokens(*tokens);
+		perror("malloc error");
+		exit(1);
+	}
 	new_token->type = type;
 	new_token->str = str;
 	new_token->next = NULL;
@@ -64,11 +66,18 @@ void	add_token(t_token_list **tokens, char *str)
 		token_str = ft_substr(str, 0, 2);
 	else
 		token_str = ft_substr(str, 0, 1);
+	if (!token_str)
+	{
+		free_tokens(*tokens);
+		perror("malloc error");
+		exit(1);
+	}
 	add_token_to_list(tokens, token_str, type);
 }
 
 void	add_quotes(t_token_list **tokens, char *str)
 {
+	char	*string;
 	char	quote;
 	int		type;
 	int		len;
@@ -84,7 +93,14 @@ void	add_quotes(t_token_list **tokens, char *str)
 		type = DOUBLE_QUOTE;
 	else
 		type = SINGLE_QUOTE;
-	add_token_to_list(tokens, ft_substr(str, 0, len), type);
+	string = ft_substr(str, 0, len);
+	if (!string)
+	{
+		free_tokens(*tokens);
+		perror("malloc error");
+		exit(1);
+	}	
+	add_token_to_list(tokens, string, type);
 }
 
 /*

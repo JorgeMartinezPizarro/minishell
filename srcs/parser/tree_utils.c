@@ -1,22 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 04:24:04 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 00:15:29 by maanguit         ###   ########.fr       */
+/*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
+/*   Updated: 2025/12/13 22:43:55 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "../../includes/parser.h"
 
-# include "minishell.h"
 
-void	set_b_op(t_parse *parse, t_token_list *token);
-bool	b_op_after_paren(t_token_list *tokens);
-void	iter_paren(t_token_list **tokens);
-
-#endif

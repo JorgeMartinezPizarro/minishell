@@ -6,20 +6,21 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/13 03:10:01 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/14 03:07:17 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_b_op(t_tree **tree, t_token_list *token)
+void	set_b_op(t_parse *parse, t_token_list *token)
 {
 	if (!token)
 		return ;
 	if (token->type == OR)
-		(*tree)->or = true;
+		parse->or = true;
 	else if (token->type == AND)
-		(*tree)->and = true;
+		parse->and = true;
+	//mirar si me viene bien avanzar la lista de tokens cuando hay b_op
 }
 
 bool	b_op_after_paren(t_token_list *tokens)
@@ -50,7 +51,7 @@ void	iter_paren(t_token_list **tokens)
 	if (!(*tokens) || (*tokens)->type != O_PAREN)
 		return ;
 	opened = 0;
-	while ((*tokens))
+	while (*tokens)
 	{
 		if ((*tokens)->type == O_PAREN)
 			opened++;
@@ -60,4 +61,16 @@ void	iter_paren(t_token_list **tokens)
 			break ;
 		(*tokens) = (*tokens)->next;
 	}
+}
+
+/*
+	durante la fase de parsing los errores que se detectan son:
+
+	1 tokens en posiciones ilegales 		| ls
+	2 operadores binarios mal colocados		ls &&
+	3 
+*/
+int	invalid_input(t_tree *tree)
+{
+	
 }

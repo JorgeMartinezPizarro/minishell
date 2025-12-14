@@ -37,28 +37,26 @@ typedef struct	s_parse_list
 	int					out_fd;
 	int					in_fd;
 }	t_parse_list;
-/*
-en esta estructura estarán los tokens y las redirecciones de cada comando
-
-en cada nodo copiar los tokens que debe contener
-
-en el parseo hay que definir el outfile y el infile
-*/
 
 
-typedef struct	s_tree
+typedef struct	s_parse
 {
-	t_parse_list	*parse;
-	struct s_tree	*right;
-	struct s_tree	*left;
+	t_parse_list	*parse_list;
 	bool			subproccess;
 	bool			valid_line;
 	bool			and;
 	bool			or;
+}	t_parse;
+
+typedef struct	s_tree
+{
+	t_parse			parse;
+	struct s_tree	*right;
+	struct s_tree	*left;
 }	t_tree;
-/*
-En cada hoja del árbol quiero saber si es un proceso hijo y a partir de ahí crear el proceso hijo
-si la línea es válida
-*/
+
+t_tree	*make_tree(t_tree **tree, t_token_list *tokens);
+int		tokenize(char *line, t_token_list **tokens);
+void	free_tokens(t_token_list *tokens);
 
 #endif

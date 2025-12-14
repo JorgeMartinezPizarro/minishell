@@ -1,0 +1,22 @@
+Para construir las condiciones son:
+
+Si hay algo a la derecha de un paréntesis el paréntesis a la hoja izquierda
+
+Si hay b_op -> se declara el nodo como OR o AND = true
+
+Lo que hay a la derecha del paréntesis o b_op a la hoja derecha
+
+
+Cuando todo el contenido de la lista de tokens es entre paréntesis se quitan y se marca
+subproceso = true
+
+Solo hay que parsear cuando ya no hay paréntesis ni b_op porque eso significa que ya se puede
+ejecutar el parseo como un único comando unido por pipes
+
+
+FUNCIONES:
+
+	1 Comprobar paréntesis y si b_op después
+	2 Copiar lista de tokens y devolver lista copiada
+	3 Copiar ignorando paréntesis
+	4 Crea la estructura de parseo

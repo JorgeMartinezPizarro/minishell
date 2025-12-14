@@ -5,9 +5,6 @@ Además se indica donde redirigir cada comando.
 Aquí se crea la lista de árboles binarios y se agrupan los comandos
 juntando todo lo que haya hasta un pipe o redirección como un mismo comando.
 
-
-Dejar un espacio si hay espacios entre argumentos
-
 El output que produce son todos los comandos agrupados con la información
 de cual es el input que toma y a donde redirige su output y este es el
 input que toma el executor.
