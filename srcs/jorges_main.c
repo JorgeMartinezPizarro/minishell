@@ -16,9 +16,23 @@
 
 // 		readline, rl_clear_history, rl_on_new_line
 //		rl_replace_line, rl_redisplay, add_history
+
+void sigint_handler(int signo)
+{
+    (void)signo;                // ignorar el argumento
+    write(1, "\n", 1);          // imprime la nueva línea
+    rl_replace_line("", 0);     // borra la línea que se estaba escribiendo
+    rl_on_new_line();            // indica a readline que estamos en una nueva línea
+    rl_redisplay();              // redibuja prompt vacío
+}
+
 int main(int argc, char **args, char **env)
 {
 	t_command com;
+
+	signal(SIGINT, sigint_handler);
+    signal(SIGQUIT, SIG_IGN);
+
 	com.cwd = getcwd(NULL, 0);
 	com.env = load_env_values(env);
 
@@ -46,7 +60,8 @@ int main(int argc, char **args, char **env)
 			com.args = words;
 			com.argc = strarr_len(words);
 			int exit_code = run_command(&com);
-			(void)exit_code;			
+			(void)exit_code;
+			add_history(line);
 			line = readline(">>> ");
 		}
 		free_env(&com.env);
