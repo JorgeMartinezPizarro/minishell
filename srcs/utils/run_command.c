@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/14 19:23:08 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/14 19:37:40 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 // TODO: Cada comando es un fichero por separado.
 
+// TODO: echo puede tener >> o > en cuyo caso debe volcarse a fichero en vez de 
+// imprimirlo en el fd 1.
 int run_echo(t_command *com)
 {
 	if (com->argc < 2)

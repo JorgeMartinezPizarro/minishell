@@ -1,6 +1,11 @@
 
 #include "libft.h"
 
+// El parseador del main debe primero identificar si hay redirect a fichero, en caso de echo
+// y debera construir con el string que le de el usuario, un arbol de t_commands,
+// es decir, una estructura como t_list pero con command_left y command_right, que se ejecutaran
+// si el comando padre da 0 o 1.
+
 typedef struct s_variable
 {
 	char	*name;
