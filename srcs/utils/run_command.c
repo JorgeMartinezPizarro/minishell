@@ -19,12 +19,19 @@
 // imprimirlo en el fd 1.
 int run_echo(t_command *com)
 {
-	if (com->argc < 2)
-	{	
-		ft_printf("What to echo?");
-		return 0;
+	t_token_list *temp;
+
+	temp = com->args;
+	if (temp)
+		ft_printf("%s", expand_vars(temp->str, com->env));
+	temp = temp->next;
+	while (temp){
+		ft_printf(" %s", expand_vars(temp->str, com->env));
+		temp = temp->next;
 	}
-	ft_printf("%s\n", expand_vars(ft_strreplace(com->args[1], "\n", ""), com->env));
+
+	ft_printf("\n");
+	
 	return 1;
 }
 
@@ -53,7 +60,7 @@ int run_pwd(t_command *com)
 // Revisar si el directorio existe antes de hacer cd!
 int	run_cd(t_command *com)
 {
-	char *new_path = join_paths(com->cwd, expand_vars(ft_strreplace(com->args[1], "\n", ""), com->env));
+	char *new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
 	set_env_value(&com->env, "PWD", new_path);
 	com->cwd = ft_strdup(new_path);
 	return 1;
@@ -62,7 +69,7 @@ int	run_cd(t_command *com)
 // TODO: validar la sintaxis, export a=1 sin espacios, como en shell
 int run_export(t_command *com)
 {
-	char **item = ft_split(ft_strreplace(com->args[1], "\n", ""), '=');
+	char **item = ft_split(com->args->str, '=');
 	set_env_value(&com->env, item[0], item[1]);
 	return 1;
 }
@@ -78,7 +85,7 @@ int run_set(t_command *com)
 // TODO: error si la variable no existe
 int run_unset(t_command *com)
 {
-	del_env_value(&com->env, ft_strreplace(com->args[1], "\n", ""));
+	del_env_value(&com->env, com->args->str);
 	return 1;
 }
 

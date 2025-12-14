@@ -1,6 +1,6 @@
 #include "minishell_jorge.h"
 #include "libft.h"
-
+#include "minishell.h"
 
 // Just a prototype on what to be run on every build in command.
 // TODO: Merge with other main.c code.
@@ -26,6 +26,14 @@ void sigint_handler(int signo)
     rl_redisplay();              // redibuja prompt vacío
 }
 
+
+// TODO: Por cada linea debemos aqui crear un arbol binario de comandos, y sobre ese 
+// arbol iniciamos iterativamente comandos.
+// Si los comandos son entre parentesis, se crea un clone de env nuevo para ese proceso, 
+// para que no interfiera con el padre.
+// En general la parte de crear el comando debe separarse en un fichero propio,
+// y llamarse tantas veces como comandos contenta la linea 
+// que recibimos.
 int main(int argc, char **args, char **env)
 {
 	t_command com;
@@ -38,34 +46,26 @@ int main(int argc, char **args, char **env)
 
 	if (argc > 1)
 	{
-		char **words = ft_split(args[1], ' ');
-		com.command = words[0];
-		com.args = words;
-		com.argc = strarr_len(words);
-		int exit_code = run_command(&com);
-		free_env(&com.env);
-		if (exit_code == 1)
-			return 0;
-		else
-			return 1;
+		(void)args; // Silencio args temporalmente
+
+		ft_printf("Not yet implemented.\n");
 	}
 	else if (argc < 2)
 	{
-		char *line = readline(">>> ");
+		char *head = expand_vars(ft_strdup("\033[1;32m${USER}@${NAME} >>> \033[0m"), com.env);
+		char *line = readline(head);
 		
 		while (line)
 		{
-			char **words = ft_split(line, ' ');
-			com.command = ft_strreplace(words[0], "\n", "");
-			com.args = words;
-			com.argc = strarr_len(words);
-			int exit_code = run_command(&com);
-			(void)exit_code;
+			com.tokens = NULL;
+			tokenize(line, &com.tokens);
+			com.command = com.tokens->str;
+			com.args = com.tokens->next;
+			com.exit_code = run_command(&com);
 			add_history(line);
-			line = readline(">>> ");
+			line = readline(head);
 		}
 		free_env(&com.env);
 	}
-	
 	
 }

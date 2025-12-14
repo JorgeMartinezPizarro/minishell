@@ -53,7 +53,8 @@ NOMBRE = jorge
 
 MY_LIST = utils/run_command jorges_main \
 	environ/expand_vars environ/extract_variables \
-	environ/environments utils/join_paths
+	environ/environments utils/join_paths \
+	tokenizer/token_utils tokenizer/tokenizer
 
 OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 

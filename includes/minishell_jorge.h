@@ -11,6 +11,8 @@
 // Debe estar lincada en el Makefile
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "minishell.h"
+# include "tokenizer.h"
 
 // El parseador del main debe primero identificar si hay redirect a fichero, en caso de echo
 // y debera construir con el string que le de el usuario, un arbol de t_commands,
@@ -25,44 +27,17 @@ typedef struct s_variable
 
 typedef struct s_command
 {
-	char		*command;
-	char		*cwd;
-	char		**args;
-	size_t		argc;
-	t_list		*env;
-	int			exit_code;
+	char			*command;
+	// EL PWD y OLDPWD se guardan en entorno, quizas
+	// se puedan quitar de aqui, asi clonando solo env
+	// podemos simular hijos que no interfieran en el
+	// padre (comandos entre parentesis)
+	char			*cwd;
+	t_token_list	*args;
+	t_list			*env;
+	int				exit_code;
+	t_token_list	*tokens;
 }	t_command;
-
-// construimos los comandos con el parser y el tokenizer.
-// despues, run_command recibe segun sea necesario cada t_command por separado, uno tras otro.
-/*
-
-Ejemplo:
-
-echo hola && echo adios || echo fin
-
-        OR
-       /  \
-     AND  echo fin
-    /   \___
-   |        |
- echo hola echo adios
-
-*/
-typedef enum e_node_type
-{
-	NODE_CMD, // el nodo ejecuta un comando
-	NODE_AND, // es una bifurcacion Y
-	NODE_OR  // es una bifurcacion O
-}	t_node_type;
-
-typedef struct s_tree
-{
-	t_node_type	type;
-	t_command	*command; // solo si type == NODE_CMD
-	struct s_tree *left;
-	struct s_tree *right;
-}	t_tree;
 
 // Main command runner entrypoint.
 int		run_command(t_command *com);

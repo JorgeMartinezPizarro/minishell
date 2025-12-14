@@ -126,7 +126,7 @@ int	tokenize(char *line, t_token_list **tokens)
 	return (1);
 }
 
-int main(int ac, char **av)
+/*int main(int ac, char **av)
 {
 	t_token_list	*tokens;
 
@@ -137,3 +137,4 @@ int main(int ac, char **av)
 	print_tokens(tokens);
 	return (0);
 }
+*/
