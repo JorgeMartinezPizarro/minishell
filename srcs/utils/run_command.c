@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 00:46:52 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/12 22:22:09 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/14 19:23:08 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int run_pwd(t_command *com)
 	return 1;
 }
 
+// TODO
+// Actualizar OLDPWD en los env para mantener coherencia. 
+// Revisar si el directorio existe antes de hacer cd!
 int	run_cd(t_command *com)
 {
 	char *new_path = join_paths(com->cwd, expand_vars(ft_strreplace(com->args[1], "\n", ""), com->env));
@@ -54,6 +57,7 @@ int	run_cd(t_command *com)
 	return 1;
 }
 
+// TODO: validar la sintaxis, export a=1 sin espacios, como en shell
 int run_export(t_command *com)
 {
 	char **item = ft_split(ft_strreplace(com->args[1], "\n", ""), '=');
@@ -61,6 +65,7 @@ int run_export(t_command *com)
 	return 1;
 }
 
+// TODO: tecnicamente, a=1 funciona como export a=1
 int run_set(t_command *com)
 {
 	char **item = ft_split(com->command, '=');
@@ -68,6 +73,7 @@ int run_set(t_command *com)
 	return 1;
 }
 
+// TODO: error si la variable no existe
 int run_unset(t_command *com)
 {
 	del_env_value(&com->env, ft_strreplace(com->args[1], "\n", ""));
@@ -76,6 +82,7 @@ int run_unset(t_command *com)
 
 // TODO: Hay mas codigos de error?
 // return 1 => true, 0 => false
+// TODO: Tenemos que considerar si el comando es el nombre de un ejecutable.
 int run_command(t_command *com)
 {
 	if (ft_strcmp(com->command, "echo") == 0)
