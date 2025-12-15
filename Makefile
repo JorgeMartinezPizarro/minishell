@@ -61,7 +61,7 @@ OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 $(NOMBRE): $(LIBFT) $(OBJETOS)
 	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -lreadline -o $(NOMBRE)
 
-tests:
+run-tests:
 	@./tests/tests.sh
 	
 clean:
@@ -85,5 +85,14 @@ token:
 tclean:
 	make fclean -C libft
 	rm a.out
+
+stats:
+	@lines=$$( \
+		{ \
+			cat Makefile; \
+			find includes srcs -type f \( -name '*.c' -o -name '*.h' -o -name '*.sh' \) -exec cat {} +; \
+		} | grep -Ev '^\s*(#|//|$$)' | wc -l \
+	); \
+	echo "Total lines: $$lines"
 
 .PHONY = tests
