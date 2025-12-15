@@ -75,6 +75,8 @@ int run_export(t_command *com)
 }
 
 // TODO: tecnicamente, a=1 funciona como export a=1
+// En efecto NO, los comandos marcados con export se pasan
+// a los procesos hijos con execev.
 int run_set(t_command *com)
 {
 	char **item = ft_split(com->command, '=');
