@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 05:30:11 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/15 08:25:04 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ operador lógico
 
 igual me viene bien asignar dos listas una para la hoja izquierda y otra para la derecha
 copy_left y copy_right
+
+para la hoja izquierda puedo usar la lista tmp
+y para la derecha si hay paréntesis hasta que se cierre el paréntesis primero
+y luego copiar el resto
 */
 t_tree	*make_tree(t_tree **tree, t_token_list *tokens)
 {
