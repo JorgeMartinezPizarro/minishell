@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/12 17:53:00 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/15 01:41:22 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static t_list *build_var_formats(const char *var)
     return (formats);
 }
 
+// TODO: Quizas sea demasiado AGRO hacer free del s, quizas no queramos 
+// que el comando que expandimos mute, ademas, esto nos fuerza
+// a usar strdup.
 char *expand_vars(char *s, t_list *env)
 {
     if (!s)
