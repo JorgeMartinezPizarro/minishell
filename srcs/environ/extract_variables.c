@@ -6,14 +6,15 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:01:02 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/11 19:04:50 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/15 01:38:58 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell_jorge.h"
 
-// extrae todas las variables de un string
+// TODO: arreglar este desastre. $(VAR) no es valido en shell,
+// $VAR o ${VAR}. Ajustar a la norma.
 t_list *extract_variables(const char *str)
 {
     t_list *vars = NULL;
