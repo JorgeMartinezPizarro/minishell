@@ -23,6 +23,7 @@ typedef struct s_variable
 {
 	char	*name;
 	char	*value;
+	bool	exported;
 }	t_variable;
 
 typedef struct s_command
@@ -40,8 +41,9 @@ typedef struct s_command
 }	t_command;
 
 // Main command runner entrypoint.
+int		is_built_in(t_command *com);
 int		run_command(t_command *com);
-
+int		run_program(t_command *com);
 char	*expand_vars(char *s, t_list *env);
 
 // OBTIENE UNA LISTA CON LAS VARIABLES EN UN STRING

@@ -9,22 +9,23 @@ echo " -> Compiling minishell"
 make jorge
 echo " -> Running different tests"
 
-./jorge "echo hola"
+./jorge -c "echo hola"
 
 ## Comando que falla, lo silenciamos
-./jorge "echo" || true
+./jorge -c "echo"
 
-./jorge "env"
+./jorge -c "env"
 
 ## Comando que falla, lo silenciamos
-./jorge "${HOME}" || true
+./jorge -c "${HOME}" || true
 
-./jorge "cd \$(HOME)"
-./jorge "echo \${HOME}"
-./jorge "pwd"
-./jorge "export A=5"
-./jorge "B=8"
-./jorge "echo \${HOME}/dir"
+./jorge -c "cd \$(HOME)"
+./jorge -c "echo \${HOME}"
+./jorge -c "pwd"
+./jorge -c "export A=5"
+./jorge -c "B=8"
+./jorge -c "echo \${HOME}/dir"
+./jorge -c "  \"hola\"  echo|hel*lo  "
 
 echo " -> Cleanup"
 make fclean > /dev/null

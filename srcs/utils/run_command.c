@@ -91,6 +91,8 @@ int run_unset(t_command *com)
 	return 1;
 }
 
+
+
 // TODO: Hay mas codigos de error?
 // return 1 => true, 0 => false
 // TODO: Tenemos que considerar si el comando es el nombre de un ejecutable, buscando el comando
@@ -116,4 +118,19 @@ int run_command(t_command *com)
 		ft_printf("Command '%s' not found.\n", com->command);
 		return 0;
 	}
+}
+
+int is_built_in(t_command *com)
+{
+	if (
+		   ft_strcmp(com->command, "echo") == 0
+		|| ft_strcmp(com->command, "env") == 0
+		|| ft_strcmp(com->command, "pwd") == 0
+		|| ft_strcmp(com->command, "cd") == 0
+		|| ft_strcmp(com->command, "export") == 0
+		|| ft_strcmp(com->command, "unset") == 0
+		|| ft_strchr(com->command, '=') != NULL
+	)
+		return (1);
+	return 0;
 }

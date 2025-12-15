@@ -26,6 +26,23 @@ void sigint_handler(int signo)
     rl_redisplay();              // redibuja prompt vacío
 }
 
+int	exec_line(t_command *com, char *line)
+{
+	// Aqui podemos ejecutar cada comando del arbol en vez 
+	// de un solo comando.
+	com->tokens = NULL;
+	tokenize(line, &com->tokens);
+	com->command = com->tokens->str;
+	com->args = com->tokens->next;
+	// Podemos distinguir el tipo de comando
+	if (is_built_in(com))
+		com->exit_code = run_command(com);
+	else
+		com->exit_code = run_program(com);
+	add_history(line);
+
+	return com->exit_code;
+}
 
 // TODO: Por cada linea debemos aqui crear un arbol binario de comandos, y sobre ese 
 // arbol iniciamos iterativamente comandos.
@@ -44,28 +61,26 @@ int main(int argc, char **args, char **env)
 	com.cwd = getcwd(NULL, 0);
 	com.env = load_env_values(env);
 
-	if (argc > 1)
+	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 	{
-		(void)args; // Silencio args temporalmente
-
-		ft_printf("Not yet implemented.\n");
+		exec_line(&com, args[2]);
 	}
 	else if (argc < 2)
 	{
-		char *head = expand_vars(ft_strdup("\033[1;32m${USER}@${NAME} >>> \033[0m"), com.env);
+		char *str = ft_strdup("\033[1;32m${USER}@${NAME} >>> \033[0m");
+		char *head = expand_vars(str, com.env);
 		char *line = readline(head);
 		
 		while (line)
 		{
-			com.tokens = NULL;
-			tokenize(line, &com.tokens);
-			com.command = com.tokens->str;
-			com.args = com.tokens->next;
-			com.exit_code = run_command(&com);
-			add_history(line);
+			exec_line(&com, line);
 			line = readline(head);
 		}
 		free_env(&com.env);
 	}
-	
+	else {
+		ft_printf("Usage %s -c <command>\n", args[0]);
+		return 1;
+	}
+	return 0;
 }
