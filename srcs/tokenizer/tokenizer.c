@@ -6,15 +6,15 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 03:18:50 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:41:32 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/tokenizer.h"
 
-void	add_last_token(t_token_list **tokens, t_token_list *new_token)
+void	add_last_token(t_tokens **tokens, t_tokens *new_token)
 {
-	t_token_list	*tmp;
+	t_tokens	*tmp;
 
 	if (!tokens || !*tokens)
 	{
@@ -27,11 +27,11 @@ void	add_last_token(t_token_list **tokens, t_token_list *new_token)
 	tmp->next = new_token;
 }
 
-void	add_token_to_list(t_token_list **tokens, char *str, int type)
+void	add_token_to_list(t_tokens **tokens, char *str, int type)
 {
-	t_token_list	*new_token;
+	t_tokens	*new_token;
 
-	new_token = malloc(sizeof(t_token_list));
+	new_token = malloc(sizeof(t_tokens));
 	if (!new_token)
 	{
 		free_tokens(*tokens);
@@ -48,7 +48,7 @@ void	add_token_to_list(t_token_list **tokens, char *str, int type)
 añade al final de la lista un nuevo nodo que contiene la información
 de qué tipo de token es, el string del token y la dirección del siguiente nodo
 */
-void	add_token(t_token_list **tokens, char *str)
+void	add_token(t_tokens **tokens, char *str)
 {
 	char	*token_str;
 	int		type;
@@ -56,9 +56,9 @@ void	add_token(t_token_list **tokens, char *str)
 
 	i = 0;
 	type = which_operator(str);
-	if (type == WORD)
+	if (type == T_WORD)
 	{
-		while (str[i] != ' ' && which_operator(str + i) == WORD)
+		while (str[i] != ' ' && which_operator(str + i) == T_WORD)
 			i++;
 		token_str = ft_substr(str, 0, i);
 	}
@@ -75,7 +75,7 @@ void	add_token(t_token_list **tokens, char *str)
 	add_token_to_list(tokens, token_str, type);
 }
 
-void	add_quotes(t_token_list **tokens, char *str)
+void	add_quotes(t_tokens **tokens, char *str)
 {
 	char	*string;
 	char	quote;
@@ -90,9 +90,9 @@ void	add_quotes(t_token_list **tokens, char *str)
 	if (len == 0)
 		return ;
 	if (quote == '\"')
-		type = DOUBLE_QUOTE;
+		type = T_DOUBLE_QUOTE;
 	else
-		type = SINGLE_QUOTE;
+		type = T_SINGLE_QUOTE;
 	string = ft_substr(str, 0, len);
 	if (!string)
 	{
@@ -107,7 +107,7 @@ void	add_quotes(t_token_list **tokens, char *str)
 esta función crea una lista enlazada en la cual cada nodo contiene
 un string, el tipo de token y la dirección del siguiente nodo
 */
-int	tokenize(char *line, t_token_list **tokens)
+int	tokenize(char *line, t_tokens **tokens)
 {
 	if (!valid_quotes(line))//también se debe comprobar si los paréntesis son inválidos
 		return (write(2, "Invalid quotes\n", 15), 0);
@@ -117,7 +117,7 @@ int	tokenize(char *line, t_token_list **tokens)
 	{
 		if (*line == '\"' || *line == '\'')
 			add_quotes(tokens, line);
-		else if (which_operator(line) != WORD)
+		else if (which_operator(line) != T_WORD)
 			add_token(tokens, line);
 		else
 			add_token(tokens, line);

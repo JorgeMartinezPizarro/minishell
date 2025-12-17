@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 01:51:06 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:41:32 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ int	which_operator(char *line)
 	if (!*line || *line == '\n')
 		return (EOF);
 	if (!ft_strncmp("<<", line, 2))
-		return (HEREDOC);
+		return (T_HEREDOC);
 	if (!ft_strncmp(">>", line, 2))
-		return (APPEND);
+		return (T_APPEND);
 	if (!ft_strncmp("&&", line, 2))
-		return (AND);
+		return (T_AND);
 	if (!ft_strncmp("||", line, 2))
-		return (OR);
+		return (T_OR);
 	if (*line == '>' || *line == '<' || *line == '|' || *line == '('
 		|| *line == ')' || *line == '\"' || *line == '\'')
 		return (*line);
-	return (WORD);
+	return (T_WORD);
 }
 
 /*
@@ -51,7 +51,7 @@ iter_line cambia la dirección de memoria de line
 si dependiendo del tipo de operador avanza 1 o 2 posiciones y cuando no es un
 operador avanza hasta que encuentre otro operador
 
-si el tipo actual es WORD recorre hasta un espacio
+si el tipo actual es T_WORD recorre hasta un espacio
 
 si contenido de línea es espacio los recorre hasta el siguiente elemento
 
@@ -68,8 +68,8 @@ char	*iter_line(char *line)
 	type = which_operator(line);
 	if (type > 4)
 		line += 1;
-	else if (type == WORD)
-		while (*line != ' ' && which_operator(line) == WORD)
+	else if (type == T_WORD)
+		while (*line != ' ' && which_operator(line) == T_WORD)
 			line++;
 	else if (type != EOF)
 		line += 2;
@@ -80,7 +80,7 @@ char	*iter_line(char *line)
 	return (line); 
 }
 
-void	print_tokens(t_token_list *tokens)//borrar antes de entregar
+void	print_tokens(t_tokens *tokens)//borrar antes de entregar
 {
 	while (tokens)
 	{
@@ -90,9 +90,9 @@ void	print_tokens(t_token_list *tokens)//borrar antes de entregar
 	}
 }
 
-void	free_tokens(t_token_list *tokens)
+void	free_tokens(t_tokens *tokens)
 {
-	t_token_list	*tmp;
+	t_tokens	*tmp;
 
 	while (tokens)
 	{

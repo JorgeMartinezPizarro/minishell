@@ -34,10 +34,10 @@ typedef struct s_command
 	// podemos simular hijos que no interfieran en el
 	// padre (comandos entre parentesis)
 	char			*cwd;
-	t_token_list	*args;
+	t_tokens	*args;
 	t_list			*env;
 	int				exit_code;
-	t_token_list	*tokens;
+	t_tokens	*tokens;
 }	t_command;
 
 // Main command runner entrypoint.

@@ -9,67 +9,60 @@
 
 typedef enum e_token_type
 {
-	OR,
-	AND,
-	WORD,
-	APPEND,
-	HEREDOC,
-	PIPE = '|',
-	REDIR = '>',
-	O_PAREN = '(',
-	C_PAREN = ')',
-	SINGLE_QUOTE = '\'',
-	DOUBLE_QUOTE = '\"'
+	T_OR,
+	T_AND,
+	T_WORD,
+	T_APPEND,
+	T_HEREDOC,
+	T_PIPE = '|',
+	T_O_PAREN = '(',
+	T_C_PAREN = ')',
+	T_REDIR_IN = '<',
+	T_REDIR_OUT = '>',
+	T_SINGLE_QUOTE = '\'',
+	T_DOUBLE_QUOTE = '\"'
 }	e_token_type;
 
-typedef struct	s_token_list
+typedef enum e_node_type
 {
-	struct s_token_list	*next;
-	char				*str;
-	int					type;
-}	t_token_list;
+	N_OR,
+	N_AND,
+	N_PIPE,
+	N_CMND
+}	e_node_type;
 
-typedef struct	s_parse_list
+typedef struct	s_tokens
 {
-	struct s_parse_list	*next;
-	t_token_list		*tokens;
-	bool				is_pipe;
-	int					out_fd;
-	int					in_fd;
-}	t_parse_list;
+	struct s_tokens	*next;
+	char			*str;
+	int				type;
+}	t_tokens;
 
-/*
-al pensar la división de make tree también por pipes cuando no hay
-b_op o paréntesis ahora toda la información de parse list
-la necesitaríamos para cada comando
-
-con la nueva idea de dividir todo en make_tree ahora podríamos poner
-más estructuras en cada nodo y que de cada estructura salgan
-otras subestructuras
-*/
-typedef struct	s_parse
+typedef struct	s_cmd
 {
-	t_parse_list	*parse_list;
-	bool			subproccess;
-	bool			valid_line;
-	bool			and;
-	bool			or;
-}	t_parse;
-/*
-se pueden definir tipos de nodos con un enum por ejemplo en vez de usar el
-booleano, así dependiendo del tipo de nodo durante la ejecución va a ser más
-fácil de gestionar
-*/
+	t_tokens	*tokens;
+	char		*out_fd;
+	char		*in_fd;
+}	t_cmd;
+//una vez separados los comandos ver si cada línea de ejecución es válida
+
+typedef struct	s_range
+{
+	t_tokens	*start;
+	t_tokens	*end;
+}	t_range;
 
 typedef struct	s_tree
 {
-	t_parse			parse;
 	struct s_tree	*right;
 	struct s_tree	*left;
+	e_node_type		n_type;
+	t_cmd			*cmd;
+	bool			subshell;
 }	t_tree;
 
-t_tree	*make_tree(t_tree **tree, t_token_list *tokens);
-int		tokenize(char *line, t_token_list **tokens);
-void	free_tokens(t_token_list *tokens);
+t_tree	*make_tree(t_tokens *start, t_tokens *end);
+int		tokenize(char *line, t_tokens **tokens);
+void	free_tokens(t_tokens *tokens);
 
 #endif
