@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 04:44:11 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:15:20 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	execution(t_tree *tree)
 
 int	exec_line(char *line, char **env)
 {
-	t_token_list	*tokens;
-	t_tree			*tree;
+	t_tokens	*tokens;
+	t_tree		*tree;
 
 	tokens = NULL;
 	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return ;
-	make_tree(&tree, tokens);
+	make_tree(tokens, NULL);
 	//free_tokens();
 	execution(tree);
 }
@@ -43,7 +43,11 @@ int	main(int ac, char **av, char **envp)
 	mirar como gestiona bash env porque hay casos en los
 	que necesita dos variables de entorno al hacer exports y
 	en algunos casos de fallo
+	
+	gestionar cuando te pasan un comando que borre la variable de entorno y luego ./minishell
+	y también los shell_lvl
 */
+
 	env = getenv(envp);
 	user = expand_user();
 	if (ft_strncmp(av[1], "-c", 3))

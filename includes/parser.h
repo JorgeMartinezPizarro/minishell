@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:24:04 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/14 00:15:29 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/17 12:41:44 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include "minishell.h"
 
-void	set_b_op(t_parse *parse, t_token_list *token);
-bool	b_op_after_paren(t_token_list *tokens);
-void	iter_paren(t_token_list **tokens);
+t_tokens	*division_point(t_tokens *start, t_tokens *end);
+void		iter_paren(t_tokens **tokens);
+void		assign_node_type(t_tree **node, t_tokens *token);
+bool		everything_inside_paren(t_tokens *start, t_tokens *end);
+void		remove_paren(t_tree **tree, t_tokens **start, t_tokens **end);
 
 #endif
