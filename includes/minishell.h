@@ -38,7 +38,15 @@ typedef struct	s_parse_list
 	int					in_fd;
 }	t_parse_list;
 
+/*
+al pensar la división de make tree también por pipes cuando no hay
+b_op o paréntesis ahora toda la información de parse list
+la necesitaríamos para cada comando
 
+con la nueva idea de dividir todo en make_tree ahora podríamos poner
+más estructuras en cada nodo y que de cada estructura salgan
+otras subestructuras
+*/
 typedef struct	s_parse
 {
 	t_parse_list	*parse_list;
@@ -47,6 +55,11 @@ typedef struct	s_parse
 	bool			and;
 	bool			or;
 }	t_parse;
+/*
+se pueden definir tipos de nodos con un enum por ejemplo en vez de usar el
+booleano, así dependiendo del tipo de nodo durante la ejecución va a ser más
+fácil de gestionar
+*/
 
 typedef struct	s_tree
 {
