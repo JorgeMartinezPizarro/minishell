@@ -26,6 +26,16 @@ void sigint_handler(int signo)
     rl_redisplay();              // redibuja prompt vacío
 }
 
+/*
+
+int exec_tree(t_tree *tree)
+{
+	// Recorremos el arbol y devolvemos el int resultante.
+}
+
+
+*/
+
 int	exec_line(t_command *com, char *line)
 {
 	// TODO: make_tree does not yet compile.
@@ -40,6 +50,10 @@ int	exec_line(t_command *com, char *line)
 	//(void)tree;
 	com->command = com->tokens->str;
 	com->args = com->tokens->next;
+	
+	// TODO: move to exec_tree
+	// El arbol tree tiene que recibir el comando
+	// completo, que contiene los tokens, el env y cwd.
 	// Podemos distinguir el tipo de comando
 	if (is_built_in(com))
 		com->exit_code = run_command(com);
