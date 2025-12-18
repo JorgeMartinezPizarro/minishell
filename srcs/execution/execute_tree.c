@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_tree.c                                     :+:      :+:    :+:   */
+/*   exec_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,7 +24,7 @@ void	exec_pipe(t_tree *tree)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		(close(fd[0]), close(fd[1]));
-		execute_tree(tree->left);
+		exec_tree(tree->left);
 		exit(exit_status);
 	}
 	pids[1] = fork();
@@ -32,7 +32,7 @@ void	exec_pipe(t_tree *tree)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		(close(fd[0]), close(fd[1]));
-		execute_tree(tree->right);
+		exec_tree(tree->right);
 		exit(exit_status);
 	}
 	(close(fd[0]), close(fd[1]));
@@ -43,15 +43,15 @@ void	exec_b_op(t_tree *tree, e_node_type type)
 {
 	if (tree->n_type == N_OR)
 	{
-		execute_tree(tree->left);
+		exec_tree(tree->left);
 		if (exit_status != 0)
-			execute_tree(tree->right);
+			exec_tree(tree->right);
 	}
 	if (tree->n_type == N_AND)
 	{
-		execute_tree(tree->left);
+		exec_tree(tree->left);
 		if (exit_status == 0)
-			execute_tree(tree->right);
+			exec_tree(tree->right);
 	}
 }
 
@@ -66,14 +66,14 @@ void	exec_subprocces(t_tree **tree)
 		{
 //hacer una copia de env(puede que ya la herede directamente y no haga falta)
 			(*tree)->subshell = false;
-			execute_tree(*tree);
+			exec_tree(*tree);
 			exit(exit_status);
 		}
 		wait(NULL);
 	}
 }
 
-void	execute_tree(t_tree *tree)
+void	exec_tree(t_tree *tree)
 {
 	if (tree->n_type == N_PIPE)
 		exec_pipe(tree);

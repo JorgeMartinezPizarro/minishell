@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 16:39:40 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 17:11:50 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec_line(char *line, char **env)
 		return ;
 	}
 	free_tokens(tokens);
-	execute_tree(tree);
+	exec_tree(tree);
 	free_tree(tree);
 }
 
