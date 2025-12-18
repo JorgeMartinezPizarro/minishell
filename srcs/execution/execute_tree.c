@@ -75,6 +75,7 @@ void	exec_subprocces(t_tree **tree)
 
 void	exec_tree(t_tree *tree)
 {
+	exec_subprocces(&tree);
 	if (tree->n_type == N_PIPE)
 		exec_pipe(tree);
 	if (tree->n_type == N_OR || tree->n_type == N_AND)
