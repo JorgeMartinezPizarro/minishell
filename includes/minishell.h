@@ -10,6 +10,9 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include "tokenizer.h"
+# include "execution.h"
+# include "parser.h"
 
 int	exit_status = 0;
 
@@ -67,12 +70,5 @@ typedef struct	s_tree
 	t_cmd			*cmd;
 	bool			subshell;
 }	t_tree;
-
-void	add_token_to_list(t_tokens **tokens, char *str, int type);
-t_tree	*make_tree(t_tokens *start, t_tokens *end);
-int		tokenize(char *line, t_tokens **tokens);
-void	free_tokens(t_tokens *tokens);
-void	free_tree(t_tree *tree);
-void	free_cmnd(t_cmd *cmd);
 
 #endif

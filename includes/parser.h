@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:24:04 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 09:29:24 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:59:20 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "minishell.h"
 
 t_tokens	*division_point(t_tokens *start, t_tokens *end);
+t_tree		*make_tree(t_tokens *start, t_tokens *end);
+void		free_cmnd(t_cmd *cmd);
 bool		is_redir(t_tokens *token);
 void		iter_paren(t_tokens **tokens);
 void		add_redir(t_redir **redirs, t_tokens **token);
