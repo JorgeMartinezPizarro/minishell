@@ -44,8 +44,10 @@ int	exec_line(t_command *com, char *line)
 	// de un solo comando.
 	//tree = NULL;
 	com->tokens = NULL;
+	// TODO: Usar expand_wildcard in tokenize
 	if (!tokenize(line, &com->tokens))
 		return 1;
+	com->tokens = expand_tokens(com->tokens, com->cwd);
 	//tree = make_tree(com->tokens, NULL);
 	//(void)tree;
 	com->command = com->tokens->str;

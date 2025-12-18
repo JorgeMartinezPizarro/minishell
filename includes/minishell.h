@@ -57,6 +57,7 @@ typedef struct	s_tree
 	struct s_tree	*right;
 	struct s_tree	*left;
 	e_node_type		n_type;
+	// Aqui podemos usar t_command
 	t_cmd			*cmd;
 	bool			subshell;
 }	t_tree;

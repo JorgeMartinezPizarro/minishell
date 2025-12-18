@@ -28,23 +28,26 @@ typedef struct s_variable
 
 typedef struct s_command
 {
-	char			*command;
-	// EL PWD y OLDPWD se guardan en entorno, quizas
-	// se puedan quitar de aqui, asi clonando solo env
-	// podemos simular hijos que no interfieran en el
-	// padre (comandos entre parentesis)
-	char			*cwd;
+	char		*command;
+	char		*cwd;
 	t_tokens	*args;
-	t_list			*env;
-	int				exit_code;
+	t_list		*env;
+	int			exit_code;
 	t_tokens	*tokens;
+	char		*out_fd;
+	char		*in_fd;
 }	t_command;
 
 // Main command runner entrypoint.
 int		is_built_in(t_command *com);
 int		run_command(t_command *com);
 int		run_program(t_command *com);
+
 char	*expand_vars(char *s, t_list *env);
+
+char	**expand_wildcard(const char *cwd, const char *pattern);
+
+t_tokens	*expand_tokens(t_tokens *tokens, char *cwd);
 
 // OBTIENE UNA LISTA CON LAS VARIABLES EN UN STRING
 // UTIL PARA REEMPLAZARLAS DESPUES POR SU VALOR
@@ -53,7 +56,6 @@ t_list	*extract_variables(const char *str);
 
 // UNE CAMINO ABSOLUTO + RELATIVO 
 char	*join_paths(const char *base, const char *relative);
-
 // tamaño del char ** 
 size_t	strarr_len(char **strs);
 
