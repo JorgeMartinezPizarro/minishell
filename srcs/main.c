@@ -6,16 +6,11 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 14:07:55 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:39:40 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	execution(t_tree *tree)
-{
-	
-}
 
 int	exec_line(char *line, char **env)
 {
@@ -32,7 +27,7 @@ int	exec_line(char *line, char **env)
 		return ;
 	}
 	free_tokens(tokens);
-	execution(tree);
+	execute_tree(tree);
 	free_tree(tree);
 }
 
@@ -43,14 +38,9 @@ int	main(int ac, char **av, char **envp)
 	char	*user;
 
 /*
-	mirar como gestiona bash env porque hay casos en los
-	que necesita dos variables de entorno al hacer exports y
-	en algunos casos de fallo
-	
-	gestionar cuando te pasan un comando que borre la variable de entorno y luego ./minishell
-	y también los shell_lvl
+gestionar cuando te pasan un comando que borre la variable de entorno
+y luego ./minishell y también los shell_lvl
 */
-
 	env = getenv(envp);
 	user = expand_user();
 	if (ft_strncmp(av[1], "-c", 3))

@@ -12,11 +12,6 @@ en cat redirigimos la entrada al pipe de lectura y redirigimos la salida a outfi
 
 lo necesario entonces es PRIMERO gestionar las redirecciones para cada comando
 
-1 Recorrer recursivamente hacia la izquierda el árbol
-2 Si el nodo siguiente es comando se ejecuta
-
-Hay que gestionar los pipes y crear subprocesos.
-
 Para los subprocesos cuando estemos en un nodo con subprocces = true
 se hace fork y cuando ya haya ejecutado la rama derecha -> return
 y en el nodo superior se pone un waitpid.
@@ -24,9 +19,5 @@ y en el nodo superior se pone un waitpid.
 Cuando estamos en un nodo pipe se crea un pipe y recorremos hacia la izquierda
 hasta que en la izquierda haya un comando
 
-Se necesitan tres cosas:
-1 Hacer fork para cada comando con pipe a su derecha
-2 
-
-Comandos que se ejecutan en el padre: comandos execve que en su nivel superior
-no tengan un pipe, esto se puede conseguir con una flag 
+En cada nodo pipe:
+1 Crear un pipe y ejecutar ambos lados

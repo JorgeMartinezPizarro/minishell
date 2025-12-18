@@ -6,6 +6,12 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+
+int	exit_status = 0;
 
 typedef enum e_token_type
 {
