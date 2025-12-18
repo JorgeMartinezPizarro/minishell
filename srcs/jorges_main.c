@@ -38,15 +38,16 @@ int exec_tree(t_tree *tree)
 
 int	exec_line(t_command *com, char *line)
 {
-	// TODO: make_tree does not yet compile.
 	//t_tree		*tree;
-	// Aqui podemos ejecutar cada comando del arbol en vez 
-	// de un solo comando.
 	//tree = NULL;
 	com->tokens = NULL;
-	// TODO: Usar expand_wildcard in tokenize
 	if (!tokenize(line, &com->tokens))
 		return 1;
+	// La expansion debe hacerse para el comando activo, 
+	// no al principio. 
+	// ejemplo:
+	// touch ast && echo a*
+	// esto funcion porque expande antes de ejecutar echo.
 	com->tokens = expand_tokens(com->tokens, com->cwd);
 	//tree = make_tree(com->tokens, NULL);
 	//(void)tree;

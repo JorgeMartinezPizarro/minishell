@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/18 13:03:14 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:30:29 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,10 @@ t_tokens	*expand_tokens(t_tokens *tokens, char *cwd)
 					token_new(ft_strdup(expanded[i]), T_WORD));
 				i++;
 			}
-			i = 0;
-			while (expanded[i])
-				free(expanded[i++]);
-			free(expanded);
+			free_str_array(expanded);
 		}
 		else
-		{
-			token_add_back(&result,
-				token_new(ft_strdup(cur->str), cur->type));
-		}
+			token_add_back(&result, token_new(ft_strdup(cur->str), cur->type));
 		cur = cur->next;
 	}
 	return (result);

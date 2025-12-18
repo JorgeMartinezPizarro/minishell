@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "minishell_jorge.h"
+#include <sys/stat.h>
 
 // TODO: Cada comando es un fichero por separado.
 
@@ -58,12 +59,35 @@ int run_pwd(t_command *com)
 // TODO
 // Actualizar OLDPWD en los env para mantener coherencia. 
 // Revisar si el directorio existe antes de hacer cd!
-int	run_cd(t_command *com)
+int run_cd(t_command *com)
 {
-	char *new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
-	set_env_value(&com->env, "PWD", new_path);
-	com->cwd = ft_strdup(new_path);
-	return 1;
+    char *new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
+    struct stat st;
+
+    if (stat(new_path, &st) != 0)
+    {
+        ft_putstr_fd("Folder does not exist\n", 2);
+        free(new_path);
+        return 0;
+    }
+
+    // cambiar cwd real del proceso
+    if (chdir(new_path) != 0)
+    {
+        perror("cd");
+        free(new_path);
+        return 0;
+    }
+
+    // actualizar entorno simulado
+    set_env_value(&com->env, "OLDPWD", com->cwd);
+    set_env_value(&com->env, "PWD", new_path);
+
+    free(com->cwd);
+    com->cwd = ft_strdup(new_path);
+    free(new_path);
+
+    return 1;
 }
 
 // TODO: validar la sintaxis, export a=1 sin espacios, como en shell

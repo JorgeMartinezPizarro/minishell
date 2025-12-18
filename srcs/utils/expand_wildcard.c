@@ -103,19 +103,6 @@ static void	expand_recursive(const char *base,
 	closedir(dir);
 }
 
-static void	free_str_array(char **arr)
-{
-	int i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 /*
 ** Public API
 */

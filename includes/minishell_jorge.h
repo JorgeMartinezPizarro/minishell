@@ -59,6 +59,8 @@ char	*join_paths(const char *base, const char *relative);
 // tamaño del char ** 
 size_t	strarr_len(char **strs);
 
+void	free_str_array(char **arr);
+
 // MANEJO DE ENTORNO
 
 // tamaño de la lista enlazada

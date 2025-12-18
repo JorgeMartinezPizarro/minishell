@@ -56,7 +56,7 @@ MY_LIST = utils/run_command jorges_main \
 	environ/environments utils/join_paths \
 	utils/run_program utils/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
-	utils/expand_tokens
+	utils/expand_tokens utils/free_str_array
 
 OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
 
