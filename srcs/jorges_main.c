@@ -1,4 +1,4 @@
-#include "minishell_jorge.h"
+#include "minishell.h"
 #include "libft.h"
 #include "minishell.h"
 
@@ -28,10 +28,16 @@ void sigint_handler(int signo)
 
 int	exec_line(t_command *com, char *line)
 {
+	t_tree		*tree;
 	// Aqui podemos ejecutar cada comando del arbol en vez 
 	// de un solo comando.
-	com->tokens = NULL;
+	tree = NULL;
+	
 	tokenize(line, &com->tokens);
+	if (!tokenize(line, &com->tokens))
+		return 1;
+	tree = make_tree(com->tokens, NULL);
+	(void)tree;
 	com->command = com->tokens->str;
 	com->args = com->tokens->next;
 	// Podemos distinguir el tipo de comando
