@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "libft.h"
-#include "minishell.h"
+#include "minishell_jorge.h"
 
 // Just a prototype on what to be run on every build in command.
 // TODO: Merge with other main.c code.
@@ -28,16 +28,16 @@ void sigint_handler(int signo)
 
 int	exec_line(t_command *com, char *line)
 {
-	t_tree		*tree;
+	// TODO: make_tree does not yet compile.
+	//t_tree		*tree;
 	// Aqui podemos ejecutar cada comando del arbol en vez 
 	// de un solo comando.
-	tree = NULL;
-	
-	tokenize(line, &com->tokens);
+	//tree = NULL;
+	com->tokens = NULL;
 	if (!tokenize(line, &com->tokens))
 		return 1;
-	tree = make_tree(com->tokens, NULL);
-	(void)tree;
+	//tree = make_tree(com->tokens, NULL);
+	//(void)tree;
 	com->command = com->tokens->str;
 	com->args = com->tokens->next;
 	// Podemos distinguir el tipo de comando
