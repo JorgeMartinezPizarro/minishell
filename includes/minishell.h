@@ -38,19 +38,20 @@ typedef struct	s_tokens
 	int				type;
 }	t_tokens;
 
+typedef struct	s_redir
+{
+	e_token_type	redir_type;
+	t_tokens		*file;
+	struct s_redir	*next;
+}	t_redir;
+
+
 typedef struct	s_cmd
 {
-	t_tokens	*tokens;
-	char		*out_fd;
-	char		*in_fd;
+	t_tokens	*args;
+	t_redir		*redirs;
+	bool		is_builtin;
 }	t_cmd;
-//una vez separados los comandos ver si cada línea de ejecución es válida
-
-typedef struct	s_range
-{
-	t_tokens	*start;
-	t_tokens	*end;
-}	t_range;
 
 typedef struct	s_tree
 {
@@ -61,8 +62,11 @@ typedef struct	s_tree
 	bool			subshell;
 }	t_tree;
 
+void	add_token_to_list(t_tokens **tokens, char *str, int type);
 t_tree	*make_tree(t_tokens *start, t_tokens *end);
 int		tokenize(char *line, t_tokens **tokens);
 void	free_tokens(t_tokens *tokens);
+void	free_tree(t_tree *tree);
+void	free_cmnd(t_cmd *cmd);
 
 #endif

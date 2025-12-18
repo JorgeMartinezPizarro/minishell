@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/17 14:15:20 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 14:07:55 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	execution(t_tree *tree)
 {
-	//expandir variables durante la ejecución justo antes de ejecutar el comando
-
-	//gestionar los errores y los códigos de salida durante la ejecución
+	
 }
 
 int	exec_line(char *line, char **env)
@@ -28,9 +26,14 @@ int	exec_line(char *line, char **env)
 	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return ;
-	make_tree(tokens, NULL);
-	//free_tokens();
+	if(!make_tree(tokens, NULL))
+	{
+		free_tokens(tokens);
+		return ;
+	}
+	free_tokens(tokens);
 	execution(tree);
+	free_tree(tree);
 }
 
 int	main(int ac, char **av, char **envp)
