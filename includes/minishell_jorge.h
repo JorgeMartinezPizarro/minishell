@@ -40,7 +40,7 @@ typedef struct s_command
 
 // Main command runner entrypoint.
 int		is_built_in(t_command *com);
-int		run_command(t_command *com);
+int		run_built_in(t_command *com);
 int		run_program(t_command *com);
 
 char	*expand_vars(char *s, t_list *env);

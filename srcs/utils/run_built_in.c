@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_command.c                                      :+:      :+:    :+:   */
+/*   run_built_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -56,38 +56,30 @@ int run_pwd(t_command *com)
 	return 1;
 }
 
-// TODO
-// Actualizar OLDPWD en los env para mantener coherencia. 
-// Revisar si el directorio existe antes de hacer cd!
 int run_cd(t_command *com)
 {
-    char *new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
+    char *new_path;
     struct stat st;
 
+	new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
     if (stat(new_path, &st) != 0)
     {
         ft_putstr_fd("Folder does not exist\n", 2);
         free(new_path);
         return 0;
     }
-
-    // cambiar cwd real del proceso
-    if (chdir(new_path) != 0)
+	if (chdir(new_path) != 0)
     {
         perror("cd");
         free(new_path);
         return 0;
     }
-
-    // actualizar entorno simulado
     set_env_value(&com->env, "OLDPWD", com->cwd);
     set_env_value(&com->env, "PWD", new_path);
-
     free(com->cwd);
     com->cwd = ft_strdup(new_path);
     free(new_path);
-
-    return 1;
+    return (1);
 }
 
 // TODO: validar la sintaxis, export a=1 sin espacios, como en shell
@@ -122,7 +114,7 @@ int run_unset(t_command *com)
 // TODO: Tenemos que considerar si el comando es el nombre de un ejecutable, buscando el comando
 // en cada ruta de la variable PATH. Hacemos split by : y buscamos si el fichero existe
 // Si existe se ejecuta!
-int run_command(t_command *com)
+int run_built_in(t_command *com)
 {
 	if (ft_strcmp(com->command, "echo") == 0)
 		return run_echo(com);

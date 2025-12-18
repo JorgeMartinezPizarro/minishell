@@ -66,7 +66,7 @@ Este comando reemplaza cada `$1` o `${var}` por su valor respectivo en el string
 Por ultimo, dado char *command y char **args, he creado una funcion:
 
 ```c
-int run_command(t_command *com)
+int run_built_in(t_command *com)
 ```
 
 Que centraliza y separa por casos, falta aun la asignacion de variables, `A=15` es un comando valido que define un env, igual que `export A=15`.

@@ -59,7 +59,7 @@ int	exec_line(t_command *com, char *line)
 	// completo, que contiene los tokens, el env y cwd.
 	// Podemos distinguir el tipo de comando
 	if (is_built_in(com))
-		com->exit_code = run_command(com);
+		com->exit_code = run_built_in(com);
 	else
 		com->exit_code = run_program(com);
 	add_history(line);

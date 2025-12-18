@@ -16,17 +16,17 @@ LIBFT_DIR = libft
 
 LIBFT=$(LIBFT_DIR)/libft.a
 
-FILES = main.c parse_command.c
+## TODO: merge jorges_main.c and main.c
+FILES = utils/run_built_in jorges_main \
+	environ/expand_vars environ/extract_variables \
+	environ/environments utils/join_paths \
+	utils/run_program utils/expand_wildcard \
+	tokenizer/token_utils tokenizer/tokenizer \
+	utils/expand_tokens utils/free_str_array
 
-FILES_BONUS = main.c parse_command.c
+## TODO: crear bonus target with some new files _bonus
 
-SRCS     = $(addprefix src/, $(FILES))
-
-OBJS = $(SRCS:.c=.o)
-
-SRCS_BONUS     = $(addprefix src/, $(FILES_BONUS))
-
-OBJS_BONUS = $(SRCS:.c=.o)
+OBJECTS = $(addprefix srcs/, $(FILES:=.o))
 
 CC       = cc
 
@@ -35,8 +35,8 @@ CFLAGS   = -Wall -Wextra -Werror \
 
 all: $(NAME)
 
-${NAME}: $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) \
+${NAME}: $(LIBFT) $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) \
 		-lreadline -L./$(LIBFT_DIR) -lft -o minishell
 
 $(LIBFT):
@@ -44,36 +44,16 @@ $(LIBFT):
 
 re: fclean all
 
-run: all
-	./minishell
-
-
-## TEMPORARY COMMANDS JORGE
-NOMBRE = jorge
-
-MY_LIST = utils/run_command jorges_main \
-	environ/expand_vars environ/extract_variables \
-	environ/environments utils/join_paths \
-	utils/run_program utils/expand_wildcard \
-	tokenizer/token_utils tokenizer/tokenizer \
-	utils/expand_tokens utils/free_str_array
-
-OBJETOS = $(addprefix srcs/, $(MY_LIST:=.o))
-
-$(NOMBRE): $(LIBFT) $(OBJETOS)
-	$(CC) $(CFLAGS) $(OBJETOS) -Llibft -lft -lreadline -o $(NOMBRE)
-
 run-tests:
 	@./tests/tests.sh
 	
 clean:
 	make -C libft clean
-	rm -f $(OBJS) $(OBJETOS)
+	rm -f $(OBJECTS)
 
 fclean: clean
 	make -C libft fclean
-	rm -f $(NOMBRE)
-	rm -f minishell
+	rm -f $(NAME)
 
 token:
 	@make -C libft -s
