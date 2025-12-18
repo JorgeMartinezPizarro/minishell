@@ -9,7 +9,7 @@
 // cada rama tiene un puntero al entorno (ejemplo: un comando define A y el siguiente lo usa)
 // run_tree recibe el arbol de comandos y segun el codigo de exit de cada uno, va al siguiente
 // o termina.
-// No tengo pensado como procesar los pipes, en verdad es una secuencia de t_commands, cada uno
+// No tengo pensado como procesar los pipes, en verdad es una secuencia de t_cmds, cada uno
 // lleva el valor de retorno del anterior como ultimo parametro.
 
 // Usaremos para manejar los comandos:
@@ -26,44 +26,28 @@ void sigint_handler(int signo)
     rl_redisplay();              // redibuja prompt vacío
 }
 
-/*
-
-int exec_tree(t_tree *tree)
-{
-	// Recorremos el arbol y devolvemos el int resultante.
-}
-
-
-*/
-
-int	exec_line(t_command *com, char *line)
+int	exec_line(t_cmd *com, char *line)
 {
 	//t_tree		*tree;
 	//tree = NULL;
-	com->tokens = NULL;
-	if (!tokenize(line, &com->tokens))
+	com->args = NULL;
+	if (!tokenize(line, &com->args))
 		return 1;
-	// La expansion debe hacerse para el comando activo, 
-	// no al principio. 
-	// ejemplo:
-	// touch ast && echo a*
-	// esto funcion porque expande antes de ejecutar echo.
-	com->tokens = expand_tokens(com->tokens, com->cwd);
-	//tree = make_tree(com->tokens, NULL);
-	//(void)tree;
-	com->command = com->tokens->str;
-	com->args = com->tokens->next;
-	
-	// TODO: move to exec_tree
-	// El arbol tree tiene que recibir el comando
-	// completo, que contiene los tokens, el env y cwd.
-	// Podemos distinguir el tipo de comando
+	// La expansion de wildcards se ejecuta 
+	// justo al ejecutar el programa, despues de crear el arbol.
+	// Lo pongo aqui como ejemplo de uso.
+	com->args = expand_tokens(com->args, com->cwd);
+	//tree = make_tree(com->args, NULL);
+	com->command = com->args->str;
+	com->args = com->args;
+	//tree->cmd = com;
+	// TODO: Cambiar por execute_tree cuando funcione.
+	//execute_tree(tree);
 	if (is_built_in(com))
 		com->exit_code = run_built_in(com);
 	else
 		com->exit_code = run_program(com);
 	add_history(line);
-
 	return com->exit_code;
 }
 
@@ -76,11 +60,13 @@ int	exec_line(t_command *com, char *line)
 // que recibimos.
 int main(int argc, char **args, char **env)
 {
-	t_command com;
+	t_cmd com;
 
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
-
+	// Aqui paso el CWD y cargo los ENVs para compartirlos
+	// en cada ejecucion. Notese que procesos hijos
+	// deben usar un comando con un clone de las env.
 	com.cwd = getcwd(NULL, 0);
 	com.env = load_env_values(env);
 

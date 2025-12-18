@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include "minishell.h"
+# include "tokenizer.h"
 
 t_tokens	*division_point(t_tokens *start, t_tokens *end);
 t_tree		*make_tree(t_tokens *start, t_tokens *end);

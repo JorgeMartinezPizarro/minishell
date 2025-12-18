@@ -14,11 +14,7 @@
 # include "minishell.h"
 # include "tokenizer.h"
 
-// El parseador del main debe primero identificar si hay redirect a fichero, en caso de echo
-// y debera construir con el string que le de el usuario, un arbol de t_commands,
-// es decir, una estructura como t_list pero con command_left y command_right, que se ejecutaran
-// si el comando padre da 0 o 1.
-
+// este tipo es para la t_list *env que gestiona las variables de entorno.
 typedef struct s_variable
 {
 	char	*name;
@@ -26,22 +22,10 @@ typedef struct s_variable
 	bool	exported;
 }	t_variable;
 
-typedef struct s_command
-{
-	char		*command;
-	char		*cwd;
-	t_tokens	*args;
-	t_list		*env;
-	int			exit_code;
-	t_tokens	*tokens;
-	char		*out_fd;
-	char		*in_fd;
-}	t_command;
-
 // Main command runner entrypoint.
-int		is_built_in(t_command *com);
-int		run_built_in(t_command *com);
-int		run_program(t_command *com);
+int		is_built_in(t_cmd *com);
+int		run_built_in(t_cmd *com);
+int		run_program(t_cmd *com);
 
 char	*expand_vars(char *s, t_list *env);
 

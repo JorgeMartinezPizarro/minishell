@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell_jorge.h"
 #include "minishell.h"
+
 
 void	exec_pipe(t_tree *tree)
 {
@@ -41,6 +43,8 @@ void	exec_pipe(t_tree *tree)
 
 void	exec_b_op(t_tree *tree, e_node_type type)
 {
+	// Para que compile
+	(void)type;
 	if (tree->n_type == N_OR)
 	{
 		exec_tree(tree->left);
@@ -65,6 +69,8 @@ void	exec_subprocces(t_tree **tree)
 		if (pid == 0)
 		{
 //hacer una copia de env(puede que ya la herede directamente y no haga falta)
+			// Estoy gestionando las variables de entorno en el cmd,
+			// aqui podemos hacer un clone para que no afecten al hijo.
 			(*tree)->subshell = false;
 			exec_tree(*tree);
 			exit(exit_status);
@@ -81,5 +87,14 @@ void	exec_tree(t_tree *tree)
 	if (tree->n_type == N_OR || tree->n_type == N_AND)
 		exec_b_op(tree, tree->n_type);
 	if (tree->n_type == N_CMND)
-		run_command();
+	{
+		// He juntado mi t_command dentro de tu t_cmd.
+		// Requiere inicializar el env, mira en main_test.c
+		// Aqui se puede usar cmd->env = clone_env(cmd_env)
+		// para procesos hijos
+		if (is_built_in(tree->cmd))
+			tree->cmd->exit_code = run_built_in(tree->cmd);
+		else
+			tree->cmd->exit_code = run_program(tree->cmd);
+	}
 }

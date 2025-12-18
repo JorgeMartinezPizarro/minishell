@@ -10,11 +10,9 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "tokenizer.h"
-# include "execution.h"
-# include "parser.h"
 
-int	exit_status = 0;
+
+//int	exit_status = 0;
 
 typedef enum e_token_type
 {
@@ -57,6 +55,10 @@ typedef struct	s_redir
 
 typedef struct	s_cmd
 {
+	char		*command;
+	char		*cwd;
+	t_list		*env;
+	int			exit_code;
 	t_tokens	*args;
 	t_redir		*redirs;
 	bool		is_builtin;
@@ -70,5 +72,9 @@ typedef struct	s_tree
 	t_cmd			*cmd;
 	bool			subshell;
 }	t_tree;
+
+# include "tokenizer.h"
+# include "execution.h"
+# include "parser.h"
 
 #endif

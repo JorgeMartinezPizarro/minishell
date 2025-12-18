@@ -90,7 +90,7 @@ static char **tokens_to_argv(t_tokens *tokens)
     return argv;
 }
 
-int run_program(t_command *com)
+int run_program(t_cmd *com)
 {
     char *exe;
     char **argv;
@@ -107,7 +107,7 @@ int run_program(t_command *com)
         return 127;
     }
 
-    argv = tokens_to_argv(com->tokens);
+    argv = tokens_to_argv(com->args);
     if (!argv)
     {
         free(exe);

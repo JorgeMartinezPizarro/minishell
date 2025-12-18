@@ -18,11 +18,11 @@
 
 // TODO: echo puede tener >> o > en cuyo caso debe volcarse a fichero en vez de 
 // imprimirlo en el fd 1.
-int run_echo(t_command *com)
+int run_echo(t_cmd *com)
 {
 	t_tokens *temp;
 
-	temp = com->args;
+	temp = com->args->next;
 	if (temp)
 		ft_printf("%s", expand_vars(temp->str, com->env));
 	temp = temp->next;
@@ -36,7 +36,7 @@ int run_echo(t_command *com)
 	return 1;
 }
 
-int run_env(t_command *com)
+int run_env(t_cmd *com)
 {
     t_list *node;
 
@@ -50,18 +50,18 @@ int run_env(t_command *com)
     return 1;
 }
 
-int run_pwd(t_command *com)
+int run_pwd(t_cmd *com)
 {
 	ft_printf("%s\n", com->cwd);
 	return 1;
 }
 
-int run_cd(t_command *com)
+int run_cd(t_cmd *com)
 {
     char *new_path;
     struct stat st;
 
-	new_path = join_paths(com->cwd, expand_vars(com->args->str, com->env));
+	new_path = join_paths(com->cwd, expand_vars(com->args->next->str, com->env));
     if (stat(new_path, &st) != 0)
     {
         ft_putstr_fd("Folder does not exist\n", 2);
@@ -83,9 +83,9 @@ int run_cd(t_command *com)
 }
 
 // TODO: validar la sintaxis, export a=1 sin espacios, como en shell
-int run_export(t_command *com)
+int run_export(t_cmd *com)
 {
-	char **item = ft_split(com->args->str, '=');
+	char **item = ft_split(com->args->next->str, '=');
 	set_env_value(&com->env, item[0], item[1]);
 	return 1;
 }
@@ -93,7 +93,7 @@ int run_export(t_command *com)
 // TODO: tecnicamente, a=1 funciona como export a=1
 // En efecto NO, los comandos marcados con export se pasan
 // a los procesos hijos con execev.
-int run_set(t_command *com)
+int run_set(t_cmd *com)
 {
 	char **item = ft_split(com->command, '=');
 	set_env_value(&com->env, item[0], item[1]);
@@ -101,9 +101,9 @@ int run_set(t_command *com)
 }
 
 // TODO: error si la variable no existe
-int run_unset(t_command *com)
+int run_unset(t_cmd *com)
 {
-	del_env_value(&com->env, com->args->str);
+	del_env_value(&com->env, com->args->next->str);
 	return 1;
 }
 
@@ -114,7 +114,7 @@ int run_unset(t_command *com)
 // TODO: Tenemos que considerar si el comando es el nombre de un ejecutable, buscando el comando
 // en cada ruta de la variable PATH. Hacemos split by : y buscamos si el fichero existe
 // Si existe se ejecuta!
-int run_built_in(t_command *com)
+int run_built_in(t_cmd *com)
 {
 	if (ft_strcmp(com->command, "echo") == 0)
 		return run_echo(com);
@@ -136,7 +136,7 @@ int run_built_in(t_command *com)
 	}
 }
 
-int is_built_in(t_command *com)
+int is_built_in(t_cmd *com)
 {
 	if (
 		   ft_strcmp(com->command, "echo") == 0
