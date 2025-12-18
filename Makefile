@@ -22,7 +22,8 @@ FILES = utils/run_built_in jorges_main \
 	environ/environments utils/join_paths \
 	utils/run_program utils/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
-	utils/expand_tokens utils/free_str_array
+	utils/expand_tokens utils/free_str_array \
+	utils/free
 
 ## TODO: crear bonus target with some new files _bonus
 

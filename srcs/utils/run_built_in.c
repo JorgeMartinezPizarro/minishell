@@ -136,16 +136,16 @@ int run_built_in(t_command *com)
 	}
 }
 
-int is_built_in(char *str)
+int is_built_in(t_command *com)
 {
 	if (
-		   ft_strcmp(str, "echo") == 0
-		|| ft_strcmp(str, "env") == 0
-		|| ft_strcmp(str, "pwd") == 0
-		|| ft_strcmp(str, "cd") == 0
-		|| ft_strcmp(str, "export") == 0
-		|| ft_strcmp(str, "unset") == 0
-		|| ft_strchr(str, '=') != NULL
+		   ft_strcmp(com->command, "echo") == 0
+		|| ft_strcmp(com->command, "env") == 0
+		|| ft_strcmp(com->command, "pwd") == 0
+		|| ft_strcmp(com->command, "cd") == 0
+		|| ft_strcmp(com->command, "export") == 0
+		|| ft_strcmp(com->command, "unset") == 0
+		|| ft_strchr(com->command, '=') != NULL
 	)
 		return (1);
 	return 0;
