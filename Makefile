@@ -16,8 +16,9 @@ LIBFT_DIR = libft
 
 LIBFT=$(LIBFT_DIR)/libft.a
 
-## TODO: merge jorges_main.c and main.c
-FILES = utils/run_built_in jorges_main \
+## TODO: merge main_tmp.c and main.c
+## TODO: Add parser when it is ready.
+FILES = utils/run_built_in main_tmp \
 	environ/expand_vars environ/extract_variables \
 	environ/environments utils/join_paths \
 	utils/run_program utils/expand_wildcard \
