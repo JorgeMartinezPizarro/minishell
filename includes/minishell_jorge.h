@@ -62,4 +62,12 @@ void	free_env(t_list **env);
 // carga la lista enlazada desde char ** de forma INICIAL
 t_list	*load_env_values(char **env);
 
+int run_cd(t_cmd *com);
+int run_echo(t_cmd *com);
+int run_env(t_cmd *com);
+int run_pwd(t_cmd *com);
+int	run_export(t_cmd *com);
+int	run_set(t_cmd *com);
+int	run_unset(t_cmd *com);
+
 #endif

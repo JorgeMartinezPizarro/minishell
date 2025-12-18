@@ -18,13 +18,13 @@ LIBFT=$(LIBFT_DIR)/libft.a
 
 ## TODO: merge main_tmp.c and main.c
 ## TODO: Add parser when it is ready.
-FILES = utils/run_built_in main_tmp \
+FILES = execution/run_built_in main_tmp \
 	environ/expand_vars environ/extract_variables \
 	environ/environments utils/join_paths \
-	utils/run_program utils/expand_wildcard \
+	execution/run_program utils/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
 	utils/expand_tokens utils/free_str_array \
-	utils/free 
+	utils/free execution/run_built_in_utils
 
 ## TODO: crear bonus target with some new files _bonus
 
