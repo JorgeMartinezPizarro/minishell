@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/17 12:41:32 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:22:25 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,13 @@ void	add_quotes(t_tokens **tokens, char *str)
 	int		len;
 
 	quote = *str;
+	type = quote;
 	str++;
 	len = 0;
 	while (str[len] != quote)
 		len++;
 	if (len == 0)
 		return ;
-	if (quote == '\"')
-		type = T_DOUBLE_QUOTE;
-	else
-		type = T_SINGLE_QUOTE;
 	string = ft_substr(str, 0, len);
 	if (!string)
 	{
@@ -109,7 +106,7 @@ un string, el tipo de token y la dirección del siguiente nodo
 */
 int	tokenize(char *line, t_tokens **tokens)
 {
-	if (!valid_quotes(line))//también se debe comprobar si los paréntesis son inválidos
+	if (!valid_quotes(line) || !valid_paren(line))
 		return (write(2, "Invalid quotes\n", 15), 0);
 	if (*line == ' ')
 		line = iter_line(line);

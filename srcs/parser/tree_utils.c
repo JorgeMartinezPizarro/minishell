@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/17 13:10:37 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:09:45 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,23 @@ void	assign_node_type(t_tree **node, t_tokens *token)
 
 t_tokens	*division_point(t_tokens *start, t_tokens *end)
 {
-	t_tokens	*last_or;
-	t_tokens	*last_and;
+	t_tokens	*last_b_op;
 	t_tokens	*last_pipe;
 
-	last_or = NULL;
-	last_and = NULL;
+	last_b_op = NULL;
 	last_pipe = NULL;
 	while (start && start != end)
 	{
 		if (start->type == T_O_PAREN)
 			iter_paren(&start);
-		if (start->type == T_OR)
-			last_or = start;
-		if (start->type == T_AND)
-			last_and = start;
+		if (start->type == T_OR || start->type == T_AND)
+			last_b_op = start;
 		if (start->type == T_PIPE)
 			last_pipe = start;
 		start = start->next;
 	}
-	if (last_or)
-		return (last_or);
-	if (last_and)
-		return (last_and);
+	if (last_b_op)
+		return (last_b_op);
 	return (last_pipe);
 }
 
@@ -56,7 +50,7 @@ void	remove_paren(t_tree **tree, t_tokens **start, t_tokens **end)
 {
 	t_tokens	*tmp;
 	int			opened;
-//si el siguiente del primero es el final
+
 	if ((*start)->next == *end || (*start)->type != T_O_PAREN)
 		return ;
 	opened = 1;

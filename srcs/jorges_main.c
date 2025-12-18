@@ -55,7 +55,7 @@ int	exec_line(t_command *com, char *line)
 	// El arbol tree tiene que recibir el comando
 	// completo, que contiene los tokens, el env y cwd.
 	// Podemos distinguir el tipo de comando
-	if (is_built_in(com))
+	if (is_built_in(com->command))
 		com->exit_code = run_command(com);
 	else
 		com->exit_code = run_program(com);
