@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 12:31:28 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/19 13:14:38 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,15 @@ int	run_cd(t_cmd *com)
 	struct stat	st;
 	char		*str;
 
-	str = expand_vars(com->args->next->str, com->env);
-	new_path = join_paths(com->cwd, str);
-	free(str);
+	if (com->args->next == NULL){
+		new_path = expand_vars(ft_strdup("$HOME"), com->env);
+	}
+	else 
+	{
+		str = expand_vars(com->args->next->str, com->env);
+		new_path = join_paths(com->cwd, str);
+		free(str);
+	}
 	if (stat(new_path, &st) != 0)
 	{
 		ft_putstr_fd("Folder does not exist.\n", 2);
@@ -43,6 +49,7 @@ int	run_cd(t_cmd *com)
 }
 
 // Print only T_WORD
+// Ojo con -n, -nnnnn
 int run_echo(t_cmd *com)
 {
 	t_tokens *temp;
@@ -50,6 +57,10 @@ int run_echo(t_cmd *com)
 	temp = com->args->next;
 	if (temp)
 		ft_printf("%s", expand_vars(temp->str, com->env));
+	else
+	{
+		return 1;
+	}
 	temp = temp->next;
 	while (temp){
 		ft_printf(" %s", expand_vars(temp->str, com->env));

@@ -38,35 +38,24 @@ int	exec_line(t_cmd *com, char *line)
 	// Lo pongo aqui como ejemplo de uso.
 	com->args = expand_tokens(com->args, com->cwd);
 	//tree = make_tree(com->args, NULL);
-	com->command = com->args->str;
 	com->args = com->args;
 	//tree->cmd = com;
 	// TODO: Cambiar por execute_tree cuando funcione.
 	//execute_tree(tree);
 	if (is_built_in(com))
-		com->exit_code = run_built_in(com);
+		run_built_in(com);
 	else
-		com->exit_code = run_program(com);
+		run_program(com);
 	add_history(line);
-	return com->exit_code;
+	return 1;
 }
 
-// TODO: Por cada linea debemos aqui crear un arbol binario de comandos, y sobre ese 
-// arbol iniciamos iterativamente comandos.
-// Si los comandos son entre parentesis, se crea un clone de env nuevo para ese proceso, 
-// para que no interfiera con el padre.
-// En general la parte de crear el comando debe separarse en un fichero propio,
-// y llamarse tantas veces como comandos contenta la linea 
-// que recibimos.
 int main(int argc, char **args, char **env)
 {
 	t_cmd com;
 
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
-	// Aqui paso el CWD y cargo los ENVs para compartirlos
-	// en cada ejecucion. Notese que procesos hijos
-	// deben usar un comando con un clone de las env.
 	com.cwd = getcwd(NULL, 0);
 	com.env = load_env_values(env);
 

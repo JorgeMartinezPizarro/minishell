@@ -45,21 +45,18 @@ size_t	strarr_len(char **strs);
 
 void	free_str_array(char **arr);
 
-// MANEJO DE ENTORNO
-
-// tamaño de la lista enlazada
 size_t	env_len_list(t_list *vars);
-// clonar lista
+
 t_list	*ft_clone_env(t_list *env);
-// set value, replace or add new env
+
 void	set_env_value(t_list **env, char *name, char *value);
-// remove a env value if it exists
+
 void	del_env_value(t_list **env, char *value);
-// devuelve el valor de una var env
+
 char	*get_env_value(t_list *env, char *name);
-// libera la lista enlazada
+
 void	free_env(t_list **env);
-// carga la lista enlazada desde char ** de forma INICIAL
+
 t_list	*load_env_values(char **env);
 
 int run_cd(t_cmd *com);

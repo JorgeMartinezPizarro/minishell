@@ -55,10 +55,8 @@ typedef struct	s_redir
 
 typedef struct	s_cmd
 {
-	char		*command;
 	char		*cwd;
 	t_list		*env;
-	int			exit_code;
 	t_tokens	*args;
 	t_redir		*redirs;
 	bool		is_builtin;

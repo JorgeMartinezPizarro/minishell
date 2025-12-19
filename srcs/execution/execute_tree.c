@@ -92,6 +92,7 @@ void	exec_tree(t_tree *tree)
 		// Requiere inicializar el env, mira en main_test.c
 		// Aqui se puede usar cmd->env = clone_env(cmd->env)
 		// para procesos hijos
+		// expandir tree->cmd->args
 		if (is_built_in(tree->cmd))
 			tree->cmd->exit_code = run_built_in(tree->cmd);
 		else

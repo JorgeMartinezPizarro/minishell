@@ -97,13 +97,13 @@ int run_program(t_cmd *com)
 	pid_t pid;
 	int status;
 
-	if (!com || !com->command)
+	if (!com || !com->args->str)
 		return -1;
 
-	exe = find_executable(com->command);
+	exe = find_executable(com->args->str);
 	if (!exe)
 	{
-		ft_printf("%s: command not found\n", com->command);
+		ft_printf("%s: command not found\n", com->args->str);
 		return 127;
 	}
 

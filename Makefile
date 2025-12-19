@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/19 12:35:57 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/19 13:26:49 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,9 @@ LIBFT=$(LIBFT_DIR)/libft.a
 FILES = execution/run_built_in main_tmp \
 	environ/expand_vars environ/extract_variables \
 	environ/environments utils/join_paths \
-	execution/run_program utils/expand_wildcard \
+	execution/run_program wildcard/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
-	utils/expand_tokens utils/free_str_array \
+	wildcard/expand_tokens utils/free_str_array \
 	utils/free execution/run_built_in_utils
 
 ## TODO: crear bonus target with some new files _bonus
@@ -33,7 +33,7 @@ OBJECTS = $(addprefix srcs/, $(FILES:=.o))
 CC       = cc
 
 CFLAGS   = -Wall -Wextra -Werror \
-	-I./includes -I./$(LIBFT_DIR)/src
+	-I./includes -I./$(LIBFT_DIR)/src -g
 
 all: $(NAME)
 
