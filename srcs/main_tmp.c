@@ -100,7 +100,8 @@ int main(int argc, char **args, char **env)
 		
 		while (line)
 		{
-			exec_line(&com, line);
+			if (ft_strcmp(line, "") != 0)
+				exec_line(&com, line);
 			line = readline(head);
 		}
 		free(head);
