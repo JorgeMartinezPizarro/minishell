@@ -2,9 +2,13 @@
 #include "libft.h"
 #include "minishell_jorge.h"
 
+// TODO: usar variable global aqui.
+
 void sigint_handler(int sign)
 {
-    (void)sign;
+    // mirar bien el shell level y el isatty para ver que shell debe reaccionar
+	
+	(void)sign;
     write(1, "\n", 1);
     rl_replace_line("", 0);
     rl_on_new_line();
