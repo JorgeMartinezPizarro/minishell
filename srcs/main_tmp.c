@@ -2,28 +2,13 @@
 #include "libft.h"
 #include "minishell_jorge.h"
 
-// Just a prototype on what to be run on every build in command.
-// TODO: Merge with other main.c code.
-
-// Del readline se obtiene una estructura t_tree que tenemos que definir,
-// cada rama tiene un puntero al entorno (ejemplo: un comando define A y el siguiente lo usa)
-// run_tree recibe el arbol de comandos y segun el codigo de exit de cada uno, va al siguiente
-// o termina.
-// No tengo pensado como procesar los pipes, en verdad es una secuencia de t_cmds, cada uno
-// lleva el valor de retorno del anterior como ultimo parametro.
-
-// Usaremos para manejar los comandos:
-
-// 		readline, rl_clear_history, rl_on_new_line
-//		rl_replace_line, rl_redisplay, add_history
-
-void sigint_handler(int signo)
+void sigint_handler(int sign)
 {
-    (void)signo;                // ignorar el argumento
-    write(1, "\n", 1);          // imprime la nueva línea
-    rl_replace_line("", 0);     // borra la línea que se estaba escribiendo
-    rl_on_new_line();            // indica a readline que estamos en una nueva línea
-    rl_redisplay();              // redibuja prompt vacío
+    (void)sign;
+    write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }
 
 int	exec_line(t_cmd *com, char *line)
@@ -37,7 +22,6 @@ int	exec_line(t_cmd *com, char *line)
 	expanded = expand_tokens(com->args, com->cwd);
 	free_tokens(com->args);
 	com->args = expanded; 
-	// TODO: Cambiar por execute_tree cuando funcione.
 	//tree = make_tree(com->args, NULL);
 	//tree->cmd = com;
 	//execute_tree(tree);
@@ -54,8 +38,6 @@ int	exec_line(t_cmd *com, char *line)
 
 char	*get_name(t_list *env)
 {
-	// TODO: free 
-	
 	char *var = get_env_value(env, "SESSION_MANAGER");
 
 	char **vals = ft_split(var, ':');
