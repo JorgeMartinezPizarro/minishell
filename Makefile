@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/19 18:13:06 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/19 18:19:16 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,8 @@ stats:
 			find includes srcs -type f \( -name '*.c' -o -name '*.h' -o -name '*.sh' \) -exec cat {} +; \
 		} | grep -Ev '^\s*(#|//|$$)' | wc -l \
 	); \
-	echo "Total lines: $$lines"
+	echo "\n Total of lines: $$lines"; \
+	files=$$(git ls-files | wc -l); \
+	echo " Total of files: $$files\n"
 
 .PHONY = test
