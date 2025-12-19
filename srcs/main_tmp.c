@@ -43,7 +43,8 @@ int	exec_line(t_cmd *com, char *line)
 char	*get_name(t_list *env)
 {
 	char *var = get_env_value(env, "SESSION_MANAGER");
-
+	if (!var)
+		return ft_strdup("unknown");
 	char **vals = ft_split(var, ':');
 
 	char **its = ft_split(vals[0], '.');
