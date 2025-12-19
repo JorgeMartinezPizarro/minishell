@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/18 22:10:44 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/19 12:31:28 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ int	run_cd(t_cmd *com)
 {
 	char		*new_path;
 	struct stat	st;
+	char		*str;
 
-	new_path = join_paths(com->cwd, expand_vars(com->args->next->str, com->env));
+	str = expand_vars(com->args->next->str, com->env);
+	new_path = join_paths(com->cwd, str);
+	free(str);
 	if (stat(new_path, &st) != 0)
 	{
 		ft_putstr_fd("Folder does not exist.\n", 2);
