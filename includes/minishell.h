@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/src/libft.h"
+# include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
@@ -11,7 +11,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-
+// El exec_tree que llama a run_command (run_built_in o run_program)
+// debe identificar un codigo especifico para simplemente terminar el programa.
 //int	exit_status = 0;
 
 typedef enum e_token_type

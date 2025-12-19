@@ -52,6 +52,27 @@ int	exec_line(t_cmd *com, char *line)
 	return 1;
 }
 
+char	*get_name(t_list *env)
+{
+	// TODO: free 
+	
+	char *var = get_env_value(env, "SESSION_MANAGER");
+
+	char **vals = ft_split(var, ':');
+
+	char **its = ft_split(vals[0], '.');
+
+	char **els = ft_split(its[0], '/');
+
+	char *sol = ft_strdup(els[1]);
+
+	free_str_array(vals);
+	free_str_array(its);
+	free_str_array(els);
+	
+	return sol;
+}
+
 int main(int argc, char **args, char **env)
 {
 	t_cmd com;
@@ -68,11 +89,16 @@ int main(int argc, char **args, char **env)
 	}
 	else if (argc < 2)
 	{
-		char *str = ft_strdup("\033[1;32m${USER}@${NAME} >>> \033[0m");
+		char *str = ft_strdup("\033[1;35m${USER}@#### >>> \033[0m");
 		char *head = expand_vars(str, com.env);
+		char *name = get_name(com.env);
+		char *tmp = head;
+		head = ft_strreplace(tmp, "####", name);
+		free(tmp);
+		free(name);
 		char *line = readline(head);
 		
-		while (line && ft_strcmp(line, "exit") != 0)
+		while (line)
 		{
 			exec_line(&com, line);
 			line = readline(head);

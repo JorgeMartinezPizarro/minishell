@@ -31,25 +31,30 @@ echo " -> Running different tests"
 
 ## Estos valgrind solo muestran algo si hay errores.
 valgrind \
-		--leak-check=full --show-leak-kinds=all --log-file=/dev/null \
+		--leak-check=full --show-leak-kinds=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
 		./minishell -c "echo ${HOME}"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all --log-file=/dev/null \
+		--leak-check=full --show-leak-kinds=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
 		./minishell -c "cd ${HOME}"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all --log-file=/dev/null \
+		--leak-check=full --show-leak-kinds=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
 		./minishell -c "env"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all --log-file=/dev/null \
+		--leak-check=full --show-leak-kinds=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
 		./minishell -c "git status"
 
 
 echo " -> Cleanup"
 make fclean > /dev/null
+
