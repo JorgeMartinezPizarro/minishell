@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/19 13:26:49 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/19 16:08:55 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,9 @@ $(LIBFT):
 
 re: fclean all
 
-run: all
-	@valgrind --leak-check=full ./minishell
+test: fclean
+	@./tests/test.sh
 
-run-tests:
-	@./tests/tests.sh
-	
 clean:
 	make -C libft clean
 	rm -f $(OBJECTS)
@@ -82,4 +79,4 @@ stats:
 	); \
 	echo "Total lines: $$lines"
 
-.PHONY = tests
+.PHONY = test

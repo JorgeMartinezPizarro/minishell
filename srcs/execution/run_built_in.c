@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 13:28:48 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/19 14:49:42 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,6 @@ int	run_unset(t_cmd *com)
 	return (1);
 }
 
-// TODO: Hay mas codigos de error?
-// return 1 => true, 0 => false
-// TODO: Tenemos que considerar si el comando es el nombre de un ejecutable
-// buscando el comando
-// en cada ruta de la variable PATH. Hacemos split by : y buscamos si el 
-// fichero existe
-// Si existe se ejecuta!
-
-// TODO: add exit!
 int	run_built_in(t_cmd *com)
 {
 	if (ft_strcmp(com->args->str, "echo") == 0)

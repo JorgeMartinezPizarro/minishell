@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 13:14:38 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/19 15:59:46 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,53 +17,61 @@ int	run_cd(t_cmd *com)
 {
 	char		*new_path;
 	struct stat	st;
-	char		*str;
+	char		*str_exp;
 
-	if (com->args->next == NULL){
-		new_path = expand_vars(ft_strdup("$HOME"), com->env);
-	}
-	else 
+	if (com->args->next == NULL)
 	{
-		str = expand_vars(com->args->next->str, com->env);
-		new_path = join_paths(com->cwd, str);
-		free(str);
+		str_exp = expand_vars(ft_strdup("$HOME"), com->env);
 	}
+	else
+	{
+		str_exp = expand_vars(ft_strdup(com->args->next->str), com->env);
+	}
+
+	new_path = join_paths(com->cwd, str_exp);
+	free(str_exp);
+
 	if (stat(new_path, &st) != 0)
 	{
 		ft_putstr_fd("Folder does not exist.\n", 2);
 		free(new_path);
 		return 0;
 	}
+
 	if (chdir(new_path) != 0)
 	{
 		perror("cd");
 		free(new_path);
 		return 0;
 	}
+
 	set_env_value(&com->env, "OLDPWD", com->cwd);
 	set_env_value(&com->env, "PWD", new_path);
+
 	free(com->cwd);
-	com->cwd = ft_strdup(new_path);
-	free(new_path);
-	return (1);
+	com->cwd = new_path;
+
+	return 1;
 }
 
 // Print only T_WORD
 // Ojo con -n, -nnnnn
 int run_echo(t_cmd *com)
 {
-	t_tokens *temp;
+	t_tokens	*temp;
 
 	temp = com->args->next;
 	if (temp)
-		ft_printf("%s", expand_vars(temp->str, com->env));
-	else
 	{
-		return 1;
+		temp->str = expand_vars(temp->str, com->env);
+		ft_printf("%s", temp->str);
 	}
+	else
+		return 1;
 	temp = temp->next;
 	while (temp){
-		ft_printf(" %s", expand_vars(temp->str, com->env));
+		temp->str = expand_vars(temp->str, com->env);
+		ft_printf(" %s", temp->str);
 		temp = temp->next;
 	}
 	ft_printf("\n");
@@ -87,5 +95,11 @@ int run_env(t_cmd *com)
 int run_pwd(t_cmd *com)
 {
 	ft_printf("%s\n", com->cwd);
+	return 1;
+}
+
+int	run_exit(t_cmd *com)
+{
+	(void)com;
 	return 1;
 }

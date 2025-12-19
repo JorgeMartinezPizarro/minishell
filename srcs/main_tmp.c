@@ -30,22 +30,24 @@ int	exec_line(t_cmd *com, char *line)
 {
 	//t_tree		*tree;
 	//tree = NULL;
-	com->args = NULL;
 	if (!tokenize(line, &com->args))
 		return 1;
-	// La expansion de wildcards se ejecuta 
-	// justo al ejecutar el programa, despues de crear el arbol.
-	// Lo pongo aqui como ejemplo de uso.
-	com->args = expand_tokens(com->args, com->cwd);
-	//tree = make_tree(com->args, NULL);
-	com->args = com->args;
-	//tree->cmd = com;
+	t_tokens *expanded;
+
+	expanded = expand_tokens(com->args, com->cwd);
+	free_tokens(com->args);
+	com->args = expanded; 
 	// TODO: Cambiar por execute_tree cuando funcione.
+	//tree = make_tree(com->args, NULL);
+	//tree->cmd = com;
 	//execute_tree(tree);
 	if (is_built_in(com))
 		run_built_in(com);
 	else
 		run_program(com);
+	if (com->args)
+		free_tokens(com->args);
+	com->args = NULL;
 	add_history(line);
 	return 1;
 }
@@ -58,6 +60,7 @@ int main(int argc, char **args, char **env)
     signal(SIGQUIT, SIG_IGN);
 	com.cwd = getcwd(NULL, 0);
 	com.env = load_env_values(env);
+	com.args = NULL;
 
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 	{
@@ -69,16 +72,20 @@ int main(int argc, char **args, char **env)
 		char *head = expand_vars(str, com.env);
 		char *line = readline(head);
 		
-		while (line)
+		while (line && ft_strcmp(line, "exit") != 0)
 		{
 			exec_line(&com, line);
 			line = readline(head);
 		}
-		free_env(&com.env);
+		free(head);
+		
 	}
 	else {
 		ft_printf("Usage %s -c <command>\n", args[0]);
 		return 1;
 	}
+	free_env(&com.env);
+	free(com.cwd);
+	
 	return 0;
 }
