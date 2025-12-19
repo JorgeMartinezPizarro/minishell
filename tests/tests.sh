@@ -6,26 +6,26 @@
 ## Add new code, add here a working example
 
 echo " -> Compiling minishell"
-make jorge
+make 
 echo " -> Running different tests"
 
-./jorge -c "echo hola"
+./minishell -c "echo hola"
 
 ## Comando que falla, lo silenciamos
-./jorge -c "echo"
+./minishell -c "echo"
 
-./jorge -c "env"
+./minishell -c "env"
 
 ## Comando que falla, lo silenciamos
-./jorge -c "${HOME}" || true
+./minishell -c "${HOME}" || true
 
-./jorge -c "cd \$(HOME)"
-./jorge -c "echo \${HOME}"
-./jorge -c "pwd"
-./jorge -c "export A=5"
-./jorge -c "B=8"
-./jorge -c "echo \${HOME}/dir"
-./jorge -c "  \"hola\"  echo|hel*lo  "
+./minishell -c "cd \$(HOME)"
+./minishell -c "echo \${HOME}"
+./minishell -c "pwd"
+./minishell -c "export A=5"
+./minishell -c "B=8"
+./minishell -c "echo \${HOME}/dir"
+./minishell -c "  \"hola\"  echo|hel*lo  " || true
 
 echo " -> Cleanup"
 make fclean > /dev/null

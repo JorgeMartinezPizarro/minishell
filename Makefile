@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/14 21:13:29 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/19 12:35:57 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,9 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 re: fclean all
+
+run: all
+	@valgrind --leak-check=full ./minishell
 
 run-tests:
 	@./tests/tests.sh
