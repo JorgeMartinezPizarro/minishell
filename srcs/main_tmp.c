@@ -23,7 +23,7 @@ int	exec_line(t_cmd *com, char *line)
 		return 1;
 	t_tokens *expanded;
 
-	expanded = expand_wildcard(com->args, com->cwd);
+	expanded = expand_tokens(com->args, com->cwd);
 	free_tokens(com->args);
 	com->args = expanded; 
 	//tree = make_tree(com->args, NULL);

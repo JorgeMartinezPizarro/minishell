@@ -31,7 +31,7 @@ char	*expand_vars(char *s, t_list *env);
 
 char	**expand_wildcard(const char *cwd, const char *pattern);
 
-t_tokens	*expand_wildcard(t_tokens *tokens, char *cwd);
+t_tokens	*expand_tokens(t_tokens *tokens, char *cwd);
 
 // OBTIENE UNA LISTA CON LAS VARIABLES EN UN STRING
 // UTIL PARA REEMPLAZARLAS DESPUES POR SU VALOR
