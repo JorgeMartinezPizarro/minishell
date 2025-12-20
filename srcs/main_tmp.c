@@ -17,15 +17,13 @@ void sigint_handler(int sign)
 
 int	exec_line(t_cmd *com, char *line)
 {
-	//t_tree		*tree;
-	//tree = NULL;
-	if (!tokenize(line, &com->args))
-		return 1;
-	t_tokens *expanded;
+	t_tokens	*tokens;
+	t_tree		*tree;
 
-	expanded = expand_tokens(com->args, com->cwd);
-	free_tokens(com->args);
-	com->args = expanded; 
+	tree = NULL;
+	if (!tokenize(line, &tokens))
+		return 1;
+	expand_tokens(&tokens, com->cwd);
 	//tree = make_tree(com->args, NULL);
 	//tree->cmd = com;
 	//execute_tree(tree);

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 14:41:43 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 15:22:12 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ de "" como tipo word
 */
 int	exec_line(char *line, char **env)
 {
+	t_tokens	*expanded;
 	t_tokens	*tokens;
 	t_tree		*tree;
 
@@ -29,15 +30,17 @@ int	exec_line(char *line, char **env)
 	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return ;
-	expand_tokens(&tokens, get_cwd(NULL, 0));
-	if(!make_tree(tokens, NULL))
-	{
-		free_tokens(tokens);
-		return ;
-	}
+	expanded = expand_tokens(tokens, get_cwd(NULL, 0));
 	free_tokens(tokens);
+	if(!make_tree(expanded, NULL))
+	{
+		free_tokens(expanded);
+		return (1);
+	}
+	free_tokens(expanded);
 	exec_tree(tree);
 	free_tree(tree);
+	return (0);
 }
 
 int	main(int ac, char **av, char **envp)

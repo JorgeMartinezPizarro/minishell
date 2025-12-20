@@ -6,71 +6,41 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/20 15:05:32 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 15:32:55 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell_jorge.h"
-
-static t_tokens	*token_new(char *str, int type)
-{
-	t_tokens	*tok;
-
-	tok = ft_calloc(1, sizeof(t_tokens));
-	if (!tok)
-		return (NULL);
-	tok->str = str;
-	tok->type = type;
-	return (tok);
-}
-
-/*
-** Añadir token al final
-*/
-static void	token_add_back(t_tokens **lst, t_tokens *new)
-{
-	t_tokens	*tmp;
-
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	tmp = *lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new;
-}
+#include "minishell.h"
 
 /*
 ** Expande wildcards en una lista de tokens
 */
-t_tokens	*expand_tokens(t_tokens *tokens, char *cwd)
+void	expand_tokens(t_tokens **tokens, char *cwd)
 {
 	t_tokens	*result;
+	t_tokens	*cur;
 	char		**expanded;
 	int			i;
 
+	cur = *tokens;
 	result = NULL;
-	while (tokens)
+	while (cur)
 	{
-		if ((tokens->type == T_WORD || tokens->type == T_DOUBLE_QUOTE)
-			&& ft_strchr(tokens->str, '*'))
+		if ((cur->type == T_WORD || cur->type == T_DOUBLE_QUOTE)
+			&& ft_strchr(cur->str, '*'))
 		{
-			expanded = expand_wildcard(cwd, tokens->str);
+			expanded = expand_wildcard(cwd, cur->str);
 			i = 0;
 			while (expanded[i])
-			{
-				token_add_back(&result,
-					token_new(ft_strdup(expanded[i]), T_WORD));
-				i++;
-			}
+				add_token_to_list(&result, expanded[i++], T_WORD);
 			free_str_array(expanded);
 		}
 		else
-			token_add_back(&result, token_new(ft_strdup(tokens->str), tokens->type));
-		tokens = tokens->next;
+			token_add_back(&result, token_new(ft_strdup(cur->str), cur->type));
+		cur = cur->next;
 	}
-	return (result);
+	free(*tokens);
+	*tokens = result;
 }
