@@ -16,3 +16,13 @@ variable de entorno
 
 
 Mirar la expansión y mejorarla
+
+
+Ideas para conciliar:
+
+- El cwd es redundante pero comodo, te duele que lo defina, crees que es mejor usar cada vez getcwd?
+- El entorno es parte del comando. La expansion del entorno se realiza al ejecutar el comando, y debe ser por tanto parte
+de la estructura. Cuando definas comandos en el arbol, pasales a cada comando un puntero al del comando anterior, segun 
+procesa.
+
+Creo que con esto es mas facil que no tengamos que tocar mucho la logica que ya tenemos.
