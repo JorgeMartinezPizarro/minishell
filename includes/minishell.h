@@ -1,8 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-int	exit_code = 0;
-
 # include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -15,7 +13,5 @@ int	exit_code = 0;
 # include "tokenizer.h"
 # include "execution.h"
 # include "parser.h"
-
-void	expand_tokens(t_tokens **tokens, char *cwd);
 
 #endif

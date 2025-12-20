@@ -2,18 +2,15 @@
 
 # define MINISHELL_JORGE_H
 
-// Debe estar lincada en el Makefile
 # include "libft.h"
-
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
-// Debe estar lincada en el Makefile
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "structs.h"
+# include "minishell.h"
 
-// este tipo es para la t_list *env que gestiona las variables de entorno.
+// estructura para las variables de entorno de cmd->env
 typedef struct s_variable
 {
 	char	*name;
@@ -21,49 +18,42 @@ typedef struct s_variable
 	bool	exported;
 }	t_variable;
 
-// Main command runner entrypoint.
-int		is_built_in(char *str);
+// Main Execution
+int		is_built_in(t_cmd *com);
 int		run_built_in(t_cmd *com);
 int		run_program(t_cmd *com);
+// Execution functions
+int		run_cd(t_cmd *com);
+int 	run_echo(t_cmd *com);
+int 	run_env(t_cmd *com);
+int 	run_pwd(t_cmd *com);
+int		run_export(t_cmd *com);
+int		run_set(t_cmd *com);
+int		run_unset(t_cmd *com);
 
+// Main expansion
 char	*expand_vars(char *s, t_list *env);
+t_tokens	*expand_tokens(t_tokens **tokens, char *cwd);
 
+// Expansion functions
 char	**expand_wildcard(const char *cwd, const char *pattern);
-
-void	expand_tokens(t_tokens **tokens, char *cwd);
-
-// OBTIENE UNA LISTA CON LAS VARIABLES EN UN STRING
-// UTIL PARA REEMPLAZARLAS DESPUES POR SU VALOR
-
 t_list	*extract_variables(const char *str);
 
-// UNE CAMINO ABSOLUTO + RELATIVO 
-char	*join_paths(const char *base, const char *relative);
-// tamaño del char ** 
+// char ** utils
 size_t	strarr_len(char **strs);
-
 void	free_str_array(char **arr);
 
+// For CWD management and command in PATH search.
+char	*join_paths(const char *base, const char *relative);
+
+// Environment management
 size_t	env_len_list(t_list *vars);
-
 t_list	*ft_clone_env(t_list *env);
-
 void	set_env_value(t_list **env, char *name, char *value);
-
 void	del_env_value(t_list **env, char *value);
-
 char	*get_env_value(t_list *env, char *name);
-
 void	free_env(t_list **env);
-
 t_list	*load_env_values(char **env);
-
-int run_cd(t_cmd *com);
-int run_echo(t_cmd *com);
-int run_env(t_cmd *com);
-int run_pwd(t_cmd *com);
-int	run_export(t_cmd *com);
-int	run_set(t_cmd *com);
-int	run_unset(t_cmd *com);
+char **env_list_to_envp(t_list *env);
 
 #endif

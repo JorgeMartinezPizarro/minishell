@@ -6,12 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 20:44:53 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 23:09:32 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include "../includes/minishell_jorge.h"
+
+int	exit_code = 0;
 
 int	exec_line(char *line, t_list *env)
 {
