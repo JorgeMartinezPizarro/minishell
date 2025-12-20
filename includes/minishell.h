@@ -1,7 +1,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-int	exit_status = 0;
+
+// It beaks compilation, we need the global variable for the signal management.
+// Fix compilation before adding it, please.
+
+// NOTA: En el .h puedes declarar la variable, pero no definirla, eso corresponde al .c
+//int	exit_status = 0;
 
 # include "libft.h"
 # include <readline/readline.h>
