@@ -89,53 +89,33 @@ static char **tokens_to_argv(t_tokens *tokens)
 	argv[i] = NULL;
 	return argv;
 }
-
-int run_program(t_cmd *com)
+/*
+queremos crear un proceso nuevo y 
+*/
+int	run_program(t_cmd *com, char **env)
 {
-	char *exe;
-	char **argv;
-	pid_t pid;
-	int status;
+	char	**argv;
+	char	*exe;
+	int		status;
+	pid_t	pid;
 
-	if (!com || !com->args->str)
-		return -1;
-
+	if (!com->args->str)
+		return (1);
 	exe = find_executable(com->args->str);
 	if (!exe)
-	{
-		ft_printf("%s: command not found\n", com->args->str);
-		return 127;
-	}
-
+		return (ft_printf("%s: command not found\n", com->args->str), 127);
 	argv = tokens_to_argv(com->args);
 	if (!argv)
-	{
-		free(exe);
-		return -1;
-	}
-
+		return (free(exe), 1);
 	pid = fork();
-	if (pid < 0)
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
 	{
-		perror("fork");
-		free(exe);
-		free_str_array(argv);
-		return -1;
-	}
-	else if (pid == 0)
-	{
-		char **envp = env_list_to_envp(com->env);
-		execve(exe, argv, envp);
-		perror("execve"); // si llega aquí hubo error
+		execve(exe, argv, env_list_to_envp(env));
+		perror("execve");
 		exit(126);
 	}
-	else
-	{
-		// padre
-		waitpid(pid, &status, 0);
-	}
-
-	free(exe);
-	free_str_array(argv);
-	return WIFEXITED(status) ? WEXITSTATUS(status) : 1;
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }

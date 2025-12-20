@@ -14,52 +14,50 @@
 #include "minishell.h"
 
 
-void	exec_pipe(t_tree *tree)
+void	exec_pipe(t_tree *tree, t_list *env)
 {
 	pid_t	pids[2];
 	int		fd[2];
 
 	if (pipe(fd) == -1)
 		(perror("pipe error"), exit(1));
-	pids[0] = fork();
+	pids[0] = fork();//gestionar el caso de error
 	if (pids[0] == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
 		(close(fd[0]), close(fd[1]));
-		exec_tree(tree->left);
-		exit(exit_status);
+		exec_tree(tree->left, env);
+		exit(exit_code);
 	}
 	pids[1] = fork();
 	if (pids[1] == 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
 		(close(fd[0]), close(fd[1]));
-		exec_tree(tree->right);
-		exit(exit_status);
+		exec_tree(tree->right, env);
+		exit(exit_code);
 	}
 	(close(fd[0]), close(fd[1]));
 	(wait(NULL), wait(NULL));
 }
 
-void	exec_b_op(t_tree *tree, e_node_type type)
+void	exec_b_op(t_tree *tree, t_list *env)
 {
-	// Para que compile
-	(void)type;
 	if (tree->n_type == N_OR)
 	{
-		exec_tree(tree->left);
-		if (exit_status != 0)
-			exec_tree(tree->right);
+		exec_tree(tree->left, env);
+		if (exit_code != 0)
+			exec_tree(tree->right, env);
 	}
 	if (tree->n_type == N_AND)
 	{
-		exec_tree(tree->left);
-		if (exit_status == 0)
-			exec_tree(tree->right);
+		exec_tree(tree->left, env);
+		if (exit_code == 0)
+			exec_tree(tree->right, env);
 	}
 }
 
-void	exec_subprocces(t_tree **tree)
+void	exec_subprocces(t_tree **tree, t_list *env)
 {
 	pid_t	pid;
 
@@ -68,34 +66,61 @@ void	exec_subprocces(t_tree **tree)
 		pid = fork();
 		if (pid == 0)
 		{
-//hacer una copia de env(puede que ya la herede directamente y no haga falta)
-			// Estoy gestionando las variables de entorno en el cmd,
-			// aqui podemos hacer un clone para que no afecten al hijo.
 			(*tree)->subshell = false;
-			exec_tree(*tree);
-			exit(exit_status);
+			exec_tree(*tree, env);
+			exit(0);
 		}
 		wait(NULL);
 	}
 }
 
-void	exec_tree(t_tree *tree)
+void	expand_cmds(t_cmd **cmd)//revisar punteros
 {
-	exec_subprocces(&tree);
+	void	*tmp;
+
+	tmp = (*cmd)->redirs;
+	while ((*cmd)->redirs)
+	{
+		if ((*cmd)->redirs->redir_type != T_HEREDOC)
+			(*cmd)->redirs->file = expand_vars((*cmd)->redirs->file, (*cmd)->env);
+		(*cmd)->redirs = (*cmd)->redirs->next;
+	}
+	(*cmd)->redirs = tmp;
+	tmp = (*cmd)->args;
+	while ((*cmd)->args)
+	{
+		(*cmd)->args->str = expand_vars((*cmd)->args->str, (*cmd)->env);
+		(*cmd)->args = (*cmd)->args->next;
+	}
+	(*cmd)->args = tmp;
+}
+
+//también necesito la raíz del árbol
+void	exec_tree(t_tree *tree, t_list *env)
+{
+	int	fd_in;
+	int	fd_out;
+
+	fd_in = dup(STDIN_FILENO);
+	fd_out = dup(STDOUT_FILENO);
+	exec_subprocces(&tree, env);
 	if (tree->n_type == N_PIPE)
-		exec_pipe(tree);
-	if (tree->n_type == N_OR || tree->n_type == N_AND)
-		exec_b_op(tree, tree->n_type);
+		exec_pipe(tree, env);
+	exec_b_op(tree, env);
 	if (tree->n_type == N_CMND)
 	{
-		// He juntado mi t_command dentro de tu t_cmd.
-		// Requiere inicializar el env, mira en main_test.c
-		// Aqui se puede usar cmd->env = clone_env(cmd->env)
-		// para procesos hijos
-		// expandir tree->cmd->args
-		if (is_built_in(tree->cmd))
-			tree->cmd->exit_code = run_built_in(tree->cmd);//necesitamos que cuando se haga exit salir de el arbol
+		expand_cmds(&tree->cmd);
+		make_redirections(tree->cmd->redirs);
+		tree->cmd->env = env;
+		if (tree->cmd->is_builtin)
+		{
+			exit_code = run_built_in(tree->cmd);//necesitamos liberar el arbol con exit
+			dup2(fd_in, STDIN_FILENO);
+			dup2(fd_in, STDOUT_FILENO);
+			close(fd_in);
+			close(fd_out);
+		}
 		else
-			tree->cmd->exit_code = run_program(tree->cmd);
+			exit_code = run_program(tree->cmd);
 	}
 }

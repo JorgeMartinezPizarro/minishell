@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/20 15:32:55 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 20:09:45 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ void	expand_tokens(t_tokens **tokens, char *cwd)
 			free_str_array(expanded);
 		}
 		else
-			token_add_back(&result, token_new(ft_strdup(cur->str), cur->type));
+			add_token_to_list(&result, cur->str, cur->type);
 		cur = cur->next;
 	}
+	free(cwd);
 	free(*tokens);
 	*tokens = result;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 15:59:46 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/20 21:09:56 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,26 @@
 // Print only T_WORD
 int	run_cd(t_cmd *com)
 {
-	char		*new_path;
 	struct stat	st;
+	char		*cwd;
+	char		*new_path;
 	char		*str_exp;
 
 	if (com->args->next == NULL)
-	{
 		str_exp = expand_vars(ft_strdup("$HOME"), com->env);
-	}
 	else
-	{
 		str_exp = expand_vars(ft_strdup(com->args->next->str), com->env);
-	}
-
-	new_path = join_paths(com->cwd, str_exp);
+		//solo expandir si es T_WORD O T_DOUBLE_QUOTE
+	getcwd(cwd, 0);
+	new_path = join_paths(cwd, str_exp);
 	free(str_exp);
-
 	if (stat(new_path, &st) != 0)
-	{
-		ft_putstr_fd("Folder does not exist.\n", 2);
-		free(new_path);
-		return 0;
-	}
-
+		return (ft_putstr_fd("Folder does not exist.\n", 2), free(new_path), 0);
 	if (chdir(new_path) != 0)
-	{
-		perror("cd");
-		free(new_path);
-		return 0;
-	}
-
-	set_env_value(&com->env, "OLDPWD", com->cwd);
+		return (perror("cd"), free(new_path), 0);
+	set_env_value(&com->env, "OLDPWD", cwd);
 	set_env_value(&com->env, "PWD", new_path);
-
-	free(com->cwd);
-	com->cwd = new_path;
-
-	return 1;
+	return (1);
 }
 
 // Print only T_WORD
@@ -94,7 +77,7 @@ int run_env(t_cmd *com)
 
 int run_pwd(t_cmd *com)
 {
-	ft_printf("%s\n", com->cwd);
+	ft_printf("%s\n", getcwd(NULL, 0));
 	return 1;
 }
 

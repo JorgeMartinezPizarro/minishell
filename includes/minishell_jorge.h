@@ -11,8 +11,7 @@
 // Debe estar lincada en el Makefile
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "minishell.h"
-# include "tokenizer.h"
+# include "structs.h"
 
 // este tipo es para la t_list *env que gestiona las variables de entorno.
 typedef struct s_variable
@@ -23,7 +22,7 @@ typedef struct s_variable
 }	t_variable;
 
 // Main command runner entrypoint.
-int		is_built_in(t_cmd *com);
+int		is_built_in(char *str);
 int		run_built_in(t_cmd *com);
 int		run_program(t_cmd *com);
 
@@ -31,7 +30,7 @@ char	*expand_vars(char *s, t_list *env);
 
 char	**expand_wildcard(const char *cwd, const char *pattern);
 
-void	expand_tokens(t_tokens *tokens, char *cwd);
+void	expand_tokens(t_tokens **tokens, char *cwd);
 
 // OBTIENE UNA LISTA CON LAS VARIABLES EN UN STRING
 // UTIL PARA REEMPLAZARLAS DESPUES POR SU VALOR

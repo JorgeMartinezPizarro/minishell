@@ -23,11 +23,11 @@ int	exec_line(t_cmd *com, char *line)
 	tree = NULL;
 	if (!tokenize(line, &tokens))
 		return 1;
-	expand_tokens(&tokens, com->cwd);
+	expand_tokens(&tokens, getcwd(NULL, 0));
 	//tree = make_tree(com->args, NULL);
 	//tree->cmd = com;
 	//execute_tree(tree);
-	if (is_built_in(com))
+	if (is_built_in(com->args->str))
 		run_built_in(com);
 	else
 		run_program(com);
@@ -64,14 +64,10 @@ int main(int argc, char **args, char **env)
 
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
-	com.cwd = getcwd(NULL, 0);
-	com.env = load_env_values(env);
 	com.args = NULL;
 
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
-	{
 		exec_line(&com, args[2]);
-	}
 	else if (argc < 2)
 	{
 		char *str = ft_strdup("\033[1;35m${USER}@#### >>> \033[0m");
@@ -97,7 +93,6 @@ int main(int argc, char **args, char **env)
 		return 1;
 	}
 	free_env(&com.env);
-	free(com.cwd);
 	
 	return 0;
 }

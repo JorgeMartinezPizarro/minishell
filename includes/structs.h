@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 13:55:38 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 21:56:53 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef enum e_token_type
 	T_O_PAREN = '(',
 	T_C_PAREN = ')',
 	T_REDIR_IN = '<',
-	T_REDIR_OUT = '>',
+	T_REDIR_TR = '>',
 	T_SINGLE_QUOTE = '\'',
 	T_DOUBLE_QUOTE = '\"'
 }	e_token_type;
@@ -59,7 +59,6 @@ typedef struct	s_redir
 
 typedef struct	s_cmd
 {
-	char		*cwd;
 	t_list		*env;
 	t_tokens	*args;
 	t_redir		*redirs;
