@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 17:07:38 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/20 15:05:32 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,16 @@ static void	token_add_back(t_tokens **lst, t_tokens *new)
 t_tokens	*expand_tokens(t_tokens *tokens, char *cwd)
 {
 	t_tokens	*result;
-	t_tokens	*cur;
 	char		**expanded;
 	int			i;
 
 	result = NULL;
-	cur = tokens;
-	while (cur)
+	while (tokens)
 	{
-		if (cur->type == T_WORD && ft_strchr(cur->str, '*'))
+		if ((tokens->type == T_WORD || tokens->type == T_DOUBLE_QUOTE)
+			&& ft_strchr(tokens->str, '*'))
 		{
-			expanded = expand_wildcard(cwd, cur->str);
+			expanded = expand_wildcard(cwd, tokens->str);
 			i = 0;
 			while (expanded[i])
 			{
@@ -70,8 +69,8 @@ t_tokens	*expand_tokens(t_tokens *tokens, char *cwd)
 			free_str_array(expanded);
 		}
 		else
-			token_add_back(&result, token_new(ft_strdup(cur->str), cur->type));
-		cur = cur->next;
+			token_add_back(&result, token_new(ft_strdup(tokens->str), tokens->type));
+		tokens = tokens->next;
 	}
 	return (result);
 }

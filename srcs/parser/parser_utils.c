@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 09:43:52 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:11:27 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,9 @@ void	iter_paren(t_tokens **tokens)
 		if (opened == 0)
 			break ;
 	}
+}
+
+void	syntax_error(void)
+{
+	write(2, "Syntax error", 12);
 }

@@ -6,14 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:24:04 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 16:59:20 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 13:50:50 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "minishell.h"
+# include "structs.h"
 # include "tokenizer.h"
 
 t_tokens	*division_point(t_tokens *start, t_tokens *end);

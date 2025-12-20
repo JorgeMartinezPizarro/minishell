@@ -6,14 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 03:23:03 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 16:58:15 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 13:51:09 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
-# include "minishell.h"
+# include "structs.h"
 
 void	add_token_to_list(t_tokens **tokens, char *str, int type);
 int		tokenize(char *line, t_tokens **tokens);

@@ -94,7 +94,7 @@ void	exec_tree(t_tree *tree)
 		// para procesos hijos
 		// expandir tree->cmd->args
 		if (is_built_in(tree->cmd))
-			tree->cmd->exit_code = run_built_in(tree->cmd);
+			tree->cmd->exit_code = run_built_in(tree->cmd);//necesitamos que cuando se haga exit salir de el arbol
 		else
 			tree->cmd->exit_code = run_program(tree->cmd);
 	}
