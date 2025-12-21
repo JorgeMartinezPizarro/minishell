@@ -3,19 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 13:27:30 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 22:54:54 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO: esta funcion falta!
-void	free_redirs(t_redir **redirs)
+void	free_redirs(t_redir *redirs)
 {
-	(void)redirs;
+	t_redir	*tmp;
+
+	while (redirs)
+	{
+		tmp = redirs;
+		redirs = redirs->next;
+		free_tokens(tmp->file);
+		free(tmp);
+	}
 }
 
 bool	is_string(t_tokens *token)
@@ -34,25 +41,27 @@ bool	is_redir(t_tokens *token)
 	return (false);
 }
 
-void	add_redir(t_redir **redirs, t_tokens **token)
+void	add_redir(t_redir **redirs, t_tokens *token)
 {
-	t_redir	*new;
+	t_redir	*new_redir;
+	t_redir	*tmp;
 
-	new = ft_calloc(sizeof(t_redir), 1);
-	if (!new)
-		free_redirs(redirs);
-	new->redir_type = (*token)->type;
-	*token = (*token)->next;
-	add_token_to_list(&new->file, (*token)->str, (*token)->type);
-	new->next = NULL;
+	new_redir = ft_calloc(sizeof(t_redir), 1);
+	if (!new_redir)
+		free_redirs(*redirs);
+	new_redir->redir_type = token->type;
+	token = token->next;
+	add_token_to_list(&new_redir->file, token->str, token->type);
+	new_redir->next = NULL;
 	if (!redirs || !*redirs)
 	{
-		*redirs = new;
+		*redirs = new_redir;
 		return ; 
 	}
-	while (*redirs)
-		*redirs = (*redirs)->next;
-	(*redirs)->next = new;
+	tmp = *redirs;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_redir;
 }
 
 void	iter_paren(t_tokens **tokens)

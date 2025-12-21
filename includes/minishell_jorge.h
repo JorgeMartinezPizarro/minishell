@@ -20,7 +20,7 @@ typedef struct s_variable
 // Main Execution
 int		is_built_in(char *str);
 int		run_built_in(t_cmd *com);
-int		run_program(t_cmd *com);
+int		run_program(t_cmd *com, t_shell *shell);
 // Execution functions
 int		run_cd(t_cmd *com);
 int 	run_echo(t_cmd *com);

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:24:04 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 16:16:09 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:57:13 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		free_cmnd(t_cmd *cmd);
 bool		is_redir(t_tokens *token);
 bool		is_string(t_tokens *token);
 void		iter_paren(t_tokens **tokens);
-void		add_redir(t_redir **redirs, t_tokens **token);
+void		add_redir(t_redir **redirs, t_tokens *token);
 void		assign_node_type(t_tree **node, t_tokens *token);
 bool		everything_inside_paren(t_tokens *start, t_tokens *end);
 void		remove_paren(t_tree **tree, t_tokens **start, t_tokens **end);

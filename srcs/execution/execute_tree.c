@@ -13,120 +13,82 @@
 #include "minishell_jorge.h"
 #include "minishell.h"
 
-
-void	exec_pipe(t_tree *tree, t_list *env)
+void	exec_b_op(t_tree *node, t_shell *shell)
 {
-	pid_t	pids[2];
-	int		fd[2];
-
-	if (pipe(fd) == -1)
-		(perror("pipe error"), exit(1));
-	pids[0] = fork();//gestionar el caso de error
-	if (pids[0] == 0)
+	if (node->n_type == N_OR)
 	{
-		dup2(fd[1], STDOUT_FILENO);
-		(close(fd[0]), close(fd[1]));
-		exec_tree(tree->left, env);
-		exit(exit_code);
-	}
-	pids[1] = fork();
-	if (pids[1] == 0)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		(close(fd[0]), close(fd[1]));
-		exec_tree(tree->right, env);
-		exit(exit_code);
-	}
-	(close(fd[0]), close(fd[1]));
-	(wait(NULL), wait(NULL));
-}
-
-void	exec_b_op(t_tree *tree, t_list *env)
-{
-	if (tree->n_type == N_OR)
-	{
-		exec_tree(tree->left, env);
+		exec_tree(node->left, shell);
 		if (exit_code == 0)
-			exec_tree(tree->right, env);
+			exec_tree(node->right, shell);
 	}
-	if (tree->n_type == N_AND)
+	if (node->n_type == N_AND)
 	{
-		exec_tree(tree->left, env);
+		exec_tree(node->left, shell);
 		if (exit_code != 0)
-			exec_tree(tree->right, env);
+			exec_tree(node->right, shell);
 	}
 }
 
-void	exec_subprocces(t_tree **tree, t_list *env)
+void	exec_subprocces(t_tree **node, t_shell *shell)
 {
 	pid_t	pid;
 
-	if ((*tree)->subshell == true)
+	if ((*node)->subshell == false)
+		return ;
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			(*tree)->subshell = false;
-			exec_tree(*tree, env);
-			exit(0);
-		}
-		waitpid(pid, NULL, 0);
+		(*node)->subshell = false;
+		exec_tree(*node, shell);
+		exit(0);
 	}
+	waitpid(pid, NULL, 0);
 }
 
-void	expand_cmds(t_cmd **cmd)//revisar punteros
+void	expand_cmds(t_tokens *args, t_redir *redirs, t_list *env)
 {
-	void	*tmp;
+	t_tokens	*tmp_args;
+	t_redir		*tmp_redir;
 
-	tmp = (*cmd)->redirs;
-	while ((*cmd)->redirs)
+	tmp_redir = redirs;
+	while (redirs)
 	{
-		if ((*cmd)->redirs->redir_type != T_HEREDOC)
-			(*cmd)->redirs->file->str = expand_vars((*cmd)->redirs->file->str
-				, (*cmd)->env);
-		(*cmd)->redirs = (*cmd)->redirs->next;
+		if (redirs->redir_type != T_HEREDOC)
+			redirs->file->str = expand_vars(redirs->file->str, env);
+		redirs = redirs->next;
 	}
-	(*cmd)->redirs = tmp;
-	tmp = (*cmd)->args;
-	while ((*cmd)->args)
+	tmp_args = args;
+	while (args)
 	{
-		(*cmd)->args->str = expand_vars((*cmd)->args->str, (*cmd)->env);
-		(*cmd)->args = (*cmd)->args->next;
+		args->str = expand_vars(args->str, env);
+		args = args->next;
 	}
-	(*cmd)->args = tmp;
 }
 
-//también necesito la raíz del árbol
-void	exec_tree(t_tree *tree, t_list *env)
+void	exec_tree(t_tree *node, t_shell *shell)
 {
 	int	fd_in;
 	int	fd_out;
 
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
-	if (tree->subshell == true)
+	exec_subprocces(&node, shell);
+	if (node->n_type == N_PIPE)
+		exec_pipe(node, shell);
+	exec_b_op(node, shell);
+	if (node->n_type == N_CMND)
 	{
-		exec_subprocces(&tree, env);
-		return ;
-	}
-	if (tree->n_type == N_PIPE)
-		exec_pipe(tree, env);
-	exec_b_op(tree, env);
-	if (tree->n_type == N_CMND)
-	{
-		expand_cmds(&tree->cmd);
-		make_redirections(tree->cmd->redirs, env);
-		tree->cmd->env = env;
-		if (tree->cmd->is_builtin)
-		{
-			exit_code = run_built_in(tree->cmd);//necesitamos liberar el arbol con exit
-			// dup2(fd_in, STDIN_FILENO);
-			// dup2(fd_out, STDOUT_FILENO);
-			// close(fd_in);
-			// close(fd_out);
-		}
+		expand_cmds(node->cmd->args, node->cmd->redirs, shell->env);
+		make_redirections(node->cmd->redirs, shell->env);
+		node->cmd->env = shell->env;
+		if (node->cmd->is_builtin)
+			exit_code = run_built_in(node->cmd);
 		else
-			exit_code = run_program(tree->cmd);
+			exit_code = run_program(node->cmd, shell);
+		dup2(fd_in, STDIN_FILENO);
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_in);
+		close(fd_out);
 	}
 	(void)fd_in;
 	(void)fd_out;

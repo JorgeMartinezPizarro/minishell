@@ -26,19 +26,18 @@ void sigint_handler(int sign)
     rl_redisplay();
 }
 
-int	exec_line(t_list *env, char *line)
+int	exec_line(t_shell *shell, char *line)
 {
 	t_tokens	*tokens;
-	t_tree		*tree;
 
 	tokens = NULL;
 	if (!tokenize(line, &tokens))
 		return 1;
-	tree = make_tree(tokens, NULL);
-	if (!tree)
+	shell->first_node = make_tree(tokens, NULL);
+	if (!shell->first_node)
 		  return (syntax_error(), 1);
-	exec_tree(tree, env);
-	free_tree(tree);
+	exec_tree(shell->first_node, shell);
+	free_tree(shell->first_node);
 	add_history(line);
 	return 1;
 }
@@ -79,20 +78,26 @@ char	*get_name(t_list *env)
 // TODO: split one task to each function.
 int main(int argc, char **args, char **env)
 {
-	t_list	*env_lst;
+	t_shell	*shell;
 
 	exit_code = 0;
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
-	env_lst = load_env_values(env);
-
+	shell = ft_calloc(sizeof(t_shell), 1);
+	if (!shell)
+	{//se puede hacer una función que haga esto ya que se hace tanto
+		exit_code = 1;
+		perror("malloc");
+		return (1);
+	}
+	shell->env = load_env_values(env);
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
-		exec_line(env_lst, args[2]);
+		exec_line(shell, args[2]);
 	else if (argc < 2)
 	{
 		char *str = ft_strdup("\033[1;35m${USER}@#### >>> \033[0m");
-		char *head = expand_vars(str, env_lst);
-		char *name = get_name(env_lst);
+		char *head = expand_vars(str, shell->env);
+		char *name = get_name(shell->env);
 		char *tmp = head;
 		head = ft_strreplace(tmp, "####", name);
 		free(tmp);
@@ -102,11 +107,8 @@ int main(int argc, char **args, char **env)
 		g_state = 0;
 		while (line)
 		{
-			g_state = 2;
-			if (ft_strcmp(line, "") != 0)
-				exec_line(env_lst, line);
-			g_state = 0;
-			g_state = 1;
+			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería in
+				exec_line(shell->env, line);
 			line = readline(head);
 			g_state = 0;
 
@@ -116,9 +118,9 @@ int main(int argc, char **args, char **env)
 	else
 	{
 		ft_printf("Usage %s -c <command>\n", args[0]);
-		free_env(&env_lst);
+		free_env(&shell->env);
 		return (1);
 	}
-	free_env(&env_lst);
+	free_env(&shell->env);
 	return (0);
 }

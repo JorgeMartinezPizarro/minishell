@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 15:04:39 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:55:34 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 		{
 			if (start->next == end || !is_string(start->next))
 				return (free_cmnd((*node)->cmd), NULL);
-			add_redir(&(*node)->cmd->redirs, &start);
+			add_redir(&(*node)->cmd->redirs, start);
+			start = start->next;
 		}
 		else if (is_string(start))
 			add_token_to_list(&(*node)->cmd->args, start->str, start->type);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 12:38:41 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 22:57:24 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,13 @@ static char **tokens_to_argv(t_tokens *tokens)
 /*
 queremos crear un proceso nuevo y 
 */
-int	run_program(t_cmd *com)
+int	run_program(t_cmd *com, t_shell *shell)
 {
 	char	**argv;
 	char	*exe;
 	int		status;
 	pid_t	pid;
 
-	if (!com->args->str)
-		return (1);
 	exe = find_executable(com->args->str);
 	if (!exe)
 		return (ft_printf("%s: command not found\n", com->args->str), 127);
@@ -100,10 +98,10 @@ int	run_program(t_cmd *com)
 		return (free(exe), 1);
 	pid = fork();
 	if (pid == -1)
-		return (1);
+		return (1);//liberar shell
 	if (pid == 0)
 	{
-		execve(exe, argv, env_list_to_envp(com->env));
+		execve(exe, argv, env_list_to_envp(shell->env));
 		perror("execve");
 		exit(126);
 	}

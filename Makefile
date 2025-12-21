@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/21 16:03:26 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/21 23:14:48 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FILES = execution/run_built_in main \
 	utils/free execution/run_built_in_utils \
 	utils/join_paths execution/run_cd execution/run_echo \
 	parser/parser_utils parser/parser parser/tree_utils  \
-	execution/redirections execution/execute_tree
+	execution/redirections execution/execute_tree \
+	execution/pipes
 
 ## TODO: crear bonus target with some new files _bonus
 
