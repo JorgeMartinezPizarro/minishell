@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/21 23:14:48 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/22 00:20:52 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,12 +71,15 @@ fclean: clean
 stats:
 	@lines=$$( \
 		{ \
-			cat Makefile; \
-			find includes srcs -type f \( -name '*.c' -o -name '*.h' -o -name '*.sh' \) -exec cat {} +; \
-		} | grep -Ev '^\s*(#|//|$$)' | wc -l \
+			find srcs includes -type f \( -name '*.c' -o -name '*.h' -o -name '*.sh' \) -exec cat {} +; \
+		} | grep -Ev '^[[:space:]]*(#|//|$$)' | wc -l \
 	); \
-	echo "\n Total of lines: $$lines"; \
-	files=$$(git ls-files | wc -l); \
-	echo " Total of files: $$files\n"
+	echo ""; \
+	echo "Total of lines: $$lines"; \
+	files=$$( \
+		find srcs includes -type f \( -name '*.c' -o -name '*.h' -o -name '*.sh' \) | wc -l \
+	); \
+	echo "Total of files: $$files"; \
+	echo ""
 
 .PHONY = test
