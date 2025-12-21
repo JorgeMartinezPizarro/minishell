@@ -128,4 +128,6 @@ void	exec_tree(t_tree *tree, t_list *env)
 		else
 			exit_code = run_program(tree->cmd);
 	}
+	(void)fd_in;
+	(void)fd_out;
 }

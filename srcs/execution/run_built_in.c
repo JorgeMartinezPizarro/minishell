@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 13:49:34 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 16:00:59 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ int	run_export(t_cmd *com)
 	char	**item;
 
 	item = ft_split(com->args->next->str, '=');
-	set_env_value(&com->env, item[0], item[1]);
-	return (1);
-}
-
-// TODO: tecnicamente, a=1 funciona como export a=1
-// En efecto NO, los comandos marcados con export se pasan
-// a los procesos hijos con execev.
-int	run_set(t_cmd *com)
-{
-	char	**item;
-
-	item = ft_split(com->args->str, '=');
 	set_env_value(&com->env, item[0], item[1]);
 	return (1);
 }
@@ -60,8 +48,6 @@ int	run_built_in(t_cmd *com)
 		return (run_export(com));
 	else if (ft_strcmp(com->args->str, "unset") == 0)
 		return (run_unset(com));
-	else if (ft_strchr(com->args->str, '=') != NULL)
-		return (run_set(com));
 	else
 	{
 		ft_printf("Command '%s' not found.\n", com->args->str);

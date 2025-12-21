@@ -15,7 +15,6 @@ typedef struct s_variable
 {
 	char	*name;
 	char	*value;
-	bool	exported;
 }	t_variable;
 
 // Main Execution
@@ -28,7 +27,6 @@ int 	run_echo(t_cmd *com);
 int 	run_env(t_cmd *com);
 int 	run_pwd(t_cmd *com);
 int		run_export(t_cmd *com);
-int		run_set(t_cmd *com);
 int		run_unset(t_cmd *com);
 
 // Main expansion

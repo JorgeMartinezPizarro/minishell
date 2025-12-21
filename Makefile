@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/21 14:08:05 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/21 16:03:26 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,6 @@ LIBFT_DIR = libft
 
 LIBFT=$(LIBFT_DIR)/libft.a
 
-## TODO: descomentar los ultimos dos ficheros
-## cuando por fin funcionen.
-## En el main_tmp hay un codigo preparado para usar
-## ambas cuando por fin compile y este terminado.
 FILES = execution/run_built_in main \
 	environ/expand_vars environ/extract_variables \
 	environ/environments environ/environments2 \
@@ -70,19 +66,6 @@ clean:
 fclean: clean
 	make -C libft fclean
 	rm -f $(NAME)
-
-token:
-	@make -C libft -s
-	@cc srcs/tokenizer/token_utils.c srcs/tokenizer/tokenizer.c libft/libft.a -Wall -Wextra -Werror -g
-	@./a.out "  \"hola\"  echo|hel*lo  "
-	@echo "next test:\n"
-	@./a.out "ls -l /tmp"
-	@echo "next test:\n"
-	@./a.out "echo 'hola mundo' "user $USER""
-
-tclean:
-	make fclean -C libft
-	rm a.out
 
 stats:
 	@lines=$$( \
