@@ -26,6 +26,8 @@ void	left_pipe(t_tree *node, t_shell *shell, int *fd)
 	if (pid == 0)
 	{
 		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
 		exec_tree(node->left, shell);
 		exit(exit_code);
 	}
@@ -45,6 +47,8 @@ void	right_pipe(t_tree *node, t_shell *shell, int *fd)
 	if (pid == 0)
 	{
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
 		exec_tree(node->right, shell);
 		exit(exit_code);
 	}

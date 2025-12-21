@@ -108,7 +108,7 @@ int main(int argc, char **args, char **env)
 		while (line)
 		{
 			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería in
-				exec_line(shell->env, line);
+				exec_line(shell, line);
 			line = readline(head);
 			g_state = 0;
 
