@@ -5,6 +5,8 @@
 
 3 Juntar todos los .h en uno comentado para tenerlo todo organizado dentro del mismo
 
+4 Arreglar los double_free generados por free_tokens()
+
 
 Gestionar el SHLVL
 actualmente la primera vez que se ejecuta ./minishell aumenta pero el resto no

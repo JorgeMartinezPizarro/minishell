@@ -38,6 +38,7 @@ int	exec_line(t_shell *shell, char *line)
 		  return (syntax_error(), 1);
 	exec_tree(shell->first_node, shell);
 	free_tree(shell->first_node);
+	free_tokens(tokens);
 	add_history(line);
 	return 1;
 }
@@ -107,7 +108,7 @@ int main(int argc, char **args, char **env)
 		g_state = 0;
 		while (line)
 		{
-			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería in
+			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería innecesario
 				exec_line(shell, line);
 			line = readline(head);
 			g_state = 0;
