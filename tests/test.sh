@@ -57,6 +57,9 @@ valgrind \
 ## Test para exec_tree
 ./minishell -c "echo hola && echo adios"
 
+## Test rotos aun por arreglar
+./minishell -c "(echo hola) && echo adios"
+
 echo " -> Cleanup"
 make fclean > /dev/null
 

@@ -43,6 +43,12 @@ int	exec_line(t_list *env, char *line)
 	return 1;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Get bash PC identifier from env.
+//	Try to load the 42 variables.
+//  Fallback to NAME for regular computers.
+//  Otherwise it returns unknown.
+///////////////////////////////////////////////////////////////////////////////
 char	*get_name(t_list *env)
 {
 	char **vals;
@@ -53,7 +59,12 @@ char	*get_name(t_list *env)
 
 	var = get_env_value(env, "SESSION_MANAGER");
 	if (!var)
-		return (ft_strdup("unknown"));
+	{
+		var = get_env_value(env, "NAME");
+		if (!var)
+			return (ft_strdup("unknown"));
+		return (ft_strdup(var));
+	}	
 	vals = ft_split(var, ':');
 	its = ft_split(vals[0], '.');
 	els = ft_split(its[0], '/');
@@ -64,6 +75,8 @@ char	*get_name(t_list *env)
 	return (sol);
 }
 
+
+// TODO: split one task to each function.
 int main(int argc, char **args, char **env)
 {
 	t_list	*env_lst;
@@ -90,7 +103,7 @@ int main(int argc, char **args, char **env)
 		while (line)
 		{
 			g_state = 2;
-			if (ft_strcmp(line, "") != 0) // Ignoramos lineas vacias.
+			if (ft_strcmp(line, "") != 0)
 				exec_line(env_lst, line);
 			g_state = 0;
 			g_state = 1;
