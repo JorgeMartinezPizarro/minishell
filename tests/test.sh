@@ -54,6 +54,8 @@ valgrind \
 		--quiet \
 		./minishell -c "git status"
 
+## Test para exec_tree
+./minishell -c "echo hola && echo adios"
 
 echo " -> Cleanup"
 make fclean > /dev/null

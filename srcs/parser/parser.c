@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 20:47:31 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/21 13:28:57 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 		return (perror("malloc"), NULL);
 	while (start != end)
 	{
-		if (is_redir(start->type))
+		if (is_redir(start))
 		{
 			if (start->next == end || !is_string(start))
 				return (free_cmnd((*node)->cmd), NULL);
@@ -61,7 +61,7 @@ t_tree	*make_tree(t_tokens *start, t_tokens *end)
 	if (!node)
 		return (perror("malloc error"), NULL);
 	div_p = division_point(start, end);
-	assign_node_type(node, div_p);
+	assign_node_type(&node, div_p);
 	if (node->n_type == N_CMND)
 	{
 		if (!parse_cmd(&node, start, end))

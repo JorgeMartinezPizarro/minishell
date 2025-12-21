@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 21:56:53 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/21 13:27:30 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// TODO: esta funcion falta!
+void	free_redirs(t_redir **redirs)
+{
+	(void)redirs;
+}
 
 bool	is_string(t_tokens *token)
 {

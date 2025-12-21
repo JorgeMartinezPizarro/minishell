@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/21 12:39:29 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/21 14:00:14 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ LIBFT_DIR = libft
 
 LIBFT=$(LIBFT_DIR)/libft.a
 
-## TODO: merge main_tmp.c and main.c
-## TODO: Add parser when it is ready.
-FILES = execution/run_built_in main_tmp \
+## TODO: descomentar los ultimos dos ficheros
+## cuando por fin funcionen.
+## En el main_tmp hay un codigo preparado para usar
+## ambas cuando por fin compile y este terminado.
+FILES = execution/run_built_in main \
 	environ/expand_vars environ/extract_variables \
 	environ/environments environ/environments2 \
 	environ/environments3 \
@@ -26,7 +28,9 @@ FILES = execution/run_built_in main_tmp \
 	tokenizer/token_utils tokenizer/tokenizer \
 	wildcard/expand_tokens utils/free_str_array \
 	utils/free execution/run_built_in_utils \
-	utils/join_paths execution/run_cd execution/run_echo
+	utils/join_paths execution/run_cd execution/run_echo \
+	parser/parser_utils parser/parser parser/tree_utils ## \
+	execution/redirections execution/execute_tree
 
 ## TODO: crear bonus target with some new files _bonus
 

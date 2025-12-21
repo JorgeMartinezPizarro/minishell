@@ -1,62 +1,110 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 22:30:09 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 23:09:32 by maanguit         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
+#include "libft.h"
+#include "minishell_jorge.h"
 
-#include "../includes/minishell.h"
-#include "../includes/minishell_jorge.h"
+// TODO: usar variable global aqui.
 
-int	exit_code = 0;
-
-int	exec_line(char *line, t_list *env)
+void sigint_handler(int sign)
 {
-	t_tokens	*tokens;
-	t_tree		*tree;
-
-	tokens = NULL;
-	tree = NULL;
-	if (!tokenize(line, &tokens))
-		return ;
-	expand_tokens(&tokens, get_cwd(NULL, 0));
-	tree = make_tree(tokens, NULL);
-	free_tokens(tokens);
-	if (!tree)
-		return (syntax_error(), 1);
-	exec_tree(tree, env);
-	free_tree(tree);
-	return (0);
+    // TODO: mirar bien el shell level y el isatty para ver que shell debe reaccionar
+	
+	(void)sign;
+    write(1, "\n", 1);
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }
 
-int	main(int ac, char **av, char **envp)
+int	exec_line(t_list *env, char *line)
 {
-	t_list	*env;
-	char	*line;
-	char	*user;
+	t_tokens	*tokens;
+	//t_tree		*tree;
 
-/*
-gestionar cuando te pasan un comando que borre la variable de entorno
-en tal caso creo que hay que construir el entorno
+	tokens = NULL;
+	if (!tokenize(line, &tokens))
+		return 1;
+	
+	///////////////////////////////////////////////////////////////////////////
+	// El codigo comentado es el uso correcto de exec_tree
+	// It does not work yet.
+	// tree = make_tree(tokens, NULL);
+	// if (!tree)
+	// 	  return (syntax_error(), 1);
+	// exec_tree(tree, env);
 
-y luego ./minishell y también los shell_lvl
-*/
-	env = load_env_values(envp);
-	if (ft_strncmp(av[1], "-c", 3))
-		exec_line(av[2], env);
-	while (1)
+	///////////////////////////////////////////////////////////////////////////
+	// Este codigo es un workaround para que funcione el single
+	// command.
 	{
-		line = readline(user);
-		if (exec_line(line, env) == 1)
+		t_cmd cmd;
+		cmd.env = env;
+		cmd.args = NULL;
+		tokenize(line, &cmd.args);
+		expand_tokens(&cmd.args, getcwd(NULL, 0));	
+		if (is_built_in(cmd.args->str))
+			run_built_in(&cmd);
+		else
+			run_program(&cmd);
+	}	
+	
+	//free_tree(tree);
+	add_history(line);
+	return 1;
+}
+
+char	*get_name(t_list *env)
+{
+	char *var = get_env_value(env, "SESSION_MANAGER");
+	if (!var)
+		return ft_strdup("unknown");
+	char **vals = ft_split(var, ':');
+
+	char **its = ft_split(vals[0], '.');
+
+	char **els = ft_split(its[0], '/');
+
+	char *sol = ft_strdup(els[1]);
+
+	free_str_array(vals);
+	free_str_array(its);
+	free_str_array(els);
+	
+	return sol;
+}
+
+int main(int argc, char **args, char **env)
+{
+	t_list	*env_lst;
+
+	signal(SIGINT, sigint_handler);
+    signal(SIGQUIT, SIG_IGN);
+	env_lst = load_env_values(env);
+
+	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
+		exec_line(env_lst, args[2]);
+	else if (argc < 2)
+	{
+		char *str = ft_strdup("\033[1;35m${USER}@#### >>> \033[0m");
+		char *head = expand_vars(str, env_lst);
+		char *name = get_name(env_lst);
+		char *tmp = head;
+		head = ft_strreplace(tmp, "####", name);
+		free(tmp);
+		free(name);
+		char *line = readline(head);
+		
+		while (line)
 		{
-			exit_code = 1;
-			break ;
+			if (ft_strcmp(line, "") != 0)
+				exec_line(env_lst, line);
+			line = readline(head);
 		}
+		free(head);
+		
 	}
-	return (0);
+	else {
+		ft_printf("Usage %s -c <command>\n", args[0]);
+		return 1;
+	}
+	return 0;
 }
