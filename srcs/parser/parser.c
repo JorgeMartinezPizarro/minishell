@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 13:28:57 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 15:04:39 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 	{
 		if (is_redir(start))
 		{
-			if (start->next == end || !is_string(start))
+			if (start->next == end || !is_string(start->next))
 				return (free_cmnd((*node)->cmd), NULL);
 			add_redir(&(*node)->cmd->redirs, &start);
 		}
@@ -51,11 +51,11 @@ t_tree	*make_tree(t_tokens *start, t_tokens *end)
 	t_tokens	*div_p;
 	t_tree		*node;
 
-	if (!start || start == end || start->next == end)
+	if (!start || start == end)
 		return (NULL);
 	while (everything_inside_paren(start, end))
 		remove_paren(&node, &start, &end);
-	if (!start || start == end || start->next == end)
+	if (!start || start == end)
 		return (NULL);
 	node = ft_calloc(sizeof(t_tree), 1);
 	if (!node)
@@ -69,7 +69,7 @@ t_tree	*make_tree(t_tokens *start, t_tokens *end)
 		return (node);
 	}
 	node->left = make_tree(start, div_p);
-	node->right = make_tree(div_p->next, NULL);
+	node->right = make_tree(div_p->next, end);
 	if (!node->left || !node->right)
 		return (free(node), NULL);
 	return (node);

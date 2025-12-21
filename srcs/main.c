@@ -3,6 +3,7 @@
 #include "minishell_jorge.h"
 
 // TODO: usar variable global aqui.
+int	exit_code = 0;
 
 void sigint_handler(int sign)
 {
@@ -18,36 +19,16 @@ void sigint_handler(int sign)
 int	exec_line(t_list *env, char *line)
 {
 	t_tokens	*tokens;
-	//t_tree		*tree;
+	t_tree		*tree;
 
 	tokens = NULL;
 	if (!tokenize(line, &tokens))
 		return 1;
-	
-	///////////////////////////////////////////////////////////////////////////
-	// El codigo comentado es el uso correcto de exec_tree
-	// It does not work yet.
-	// tree = make_tree(tokens, NULL);
-	// if (!tree)
-	// 	  return (syntax_error(), 1);
-	// exec_tree(tree, env);
-
-	///////////////////////////////////////////////////////////////////////////
-	// Este codigo es un workaround para que funcione el single
-	// command.
-	{
-		t_cmd cmd;
-		cmd.env = env;
-		cmd.args = NULL;
-		tokenize(line, &cmd.args);
-		expand_tokens(&cmd.args, getcwd(NULL, 0));	
-		if (is_built_in(cmd.args->str))
-			run_built_in(&cmd);
-		else
-			run_program(&cmd);
-	}	
-	
-	//free_tree(tree);
+	tree = make_tree(tokens, NULL);
+	if (!tree)
+		  return (syntax_error(), 1);
+	exec_tree(tree, env);
+	free_tree(tree);
 	add_history(line);
 	return 1;
 }
@@ -76,6 +57,7 @@ int main(int argc, char **args, char **env)
 {
 	t_list	*env_lst;
 
+	exit_code = 0;
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
 	env_lst = load_env_values(env);
@@ -95,16 +77,16 @@ int main(int argc, char **args, char **env)
 		
 		while (line)
 		{
-			if (ft_strcmp(line, "") != 0)
+			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería in
 				exec_line(env_lst, line);
 			line = readline(head);
 		}
 		free(head);
-		
 	}
-	else {
+	else
+	{
 		ft_printf("Usage %s -c <command>\n", args[0]);
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }

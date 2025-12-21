@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/20 22:47:31 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/21 14:12:13 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@ int	here_doc(t_redir *redir, t_list *env)
 			if (redir->file->type != T_SINGLE_QUOTE)
 				line = expand_vars(line, env);
 			write(STDIN_FILENO, line, ft_strlen(line));
-			if (ft_strcmp(line, redir->file) == 0)
+			if (ft_strcmp(line, redir->file->str) == 0)
 				break ;
 		}
 	}
+	return (0);
 }
 
 int	redir_files(t_redir *redir)
 {
 	int	fd;
 
+	fd = 0;
 	if (redir->redir_type == T_REDIR_IN)
-		fd = open(redir->file, O_RDONLY);
+		fd = open(redir->file->str, O_RDONLY);
 	else if (redir->redir_type == T_REDIR_TR)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(redir->file->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redir->redir_type == T_APPEND)
-		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(redir->file->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return (perror("open"), -1);
 	if (redir->redir_type == T_APPEND || redir->redir_type == T_REDIR_TR)
@@ -61,8 +63,6 @@ int	redir_files(t_redir *redir)
 
 int	make_redirections(t_redir *redirs, t_list *env)
 {
-	int	fd;
-
 	while (redirs)
 	{
 		if (redir_files(redirs) == -1)

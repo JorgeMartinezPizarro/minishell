@@ -46,13 +46,13 @@ void	exec_b_op(t_tree *tree, t_list *env)
 	if (tree->n_type == N_OR)
 	{
 		exec_tree(tree->left, env);
-		if (exit_code != 0)
+		if (exit_code == 0)
 			exec_tree(tree->right, env);
 	}
 	if (tree->n_type == N_AND)
 	{
 		exec_tree(tree->left, env);
-		if (exit_code == 0)
+		if (exit_code != 0)
 			exec_tree(tree->right, env);
 	}
 }
@@ -70,7 +70,7 @@ void	exec_subprocces(t_tree **tree, t_list *env)
 			exec_tree(*tree, env);
 			exit(0);
 		}
-		wait(NULL);
+		waitpid(pid, NULL, 0);
 	}
 }
 
@@ -82,7 +82,8 @@ void	expand_cmds(t_cmd **cmd)//revisar punteros
 	while ((*cmd)->redirs)
 	{
 		if ((*cmd)->redirs->redir_type != T_HEREDOC)
-			(*cmd)->redirs->file = expand_vars((*cmd)->redirs->file, (*cmd)->env);
+			(*cmd)->redirs->file->str = expand_vars((*cmd)->redirs->file->str
+				, (*cmd)->env);
 		(*cmd)->redirs = (*cmd)->redirs->next;
 	}
 	(*cmd)->redirs = tmp;
@@ -103,22 +104,26 @@ void	exec_tree(t_tree *tree, t_list *env)
 
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
-	exec_subprocces(&tree, env);
+	if (tree->subshell == true)
+	{
+		exec_subprocces(&tree, env);
+		return ;
+	}
 	if (tree->n_type == N_PIPE)
 		exec_pipe(tree, env);
 	exec_b_op(tree, env);
 	if (tree->n_type == N_CMND)
 	{
 		expand_cmds(&tree->cmd);
-		make_redirections(tree->cmd->redirs);
+		make_redirections(tree->cmd->redirs, env);
 		tree->cmd->env = env;
 		if (tree->cmd->is_builtin)
 		{
 			exit_code = run_built_in(tree->cmd);//necesitamos liberar el arbol con exit
-			dup2(fd_in, STDIN_FILENO);
-			dup2(fd_in, STDOUT_FILENO);
-			close(fd_in);
-			close(fd_out);
+			// dup2(fd_in, STDIN_FILENO);
+			// dup2(fd_out, STDOUT_FILENO);
+			// close(fd_in);
+			// close(fd_out);
 		}
 		else
 			exit_code = run_program(tree->cmd);
