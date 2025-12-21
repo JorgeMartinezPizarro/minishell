@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/19 14:49:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/20 19:35:31 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,14 @@ int	run_built_in(t_cmd *com)
 	}
 }
 
-int	is_built_in(t_cmd *com)
+int	is_built_in(char *str)
 {
-	if (
-		ft_strcmp(com->args->str, "echo") == 0
-		|| ft_strcmp(com->args->str, "env") == 0
-		|| ft_strcmp(com->args->str, "pwd") == 0
-		|| ft_strcmp(com->args->str, "cd") == 0
-		|| ft_strcmp(com->args->str, "export") == 0
-		|| ft_strcmp(com->args->str, "unset") == 0
-		|| ft_strchr(com->args->str, '=') != NULL
-	)
+	if (ft_strcmp(str, "echo") == 0
+		|| ft_strcmp(str, "env") == 0
+		|| ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "cd") == 0
+		|| ft_strcmp(str, "export") == 0
+		|| ft_strcmp(str, "unset") == 0)
 		return (1);
 	return (0);
 }

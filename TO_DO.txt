@@ -5,12 +5,11 @@ Hacer que compilen las funciones make_tree y parse.
 Para debuguear hacer una función que imprima el árbol nodo a nodo
 
 
-Como solo hace falta cwd en los builtins -> quitarlo de la estructura
-
 La variable de entorno se puede pasar como parámetro y usarla cuando sea necesario
 
 
-Gestionar el SHLVL que la primera vez que se ejecuta la minishell aumenta pero el resto no
+Gestionar el SHLVL
+actualmente la primera vez que se ejecuta ./minishell aumenta pero el resto no
 así que habría que mirar si el comando es ./minishell y en ese caso aumentar 1 el SHLVL de la
 variable de entorno
 

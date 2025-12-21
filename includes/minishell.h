@@ -1,7 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-
 // It beaks compilation, we need the global variable for the signal management.
 // Fix compilation before adding it, please.
 

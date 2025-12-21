@@ -6,16 +6,24 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/19 20:11:27 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/20 21:56:53 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool	is_string(t_tokens *token)
+{
+	if (token->type == T_WORD || token->type == T_SINGLE_QUOTE
+		|| token->type == T_DOUBLE_QUOTE)
+		return (true);
+	return (false);
+}
+
 bool	is_redir(t_tokens *token)
 {
 	if (token->type == T_APPEND || token->type == T_HEREDOC
-		|| token->type == T_REDIR_IN || token->type == T_REDIR_OUT)
+		|| token->type == T_REDIR_IN || token->type == T_REDIR_TR)
 		return (true);
 	return (false);
 }
@@ -62,5 +70,5 @@ void	iter_paren(t_tokens **tokens)
 
 void	syntax_error(void)
 {
-	write(2, "Syntax error", 12);
+	write(2, "Syntax error\n", 13);
 }
