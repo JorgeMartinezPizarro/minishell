@@ -35,6 +35,7 @@ int	exec_line(t_list *env, char *line)
 	if (!tokenize(line, &tokens))
 		return 1;
 	tree = make_tree(tokens, NULL);
+	free_tokens(tokens);
 	if (!tree)
 		  return (syntax_error(), 1);
 	exec_tree(tree, env);
@@ -116,7 +117,9 @@ int main(int argc, char **args, char **env)
 	else
 	{
 		ft_printf("Usage %s -c <command>\n", args[0]);
+		free_env(&env_lst);
 		return (1);
 	}
+	free_env(&env_lst);
 	return (0);
 }
