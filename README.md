@@ -45,14 +45,20 @@ make test
 
 ### NOTA IMPORTANTE:
 
-El comando lleva un puntero al entorno, y en exec_tree se pasa de comando a comando. t_cmd contiene por diseño cwd con el path actual
-y env con la t_list de t_variables. En run_program necesitas tener los env actuales, y aunque no haga falta ahi cwd, es util para la parte
-de los built ins.
+expand_vars funciona con el patron
+
+str = expand_vars(str)
+
+es menos compacto que expand_vars(&str) pero se lee mejor.
+
+El patron arriba indicado, significa que el contenido de str se libera dentro de la funcion.
 
 ### TODOS:
 
 - Gestion de exit
 - Trocear el codigo para mejor legibilidad. 
-- Arreglar el .h
-- Ctrl C solo reacciona en la terminal activa.
-- Terminar make_tree y exec_tree y testearlos.
+- Integrar bien los .h.
+- Reparar expand_tokens (integracion con expand_wildcards).
+- Arreglar exec_tree:
+	- (echo hola) && (echo adios) da problemas.
+	- export a=5 && echo $a no imprime nada.

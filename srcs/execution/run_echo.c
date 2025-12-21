@@ -6,32 +6,53 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:52:15 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 11:54:55 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 17:40:38 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-// TODO: Ojo con -n, -nnnnn
-int	run_echo(t_cmd *com)
+int is_echo_n(const char *s)
 {
-	t_tokens	*temp;
+    int i;
 
-	temp = com->args->next;
-	if (temp)
-	{
-		temp->str = expand_vars(temp->str, com->env);
-		ft_printf("%s", temp->str);
-	}
-	else
-		return (1);
-	temp = temp->next;
-	while (temp)
-	{
-		temp->str = expand_vars(temp->str, com->env);
-		ft_printf(" %s", temp->str);
-		temp = temp->next;
-	}
-	ft_printf("\n");
-	return (1);
+    if (!s || s[0] != '-' || s[1] != 'n')
+        return 0;
+
+    i = 2;
+    while (s[i])
+    {
+        if (s[i] != 'n')
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
+int run_echo(t_cmd *com)
+{
+    t_tokens    *temp;
+    int         no_newline;
+    int         first;
+
+	no_newline = 0;
+    first = 1;
+    temp = com->args->next;
+    while (temp && is_echo_n(temp->str))
+    {
+        no_newline = 1;
+        temp = temp->next;
+    }
+    while (temp)
+    {
+        temp->str = expand_vars(temp->str, com->env);
+        if (!first)
+            ft_printf(" ");
+        ft_printf("%s", temp->str);
+        first = 0;
+        temp = temp->next;
+    }
+    if (!no_newline)
+        ft_printf("\n");
+    return (1);
 }
