@@ -17,13 +17,13 @@ void sigint_handler(int sign)
 
 int	exec_line(t_cmd *com, char *line)
 {
-	t_tokens	*tokens;
-	t_tree		*tree;
+	//t_tokens	*tokens;
+	//t_tree		*tree;
 
-	tree = NULL;
-	if (!tokenize(line, &tokens))
+	//tree = NULL;
+	if (!tokenize(line, &com->args))
 		return 1;
-	expand_tokens(&tokens, getcwd(NULL, 0));
+	expand_tokens(&com->args, getcwd(NULL, 0));
 	//tree = make_tree(com->args, NULL);
 	//tree->cmd = com;
 	//execute_tree(tree);
@@ -65,6 +65,7 @@ int main(int argc, char **args, char **env)
 	signal(SIGINT, sigint_handler);
     signal(SIGQUIT, SIG_IGN);
 	com.args = NULL;
+	com.env = load_env_values(env);
 
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 		exec_line(&com, args[2]);

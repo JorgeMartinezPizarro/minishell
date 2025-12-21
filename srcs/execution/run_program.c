@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 11:57:09 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 12:11:45 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static char **tokens_to_argv(t_tokens *tokens)
 /*
 queremos crear un proceso nuevo y 
 */
-int	run_program(t_cmd *com, char **env)
+int	run_program(t_cmd *com)
 {
 	char	**argv;
 	char	*exe;
@@ -124,7 +124,7 @@ int	run_program(t_cmd *com, char **env)
 		return (1);
 	if (pid == 0)
 	{
-		execve(exe, argv, env_list_to_envp(env));
+		execve(exe, argv, env_list_to_envp(com->env));
 		perror("execve");
 		exit(126);
 	}

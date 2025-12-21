@@ -19,7 +19,7 @@ typedef struct s_variable
 }	t_variable;
 
 // Main Execution
-int		is_built_in(t_cmd *com);
+int		is_built_in(char *str);
 int		run_built_in(t_cmd *com);
 int		run_program(t_cmd *com);
 // Execution functions
