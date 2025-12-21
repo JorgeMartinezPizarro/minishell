@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_program.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/12/21 11:57:09 by jomarti3         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell_jorge.h"
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-char **env_list_to_envp(t_list *env)
+char	**env_list_to_envp(t_list *env)
 {
 	int len = ft_lstsize(env);
 	char **envp = ft_calloc(len + 1, sizeof(char *));
@@ -31,7 +43,7 @@ char *find_executable(const char *cmd)
 	char *full;
 	int i;
 
-	if (ft_strchr(cmd, '/')) // contiene '/' → ruta directa
+	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)
 			return ft_strdup(cmd);
@@ -52,7 +64,7 @@ char *find_executable(const char *cmd)
 		full = join_paths(dirs[i], cmd);
 		if (access(full, X_OK) == 0)
 		{
-			free_str_array(dirs); // liberar tu función de array de strings
+			free_str_array(dirs);
 			return full;
 		}
 		free(full);

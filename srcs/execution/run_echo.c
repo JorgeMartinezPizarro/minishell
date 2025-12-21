@@ -1,41 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_built_in_utils.c                               :+:      :+:    :+:   */
+/*   run_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 11:54:24 by jomarti3         ###   ########.fr       */
+/*   Created: 2025/12/21 11:52:15 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/12/21 11:54:55 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-int	run_env(t_cmd *com)
+// TODO: Ojo con -n, -nnnnn
+int	run_echo(t_cmd *com)
 {
-	t_list		*node;
-	t_variable	*v;
+	t_tokens	*temp;
 
-	node = com->env;
-	while (node)
+	temp = com->args->next;
+	if (temp)
 	{
-		v = (t_variable *)node->content;
-		ft_printf("%s=%s\n", v->name, v->value);
-		node = node->next;
+		temp->str = expand_vars(temp->str, com->env);
+		ft_printf("%s", temp->str);
 	}
-	return (1);
-}
-
-int	run_pwd(t_cmd *com)
-{
-	ft_printf("%s\n", com->cwd);
-	return (1);
-}
-
-// TODO: discutir con mangit como gestionar esto desde exec_tree
-int	run_exit(t_cmd *com)
-{
-	(void)com;
+	else
+		return (1);
+	temp = temp->next;
+	while (temp)
+	{
+		temp->str = expand_vars(temp->str, com->env);
+		ft_printf(" %s", temp->str);
+		temp = temp->next;
+	}
+	ft_printf("\n");
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/19 18:19:16 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/21 11:52:44 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,12 @@ LIBFT=$(LIBFT_DIR)/libft.a
 ## TODO: Add parser when it is ready.
 FILES = execution/run_built_in main_tmp \
 	environ/expand_vars environ/extract_variables \
-	environ/environments utils/join_paths \
+	environ/environments environ/environments2 \
 	execution/run_program wildcard/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
 	wildcard/expand_tokens utils/free_str_array \
-	utils/free execution/run_built_in_utils
+	utils/free execution/run_built_in_utils \
+	utils/join_paths execution/run_cd execution/run_echo
 
 ## TODO: crear bonus target with some new files _bonus
 
@@ -49,6 +50,14 @@ re: fclean all
 test: fclean
 	@./tests/test.sh
 
+## Run minishell with valgrind. readline.supp suppress all LEAKS
+## from readline. All supp rules are readline or add_history 
+## usage.
+run: all
+	valgrind \
+		--leak-check=full --show-leak-kinds=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		./minishell
 clean:
 	make -C libft clean
 	rm -f $(OBJECTS)

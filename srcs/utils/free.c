@@ -6,11 +6,13 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:41:48 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/19 17:08:56 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/21 11:45:21 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell_jorge.h"
 #include "minishell.h"
+#include "libft.h"
 
 void	free_tokens(t_tokens *tokens)
 {
@@ -51,4 +53,17 @@ void	free_tree(t_tree *tree)
 	if (tree->right)
 		free_tree(tree->right);
 	free(tree);
+}
+
+void free_variable(void *content)
+{
+	t_variable *v = (t_variable *)content;
+	free(v->name);
+	free(v->value);
+	free(v);
+}
+
+void free_env(t_list **vars)
+{
+	ft_lstclear(vars, free_variable);
 }

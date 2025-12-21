@@ -21,13 +21,21 @@ to compile the working code, in `main_tmp.c`.
 ./minishell
 ```
 
-opens the shell interactively. Using
+opens the minishell interactively. Using
 
 ```sh
 ./minishell -c "command"
 ```
 
 it runs a single command.
+
+Alternatively, you can use:
+
+```sh
+make run
+```
+
+to run the minishell with `valgrind`.
 
 Finally, to run the tests, you can run
 
