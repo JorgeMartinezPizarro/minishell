@@ -63,6 +63,8 @@ void	expand_cmds(t_tokens *args, t_redir *redirs, t_list *env)
 		args->str = expand_vars(args->str, env);
 		args = args->next;
 	}
+	(void)tmp_redir;
+	(void)tmp_args;
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
