@@ -35,7 +35,6 @@ int	exec_line(t_list *env, char *line)
 	if (!tokenize(line, &tokens))
 		return 1;
 	tree = make_tree(tokens, NULL);
-	free_tokens(tokens);
 	if (!tree)
 		  return (syntax_error(), 1);
 	exec_tree(tree, env);
