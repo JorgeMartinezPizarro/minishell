@@ -7,6 +7,10 @@
 
 4 Arreglar los double_free generados por free_tokens()
 
+5 Gestionar si la minishell está en modo interactivo o no
+
+6 Gestionar bien el heredoc con sus señales 
+
 
 Gestionar el SHLVL
 actualmente la primera vez que se ejecuta ./minishell aumenta pero el resto no
