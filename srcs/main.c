@@ -38,6 +38,7 @@ int	exec_line(t_shell *shell, char *line)
 		  return (syntax_error(), 1);
 	exec_tree(shell->first_node, shell);
 	free_tree(shell->first_node);
+	free_tokens(tokens);
 	add_history(line);
 	return 1;
 }

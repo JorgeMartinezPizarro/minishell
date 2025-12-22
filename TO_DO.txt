@@ -5,11 +5,13 @@
 
 3 Juntar todos los .h en uno comentado para tenerlo todo organizado dentro del mismo
 
-4 Arreglar los double_free generados por free_tokens()
+4 Arreglar los double_free generados por free_tokens() TERMINADO
 
 5 Gestionar si la minishell está en modo interactivo o no
 
-6 Gestionar bien el heredoc con sus señales 
+6 Gestionar bien el heredoc con sus señales
+
+7 Investigar un poco más si hace falta si hay que mandar una copia del entorno
 
 
 Gestionar el SHLVL

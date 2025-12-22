@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 12:40:05 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:49:33 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,12 @@ int	run_program(t_cmd *com, t_shell *shell)
 	if (pid == 0)
 	{
 		execve(exe, argv, env_list_to_envp(shell->env));
+		free(exe);
 		perror("execve");
 		exit(126);
 	}
+	free_str_array(argv);
+	free(exe);
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }

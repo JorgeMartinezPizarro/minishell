@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 17:55:34 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 14:42:50 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 			start = start->next;
 		}
 		else if (is_string(start))
-			add_token_to_list(&(*node)->cmd->args, start->str, start->type);
+			add_token_to_list(&(*node)->cmd->args, ft_strdup(start->str),
+				start->type);
 		else
 			return (free_cmnd((*node)->cmd), NULL);
 		start = start->next;

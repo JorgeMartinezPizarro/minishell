@@ -47,24 +47,17 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 
 void	expand_cmds(t_tokens *args, t_redir *redirs, t_list *env)
 {
-	t_tokens	*tmp_args;
-	t_redir		*tmp_redir;
-
-	tmp_redir = redirs;
 	while (redirs)
 	{
 		if (redirs->redir_type != T_HEREDOC)
 			redirs->file->str = expand_vars(redirs->file->str, env);
 		redirs = redirs->next;
 	}
-	tmp_args = args;
 	while (args)
 	{
 		args->str = expand_vars(args->str, env);
 		args = args->next;
 	}
-	(void)tmp_redir;
-	(void)tmp_args;
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
@@ -92,6 +85,4 @@ void	exec_tree(t_tree *node, t_shell *shell)
 		close(fd_in);
 		close(fd_out);
 	}
-	(void)fd_in;
-	(void)fd_out;
 }
