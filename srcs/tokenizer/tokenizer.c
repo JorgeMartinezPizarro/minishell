@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/22 14:45:21 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:36:11 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	add_token_to_list(t_tokens **tokens, char *str, int type)
 		exit(1);
 	}
 	new_token->type = type;
-	new_token->str = str;
+	new_token->str = ft_strdup(str);
 	new_token->next = NULL;
 	add_last_token(tokens, new_token);
 }
@@ -73,6 +73,7 @@ void	add_token(t_tokens **tokens, char *str)
 		exit(1);
 	}
 	add_token_to_list(tokens, token_str, type);
+	free(token_str);
 }
 
 void	add_quotes(t_tokens **tokens, char *str)
@@ -98,6 +99,7 @@ void	add_quotes(t_tokens **tokens, char *str)
 		exit(1);
 	}	
 	add_token_to_list(tokens, string, type);
+	free(string);
 }
 
 /*

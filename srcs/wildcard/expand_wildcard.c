@@ -68,18 +68,15 @@ static int	is_directory(const char *path)
 /*
 ** Recursive expansion by path segments
 */
-static void	expand_recursive(const char *base,
-				char **segments, int idx, char ***out)
+static void expand_recursive(const char *base,
+							 char **segments, int idx, char ***out)
 {
-	DIR				*dir;
-	struct dirent	*ent;
-	char			*path;
+	DIR             *dir;
+	struct dirent   *ent;
+	char            *path;
 
 	if (!segments[idx])
-	{
-		*out = str_array_add(*out, ft_strdup(base));
 		return ;
-	}
 	dir = opendir(base);
 	if (!dir)
 		return ;
@@ -91,25 +88,18 @@ static void	expand_recursive(const char *base,
 			continue ;
 		path = join_paths(base, ent->d_name);
 		if (!segments[idx + 1])
-			*out = str_array_add(*out, path);
+			*out = str_array_add(*out, ft_strdup(ent->d_name));
 		else if (is_directory(path))
-		{
 			expand_recursive(path, segments, idx + 1, out);
-			free(path);
-		}
-		else
-			free(path);
+		free(path);	
 	}
 	closedir(dir);
 }
 
-/*
-** Public API
-*/
-char	**expand_wildcard(const char *cwd, const char *pattern)
+char **expand_wildcard(const char *cwd, const char *pattern)
 {
-	char	**segments;
-	char	**result;
+	char **segments;
+	char **result;
 
 	result = NULL;
 	segments = ft_split(pattern, '/');

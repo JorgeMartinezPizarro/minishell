@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 14:54:59 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:05:59 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	change_directory(char *path)
 
 	if (stat(path, &st) != 0)
 	{
-		ft_putstr_fd("Folder does not exist.\n", 2);
+		ft_putstr_fd("cd: folder does not exist.\n", 2);
 		return (0);
 	}
 	if (chdir(path) != 0)

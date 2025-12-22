@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/20 20:09:45 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:29:37 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ void	expand_tokens(t_tokens **tokens, char *cwd)
 		cur = cur->next;
 	}
 	free(cwd);
-	free(*tokens);
+	free_tokens(*tokens);
 	*tokens = result;
 }

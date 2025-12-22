@@ -73,6 +73,7 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{
+		expand_tokens(&node->cmd->args, getcwd(NULL, 0));
 		expand_cmds(node->cmd->args, node->cmd->redirs, shell->env);
 		make_redirections(node->cmd->redirs, shell->env);
 		node->cmd->env = shell->env;
