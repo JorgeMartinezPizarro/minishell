@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 21:18:29 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:22:02 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 {
 	char *line;
 
+	//gestionar las señales haciendo exit
 	while (1)
 	{
 		line = readline("> ");
@@ -40,7 +41,7 @@ int	here_doc(t_redir *redir, t_list *env)
 	pid_t	pid;
 
 	pid = fork();
-	if (pid == -1 || pipe(fd) == -1)
+	if (pipe(fd) == -1 || pid == -1)
 		return (-1);
 	if (pid == 0)
 		here_doc_aux(redir, env, fd);

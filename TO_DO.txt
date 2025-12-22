@@ -1,11 +1,7 @@
-1 Terminar de adaptar las funciones de ejecución a el uso de t_shell
+
 2 Una función para liberar la shell cuando algo falle, imprimir el error con perror
 	y modificar el valor de exit_code 
 	(open, pipe(fd), fork y malloc)-> estas funciones pueden fallar
-
-3 Juntar todos los .h en uno comentado para tenerlo todo organizado dentro del mismo
-
-4 Arreglar los double_free generados por free_tokens() TERMINADO
 
 5 Gestionar si la minishell está en modo interactivo o no
 

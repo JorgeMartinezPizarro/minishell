@@ -43,22 +43,10 @@ Finally, to run the tests, you can run
 make test
 ```
 
-### NOTA IMPORTANTE:
-
-expand_vars funciona con el patron
-
-str = expand_vars(str)
-
-es menos compacto que expand_vars(&str) pero se lee mejor.
-
-El patron arriba indicado, significa que el contenido de str se libera dentro de la funcion.
-
 ### TODOS:
 
 - Gestion de exit
 - Trocear el codigo para mejor legibilidad. 
 - Integrar bien los .h.
-- Reparar expand_tokens (integracion con expand_wildcards).
 - Arreglar exec_tree:
 	- (echo hola) && (echo adios) da problemas.
-	- export a=5 && echo $a no imprime nada.
