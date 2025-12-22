@@ -49,13 +49,15 @@ make test
 
 - Gestion de exit
 
+- Gestionar export A="echo hola"
+
 - Trocear el codigo para mejor legibilidad. 
 
 - Integrar bien los .h.
 
 - Reparar tokens memory usage.
 
-- Expand variables into tokens. (jorge)
+- Gestionar control + c.
 
 - Los siguientes comandos fallan.
 	- (echo hola)

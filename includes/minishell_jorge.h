@@ -32,6 +32,7 @@ int		run_unset(t_cmd *com);
 // Main expansion
 char	*expand_vars(char *s, t_list *env);
 void	expand_tokens(t_tokens **tokens, char *cwd);
+void	expand_env_tokens(t_tokens **tokens, t_list *env);
 
 // Expansion functions
 char	**expand_wildcard(const char *cwd, const char *pattern);

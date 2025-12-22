@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:52:15 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 17:40:38 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/22 23:22:11 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int run_echo(t_cmd *com)
     }
     while (temp)
     {
-        temp->str = expand_vars(temp->str, com->env);
         if (!first)
             ft_printf(" ");
         ft_printf("%s", temp->str);

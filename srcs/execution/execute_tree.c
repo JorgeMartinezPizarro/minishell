@@ -45,24 +45,16 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	waitpid(pid, NULL, 0);
 }
 
-void	expand_cmds(t_tokens *args, t_redir *redirs, t_list *env)
+void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 {
-	t_tokens	*tmp_args;
-	t_redir		*tmp_redir;
-
-	tmp_redir = redirs;
 	while (redirs)
 	{
 		if (redirs->redir_type != T_HEREDOC)
 			redirs->file->str = expand_vars(redirs->file->str, env);
 		redirs = redirs->next;
 	}
-	tmp_args = args;
-	while (args)
-	{
-		args->str = expand_vars(args->str, env);
-		args = args->next;
-	}
+	expand_tokens(args, get_env_value(env, "PWD"));
+	expand_env_tokens(args, env);
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
@@ -78,15 +70,7 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{
-		// TODO: aqui deberiamos expandir tambien las VARS de entorno,
-		// considerando que un token puede desaparecer o expandir en mas 
-		// de uno. Ejemplos:
-		//
-		// - export a="echo hola" $a deberia expandir en dos tokens.
-		// - export a, $a deberia colapsar el token
-		//
-		expand_tokens(&node->cmd->args, get_env_value(shell->env, "PWD"));
-		expand_cmds(node->cmd->args, node->cmd->redirs, shell->env);
+		expand_cmds(&node->cmd->args, node->cmd->redirs, shell->env);
 		make_redirections(node->cmd->redirs, shell->env);
 		node->cmd->env = shell->env;
 		if (node->cmd->is_builtin)

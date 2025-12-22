@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_tokens.c                                    :+:      :+:    :+:   */
+/*   expand_env_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 23:42:53 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/22 23:47:53 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,29 @@
 #include "minishell.h"
 
 /*
-** Expande wildcards en una lista de tokens
+** Expande variables de entorno en una lista de tokens
 */
-void	expand_tokens(t_tokens **tokens, char *cwd)
+void	expand_env_tokens(t_tokens **tokens, t_list *env)
 {
 	t_tokens	*result;
 	t_tokens	*cur;
-	char		**expanded;
-	int			i;
 
 	cur = *tokens;
 	result = NULL;
 	while (cur)
 	{
 		if ((cur->type == T_WORD || cur->type == T_DOUBLE_QUOTE)
-			&& ft_strchr(cur->str, '*'))
+			&& ft_strchr(cur->str, '$'))
 		{
-			expanded = expand_wildcard(cwd, cur->str);
-			i = 0;
-			while (expanded[i])
-				add_token_to_list(&result, expanded[i++], T_WORD);
-			free_str_array(expanded);
+			cur->str = expand_vars(cur->str, env);
+			t_tokens *t = NULL;
+			tokenize(cur->str, &t);
+			while (t)
+			{
+				add_token_to_list(&result, t->str, T_WORD);
+				t = t->next;
+			}
+			free_tokens(t);
 		}
 		else
 			add_token_to_list(&result, cur->str, cur->type);
