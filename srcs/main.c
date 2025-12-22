@@ -108,8 +108,12 @@ int main(int argc, char **args, char **env)
 		g_state = 0;
 		while (line)
 		{
-			if (ft_strcmp(line, "") != 0)//si getline siempre devuelve nl sería innecesario
+			// Necesario filtrar comandos vacios, lo hacemos aqui por convenienciaa.
+			// Enter en shell no hace nada ni guarda en el historial y asi procedemos
+			// nosotros.
+			if (ft_strcmp(line, "") != 0)
 				exec_line(shell, line);
+			free(line);
 			line = readline(head);
 			g_state = 0;
 
@@ -120,8 +124,10 @@ int main(int argc, char **args, char **env)
 	{
 		ft_printf("Usage %s -c <command>\n", args[0]);
 		free_env(&shell->env);
+		free(shell);
 		return (1);
 	}
 	free_env(&shell->env);
+	free(shell);
 	return (0);
 }
