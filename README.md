@@ -1,6 +1,6 @@
 ### Minishell work for 42
 
-Aqui podemos dejarnos  comentarios o explicaciones de como van yendo las cosas.
+Aqui podemos dejarnos comentarios o explicaciones de como van yendo las cosas.
 
 ### NOTES
 
@@ -14,7 +14,9 @@ Use
 make 
 ```
 
-to compile the working code, in `main_tmp.c`. 
+to compile the latest version of minishell. 
+
+The command
 
 
 ```sh
@@ -43,7 +45,7 @@ Finally, to run the tests, you can run
 make test
 ```
 
-### TODOS:
+### T0D0:
 
 - Gestion de exit
 - Trocear el codigo para mejor legibilidad. 
