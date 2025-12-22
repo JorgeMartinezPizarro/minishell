@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 15:44:16 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/22 18:14:25 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 #include "minishell_jorge.h"
 #include <sys/stat.h>
 
-// TODO: Cada comando es un fichero por separado.
-// TODO: echo puede tener >> o > en cuyo caso debe volcarse a fichero en vez de 
-// imprimirlo en el fd 1.
-// TODO: validar la sintaxis, export a=1 sin espacios, como en shell
+// TODO: validar la sintaxis. export sin mas funciona commo env.
+// export $A=5 expande $A primero y lo usa como nombre de variable.
 int	run_export(t_cmd *com)
 {
 	char	**item;
@@ -51,7 +49,7 @@ int	run_built_in(t_cmd *com)
 		return (run_unset(com));
 	else
 	{
-		ft_printf("Command '%s' not found.\n", com->args->str);
+		ft_printf("bash: command '%s' not found.\n", com->args->str);
 		return (0);
 	}
 }

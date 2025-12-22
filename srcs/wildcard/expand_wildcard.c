@@ -1,21 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_wildcard.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/22 16:56:55 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/12/22 18:12:22 by jomarti3         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <dirent.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include "libft.h"
 #include "minishell_jorge.h"
-
-static char *join_relpath(const char *base, const char *name)
-{
-    char *tmp;
-    char *res;
-
-    if (!base || base[0] == '\0')
-        return (ft_strdup(name));
-    tmp = ft_strjoin(base, "/");
-    res = ft_strjoin(tmp, name);
-    free(tmp);
-    return (res);
-}
 
 /*
 ** Match string against pattern with '*' (multiple allowed)
@@ -39,7 +38,7 @@ static int	match_star(const char *str, const char *pat)
 		return (0);
 	}
 	if (*str && *str == *pat)
-		return (match_star(str + 1, pat + 1));
+		return match_star(str + 1, pat + 1);
 	return (0);
 }
 
@@ -55,6 +54,8 @@ static char	**str_array_add(char **arr, char *s)
 	while (arr && arr[i])
 		i++;
 	new = ft_calloc(i + 2, sizeof(char *));
+	if (!new)
+		return (NULL);
 	i = 0;
 	while (arr && arr[i])
 	{
@@ -62,7 +63,6 @@ static char	**str_array_add(char **arr, char *s)
 		i++;
 	}
 	new[i] = s;
-	free(arr);
 	return (new);
 }
 
@@ -79,69 +79,77 @@ static int	is_directory(const char *path)
 }
 
 /*
-** Recursive expansion by path segments
+** Join two path segments for relative output
 */
-static void expand_recursive(const char *fs_base,
-                             const char *rel_base,
-                             char **segments,
-                             int idx,
-                             char ***out)
+static char	*join_relpath(const char *base, const char *name)
 {
-    DIR             *dir;
-    struct dirent   *ent;
-    char            *next_fs;
-    char            *next_rel;
+	char *tmp;
+	char *res;
 
-    dir = opendir(fs_base);
-    if (!dir)
-        return ;
-
-    while ((ent = readdir(dir)))
-    {
-        if (ent->d_name[0] == '.' && segments[idx][0] != '.')
-            continue ;
-        if (!match_star(ent->d_name, segments[idx]))
-            continue ;
-
-        next_fs = join_paths(fs_base, ent->d_name);
-
-        next_rel = join_relpath(rel_base, ent->d_name);
-
-        if (!segments[idx + 1])
-        {
-            *out = str_array_add(*out, next_rel);
-            free(next_fs);
-        }
-        else if (is_directory(next_fs))
-        {
-            expand_recursive(next_fs, next_rel,
-                             segments, idx + 1, out);
-            free(next_fs);
-            free(next_rel);
-        }
-        else
-        {
-            free(next_fs);
-            free(next_rel);
-        }
-    }
-    closedir(dir);
+	if (!base || base[0] == '\0')
+		return ft_strdup(name);
+	tmp = ft_strjoin(base, "/");
+	res = ft_strjoin(tmp, name);
+	free(tmp);
+	return res;
 }
 
-char **expand_wildcard(const char *cwd, const char *pattern)
+/*
+** Recursive helper for wildcard expansion
+*/
+static void	expand_recursive_rel(const char *fs_base,
+				const char *rel_base, char **segments, int idx, char ***out)
 {
-    char **segments;
-    char **result;
+	DIR				*dir;
+	struct dirent	*ent;
+	char			*next_fs;
+	char			*next_rel;
 
-    result = NULL;
-    segments = ft_split(pattern, '/');
-    if (!segments)
-        return (str_array_add(NULL, ft_strdup(pattern)));
+	if (!segments[idx])
+	{
+		*out = str_array_add(*out, ft_strdup(rel_base));
+		return;
+	}
+	dir = opendir(fs_base);
+	if (!dir)
+		return;
+	while ((ent = readdir(dir)))
+	{
+		if (ent->d_name[0] == '.' && segments[idx][0] != '.')
+			continue;
+		if (!match_star(ent->d_name, segments[idx]))
+			continue;
+		next_fs = join_paths(fs_base, ent->d_name);
+		next_rel = join_relpath(rel_base, ent->d_name);
+		if (!segments[idx + 1])
+		{
+			*out = str_array_add(*out, ft_strdup(next_rel));
+		}
+		else if (is_directory(next_fs))
+		{
+			expand_recursive_rel(next_fs, next_rel, segments, idx + 1, out);
+		}
+		free(next_fs);
+		free(next_rel);
+	}
+	closedir(dir);
+}
 
-    expand_recursive(cwd, NULL, segments, 0, &result);
-    free_str_array(segments);
+/*
+** Public API.
+*/
+char	**expand_wildcard(const char *cwd, const char *pattern)
+{
+	char	**segments;
+	char	**result;
 
-    if (!result)
-        result = str_array_add(NULL, ft_strdup(pattern));
-    return (result);
+	result = NULL;
+	segments = ft_split(pattern, '/');
+	if (!segments)
+		return (str_array_add(NULL, ft_strdup(pattern)));
+	expand_recursive_rel(cwd, "", segments, 0, &result);
+	free_str_array(segments);
+	if (!result)
+		result = str_array_add(NULL, ft_strdup(pattern));
+	return (result);
 }

@@ -78,6 +78,14 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{
+		// TODO: aqui deberiamos expandir tambien las VARS de entorno,
+		// considerando que un token puede desaparecer o expandir en mas 
+		// de uno. Ejemplos:
+		//
+		// - export a="echo hola" $a deberia expandir en dos tokens.
+		// - export a, $a deberia colapsar el token
+		//
+		expand_tokens(&node->cmd->args, get_env_value(shell->env, "PWD"));
 		expand_cmds(node->cmd->args, node->cmd->redirs, shell->env);
 		make_redirections(node->cmd->redirs, shell->env);
 		node->cmd->env = shell->env;
