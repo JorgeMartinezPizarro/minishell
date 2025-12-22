@@ -48,5 +48,7 @@ make test
 - Gestion de exit
 - Trocear el codigo para mejor legibilidad. 
 - Integrar bien los .h.
-- Arreglar exec_tree:
-	- (echo hola) && (echo adios) da problemas.
+- Reparar tokens memory usage.
+- Los siguientes comandos fallan.
+	- (echo hola)
+	- (echo hola) && (echo adios)

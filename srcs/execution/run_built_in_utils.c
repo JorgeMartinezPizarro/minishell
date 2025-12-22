@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 12:12:13 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:46:01 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	run_env(t_cmd *com)
 int	run_pwd(t_cmd *com)
 {
 	(void)com;
-	ft_printf("%s\n", getcwd(NULL, 0));
+	ft_printf("%s\n", get_env_value(com->env, "PWD"));
 	return (1);
 }
 

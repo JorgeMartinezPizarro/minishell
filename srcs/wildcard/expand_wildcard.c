@@ -4,6 +4,19 @@
 #include "libft.h"
 #include "minishell_jorge.h"
 
+static char *join_relpath(const char *base, const char *name)
+{
+    char *tmp;
+    char *res;
+
+    if (!base || base[0] == '\0')
+        return (ft_strdup(name));
+    tmp = ft_strjoin(base, "/");
+    res = ft_strjoin(tmp, name);
+    free(tmp);
+    return (res);
+}
+
 /*
 ** Match string against pattern with '*' (multiple allowed)
 */
@@ -68,46 +81,67 @@ static int	is_directory(const char *path)
 /*
 ** Recursive expansion by path segments
 */
-static void expand_recursive(const char *base,
-							 char **segments, int idx, char ***out)
+static void expand_recursive(const char *fs_base,
+                             const char *rel_base,
+                             char **segments,
+                             int idx,
+                             char ***out)
 {
-	DIR             *dir;
-	struct dirent   *ent;
-	char            *path;
+    DIR             *dir;
+    struct dirent   *ent;
+    char            *next_fs;
+    char            *next_rel;
 
-	if (!segments[idx])
-		return ;
-	dir = opendir(base);
-	if (!dir)
-		return ;
-	while ((ent = readdir(dir)))
-	{
-		if (ent->d_name[0] == '.' && segments[idx][0] != '.')
-			continue ;
-		if (!match_star(ent->d_name, segments[idx]))
-			continue ;
-		path = join_paths(base, ent->d_name);
-		if (!segments[idx + 1])
-			*out = str_array_add(*out, ft_strdup(ent->d_name));
-		else if (is_directory(path))
-			expand_recursive(path, segments, idx + 1, out);
-		free(path);	
-	}
-	closedir(dir);
+    dir = opendir(fs_base);
+    if (!dir)
+        return ;
+
+    while ((ent = readdir(dir)))
+    {
+        if (ent->d_name[0] == '.' && segments[idx][0] != '.')
+            continue ;
+        if (!match_star(ent->d_name, segments[idx]))
+            continue ;
+
+        next_fs = join_paths(fs_base, ent->d_name);
+
+        next_rel = join_relpath(rel_base, ent->d_name);
+
+        if (!segments[idx + 1])
+        {
+            *out = str_array_add(*out, next_rel);
+            free(next_fs);
+        }
+        else if (is_directory(next_fs))
+        {
+            expand_recursive(next_fs, next_rel,
+                             segments, idx + 1, out);
+            free(next_fs);
+            free(next_rel);
+        }
+        else
+        {
+            free(next_fs);
+            free(next_rel);
+        }
+    }
+    closedir(dir);
 }
 
 char **expand_wildcard(const char *cwd, const char *pattern)
 {
-	char **segments;
-	char **result;
+    char **segments;
+    char **result;
 
-	result = NULL;
-	segments = ft_split(pattern, '/');
-	if (!segments)
-		return (str_array_add(NULL, ft_strdup(pattern)));
-	expand_recursive(cwd, segments, 0, &result);
-	free_str_array(segments);
-	if (!result)
-		result = str_array_add(NULL, ft_strdup(pattern));
-	return (result);
+    result = NULL;
+    segments = ft_split(pattern, '/');
+    if (!segments)
+        return (str_array_add(NULL, ft_strdup(pattern)));
+
+    expand_recursive(cwd, NULL, segments, 0, &result);
+    free_str_array(segments);
+
+    if (!result)
+        result = str_array_add(NULL, ft_strdup(pattern));
+    return (result);
 }
