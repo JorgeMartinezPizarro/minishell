@@ -48,9 +48,15 @@ make test
 ### T0D0:
 
 - Gestion de exit
+
 - Trocear el codigo para mejor legibilidad. 
+
 - Integrar bien los .h.
+
 - Reparar tokens memory usage.
+
+- Expand variables into tokens. (jorge)
+
 - Los siguientes comandos fallan.
 	- (echo hola)
 	- (echo hola) && (echo adios)
