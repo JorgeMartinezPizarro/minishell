@@ -40,7 +40,7 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	{
 		(*node)->subshell = false;
 		exec_tree(*node, shell);
-		exit(0);//hay que transmitir el código de salida a el padre
+		exit(0);//hay que transmitir el código de salida a el padre?
 	}
 }
 
