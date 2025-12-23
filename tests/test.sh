@@ -13,7 +13,7 @@ echo " -> Running different tests"
 
 ./minishell -c "echo"
 
-./minishell -c "env"
+./minishell -c "export"
 
 ## Comando que falla, lo silenciamos
 ./minishell -c "${HOME}" || true
@@ -59,6 +59,8 @@ valgrind \
 
 ## Test rotos aun por arreglar
 ./minishell -c "(echo hola) && echo adios"
+
+./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2"
 
 echo " -> Cleanup"
 make fclean > /dev/null
