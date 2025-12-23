@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 14:58:10 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 15:20:37 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static char **tokens_to_argv(t_tokens *tokens)
 }
 /*
 queremos crear un proceso nuevo y 
+	NOTE: fijate aqui como manejo las signals para que solo control C lo coja el
+	shell actual. 
 */
 int	run_program(t_cmd *com, t_shell *shell)
 {
