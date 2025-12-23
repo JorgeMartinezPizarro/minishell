@@ -52,8 +52,8 @@ void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 			redirs->file->str = expand_vars(redirs->file->str, env);
 		redirs = redirs->next;
 	}
-	expand_tokens(args, get_env_value(env, "PWD"));
 	expand_env_tokens(args, env);
+	expand_tokens(args, get_env_value(env, "PWD"));
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)

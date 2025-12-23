@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 18:14:25 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 11:55:57 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 #include "minishell_jorge.h"
 #include <sys/stat.h>
 
-// TODO: validar la sintaxis. export sin mas funciona commo env.
-// export $A=5 expande $A primero y lo usa como nombre de variable.
 int	run_export(t_cmd *com)
 {
 	char	**item;
 
+	if (com->args->next == NULL)
+		return run_env(com, "declare -x ");
 	item = ft_split(com->args->next->str, '=');
-	set_env_value(&com->env, item[0], item[1]);
+	// Caso regular, todo en un token, A=15
+	if (strarr_len(item) == 2)
+		set_env_value(&com->env, item[0], item[1]);
+	// Caso raro, dos tokens: export A="echo hola"
+	else if (strarr_len(item) == 1 && com->args->next->next) 
+		set_env_value(&com->env, item[0], com->args->next->next->str);
 	free_str_array(item);
 	return (1);
 }
 
-// TODO: error si la variable no existe
 int	run_unset(t_cmd *com)
 {
 	del_env_value(&com->env, com->args->next->str);
@@ -38,7 +42,7 @@ int	run_built_in(t_cmd *com)
 	if (ft_strcmp(com->args->str, "echo") == 0)
 		return (run_echo(com));
 	else if (ft_strcmp(com->args->str, "env") == 0)
-		return (run_env(com));
+		return (run_env(com, ""));
 	else if (ft_strcmp(com->args->str, "pwd") == 0)
 		return (run_pwd(com));
 	else if (ft_strcmp(com->args->str, "cd") == 0)
