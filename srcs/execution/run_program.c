@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 19:20:17 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 20:44:16 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	run_program(t_cmd *com, t_shell *shell)
 
 	pid = fork();
 	if (pid == -1)
-		return (free_str_array(argv), free(exe), 1);
-
+		return (free_str_array(argv), free(exe), free_shell(shell),
+			exit(1), 0);
 	if (pid == 0)
 	{
 		setup_signals_child();
@@ -110,13 +110,11 @@ int	run_program(t_cmd *com, t_shell *shell)
 		perror("execve");
 		exit(126);
 	}
-
 	free_str_array(argv);
 	free(exe);
 	setup_signals_parent_waiting();
 	waitpid(pid, &status, 0);
 	setup_signals_interactive();
-	
 	if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	return (WEXITSTATUS(status));

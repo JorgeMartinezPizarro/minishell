@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 21:25:29 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 22:43:58 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 20:34:22 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	left_pipe(t_tree *node, t_shell *shell, int *fd)
 	if (pid == -1)
 	{
 		perror("fork error");
-		free_tree(shell->first_node);
+		free_shell(shell);
 		exit(1);
 	}
 	if (pid == 0)
@@ -41,7 +41,7 @@ void	right_pipe(t_tree *node, t_shell *shell, int *fd)
 	if (pid == -1)
 	{
 		perror("fork error");
-		free_tree(shell->first_node);
+		free_shell(shell);
 		exit(1);
 	}
 	if (pid == 0)
@@ -61,10 +61,11 @@ void	exec_pipe(t_tree *node, t_shell *shell)
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
-		
+		free_shell(shell);	
+		exit(1);
 	}
 	left_pipe(node, shell, fd);
-	right_pipe(node, shell, fd);	
+	right_pipe(node, shell, fd);
 	close(fd[0]);
 	close(fd[1]);
 	wait(NULL);

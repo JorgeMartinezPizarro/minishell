@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/23 16:56:53 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/23 20:23:14 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FILES = execution/run_built_in main \
 	environ/environments3 \
 	execution/run_program wildcard/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
-	wildcard/expand_wildcard_tokens utils/free_str_array \
+	wildcard/expand_wildcard_tokens utils/free2 \
 	utils/free execution/run_built_in_utils \
 	utils/join_paths execution/run_cd execution/run_echo \
 	parser/parser_utils parser/parser parser/tree_utils  \

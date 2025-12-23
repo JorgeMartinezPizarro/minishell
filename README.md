@@ -84,6 +84,4 @@ make test
 
 - Expandir $? en expand_cmds con exit_code
 
-- Los siguientes comandos fallan.
-	- (echo hola)
-	- (echo hola) && (echo adios)
+- Recordar para la entrega solo entregar Makefile, *.c y *.h

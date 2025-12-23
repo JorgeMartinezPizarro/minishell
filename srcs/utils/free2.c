@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_built_in_utils.c                               :+:      :+:    :+:   */
+/*   free2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 21:23:55 by maanguit         ###   ########.fr       */
+/*   Created: 2025/12/23 20:23:49 by maanguit          #+#    #+#             */
+/*   Updated: 2025/12/23 20:23:50 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-int	run_env(t_cmd *com, char *prefix)
+void	free_str_array(char **arr)
 {
-	t_list		*node;
-	t_variable	*v;
-
-	node = com->env;
-	while (node)
+	int i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
 	{
-		v = (t_variable *)node->content;
-		ft_printf("%s%s=%s\n", prefix, v->name, v->value);
-		node = node->next;
+		free(arr[i]);
+		i++;
 	}
-	return (0);
+	free(arr);
 }
 
-int	run_pwd(t_cmd *com)
+void	free_shell(t_shell *shell)
 {
-	(void)com;
-	ft_printf("%s\n", get_env_value(com->env, "PWD"));
-	return (0);
-}
-
-int	run_exit(t_shell *shell)
-{
-	free_shell(shell);
-	exit(0);
+	free_tree(shell->first_node);
+	ft_lstclear(&shell->env, free);
+	free(shell);
 }

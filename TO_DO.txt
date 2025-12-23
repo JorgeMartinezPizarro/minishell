@@ -1,27 +1,27 @@
+Gestionar bien el heredoc con sus señales
 
-2 Una función para liberar la shell cuando algo falle, imprimir el error con perror
-	y modificar el valor de exit_code 
-	(open, pipe(fd), fork y malloc)-> estas funciones pueden fallar
-
-5 Gestionar si la minishell está en modo interactivo o no
-
-6 Gestionar bien el heredoc con sus señales
-
-7 Investigar un poco más si hace falta si hay que mandar una copia del entorno
+Expandir antes de crear las redirecciones
 
 
-Gestionar el SHLVL
-actualmente la primera vez que se ejecuta ./minishell aumenta pero el resto no
-así que habría que mirar si el comando es ./minishell y en ese caso aumentar 1 el SHLVL de la
-variable de entorno
+Pensar en como gestionar el exit liberando todo
+en el exit se sale de el proceso actual, el problema es
+que no se debe gestionar igual en un proceso padre que en uno
+hijo
 
 
+Expandir $?
 
-Ideas para conciliar:
+hay casos incorrectos al usar env -i ./minishell,
+algún caso de cd y $VARIABLE_INEXISTENTE segfault
 
-- El cwd es redundante pero comodo, te duele que lo defina, crees que es mejor usar cada vez getcwd?
-- El entorno es parte del comando. La expansion del entorno se realiza al ejecutar el comando, y debe ser por tanto parte
-de la estructura. Cuando definas comandos en el arbol, pasales a cada comando un puntero al del comando anterior, segun 
-proceda.
+cuando te pasan cat << $algo hay que expandir algo
 
-Creo que con esto es mas facil que no tengamos que tocar mucho la logica que ya tenemos.
+hay algún caso con "'$USER'" no expande bien porque ignora las comillas
+internas
+
+bash:echo "'$USER'"
+'maanguit'
+mshll:echo "'$USER'"
+maanguit
+
+$variable_no_definida-> segmentation fault

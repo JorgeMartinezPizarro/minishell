@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 17:25:28 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 21:22:28 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	run_unset(t_cmd *com)
 	return (0);
 }
 
-int	run_built_in(t_cmd *com)
+int	run_built_in(t_cmd *com, t_shell *shell)
 {
 	if (ft_strcmp(com->args->str, "echo") == 0)
 		return (run_echo(com));
@@ -53,7 +53,7 @@ int	run_built_in(t_cmd *com)
 	else if (ft_strcmp(com->args->str, "unset") == 0)
 		return (run_unset(com));
 	else if (ft_strcmp(com->args->str, "exit") == 0)
-		return (run_exit(com));
+		return (run_exit(shell));
 	else
 	{
 		ft_printf("bash: command '%s' not found.\n", com->args->str);

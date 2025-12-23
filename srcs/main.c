@@ -64,12 +64,16 @@ void	malloc_failed()
 
 void	update_minishell_level(t_list **env)
 {
-	char *str = get_env_value(*env, "MSHLVL");
+	char *str;
 	char *nbr;
+	int i;
+
+	str = get_env_value(*env, "MSHLVL");
 	if (!str)
 		nbr = ft_strdup("1");
-	else{
-		int i = ft_atoi(str) + 1;
+	else
+	{
+		i = ft_atoi(str) + 1;
 		nbr = ft_itoa(i);
 	}
 	set_env_value(env, "MSHLVL", nbr);
@@ -103,5 +107,5 @@ int main(int argc, char **args, char **env)
 	}
 	free_env(&shell->env);
 	free(shell);
-	return (0);
+	return (exit_code);
 }

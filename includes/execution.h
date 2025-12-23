@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 16:50:01 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 22:59:49 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 20:50:16 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	exec_b_op(t_tree *tree, t_shell *shell);
 void	exec_pipe(t_tree *tree, t_shell *shell);
 int		here_doc(t_redir *redir, t_list *env);
 int		redir_files(t_redir *redir);
+void	free_shell(t_shell *shell);
 void	free_tree(t_tree *tree);
 
 #endif

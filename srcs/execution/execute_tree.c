@@ -38,6 +38,8 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 		return ;
 	(*node)->subshell = false;
 	pid = fork();
+	if (pid == -1)
+		return (free_shell(shell), exit(1));
 	if (pid == 0)
 	{
 		exec_tree(*node, shell);
@@ -74,13 +76,12 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{
-		make_redirections(node->cmd->redirs, shell->env);
 		expand_cmds(&node->cmd->args, node->cmd->redirs, shell->env);
 		if (make_redirections(node->cmd->redirs, shell->env) == -1)
-			return ;//exit y free
+			return (free_shell(shell), exit(1));
 		node->cmd->env = shell->env;
 		if (node->cmd->is_builtin)
-			exit_code = run_built_in(node->cmd);
+			exit_code = run_built_in(node->cmd, shell);
 		else
 			exit_code = run_program(node->cmd, shell);
 		dup2(fd_in, STDIN_FILENO);
