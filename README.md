@@ -6,6 +6,12 @@ Aqui podemos dejarnos comentarios o explicaciones de como van yendo las cosas.
 
 En el repositorio de 42madrid debemos eliminar cualquier test, README.md o pdfs. Revisar bien antes de finalizar.
 
+## COLORES:
+
+Se puede configurar el color del prompt usando la variable de entorno `COLOR`:
+
+Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
+
 ## GIT:
 
 Para trabajar en el mismo branch, hay dos vias:

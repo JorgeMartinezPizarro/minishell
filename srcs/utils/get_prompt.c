@@ -2,12 +2,29 @@
 
 char *get_color(t_list *env)
 {
-	char *str = get_env_value(env, "COLOR");
+    char *str = get_env_value(env, "COLOR");
+    if (!str)
+        return "\033[0m"; // default: reset
 
-	if (str && ft_strcmp(str, "GREEN"))
-		return "\033[1;33m";
-	else
-		return "\033[1;35m";
+    // Comparaciones correctas con strcmp: 0 significa igual
+    if (ft_strcmp(str, "BLACK") == 0)
+        return "\033[0;30m";
+    else if (ft_strcmp(str, "RED") == 0)
+        return "\033[0;31m";
+    else if (ft_strcmp(str, "GREEN") == 0)
+        return "\033[0;32m";
+    else if (ft_strcmp(str, "YELLOW") == 0)
+        return "\033[0;33m";
+    else if (ft_strcmp(str, "BLUE") == 0)
+        return "\033[0;34m";
+    else if (ft_strcmp(str, "MAGENTA") == 0)
+        return "\033[0;35m";
+    else if (ft_strcmp(str, "CYAN") == 0)
+        return "\033[0;36m";
+    else if (ft_strcmp(str, "WHITE") == 0)
+        return "\033[0;37m";
+    
+    return "\033[0m"; // default: reset
 }
 
 ///////////////////////////////////////////////////////////////////////////////

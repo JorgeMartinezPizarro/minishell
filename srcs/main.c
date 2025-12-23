@@ -40,14 +40,16 @@ static void	shell_loop(t_shell *shell)
 		}
 		return ;
 	}
-	char *head = get_prompt(shell->env);
+	
 	// TODO: if is not interactive, read from stdin_fileno
 	
+	char *head = get_prompt(shell->env);
 	char *line = readline(head);
 	while (line)
 	{
 		exec_line(shell, line);
 		free(line);
+		head = get_prompt(shell->env);
 		line = readline(head);
 	}
 	free(head);
