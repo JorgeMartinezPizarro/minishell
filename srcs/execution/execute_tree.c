@@ -18,13 +18,13 @@ void	exec_b_op(t_tree *node, t_shell *shell)
 	if (node->n_type == N_OR)
 	{
 		exec_tree(node->left, shell);
-		if (exit_code == 0)
+		if (exit_code != 0)
 			exec_tree(node->right, shell);
 	}
 	if (node->n_type == N_AND)
 	{
 		exec_tree(node->left, shell);
-		if (exit_code != 0)
+		if (exit_code == 0)
 			exec_tree(node->right, shell);
 	}
 }
@@ -32,6 +32,7 @@ void	exec_b_op(t_tree *node, t_shell *shell)
 void	exec_subprocces(t_tree **node, t_shell *shell)
 {
 	pid_t	pid;
+	int		status;
 
 	if ((*node)->subshell == false)
 		return ;
@@ -40,8 +41,10 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	{
 		(*node)->subshell = false;
 		exec_tree(*node, shell);
-		exit(0);//hay que transmitir el código de salida a el padre?
+		exit(exit_code);//hay que transmitir el código de salida a el padre?
 	}
+	waitpid(pid, &status, 0);
+	exit_code = WIFEXITED(status);
 }
 
 void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)

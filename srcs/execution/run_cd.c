@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 16:56:54 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 18:52:11 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int	run_cd(t_cmd *com)
 	old = get_env_value(com->env, "PWD");
 	target = get_cd_target(com);
 	if (!target)
-		return (0);
+		return (1);
 	new_path = join_paths(old, target);
 	if (!new_path)
-		return (0);
+		return (1);
 	if (!change_directory(new_path))
 		return (free(new_path), 0);
 	set_env_value(&com->env, "OLDPWD", old);
 	set_env_value(&com->env, "PWD", new_path);
 	free(new_path);
-	return (1);
+	return (0);
 }

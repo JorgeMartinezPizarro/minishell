@@ -1,5 +1,15 @@
 #include "minishell_jorge.h"
 
+char *get_color(t_list *env)
+{
+	char *str = get_env_value(env, "COLOR");
+
+	if (ft_strcmp(str, "GREEN"))
+		return "\033[1;33m";
+	else
+		return "\033[1;35m";
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Get bash PC identifier from env.
 //	Try to load the 42 variables.
@@ -45,7 +55,7 @@ char	*get_prompt(t_list *env)
 	char *name;
 	char *tmp;
 
-	str = ft_strdup("\001\033[1;33m\002${USER}@#### >>> \001\033[0m\002");
+	str = ft_strdup("\001XXXXX\002${USER}@#### >>> \001\033[0m\002");
 	head = expand_vars(str, env);
 	name = get_name(env);
 	tmp = head;

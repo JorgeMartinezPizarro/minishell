@@ -31,25 +31,25 @@ echo " -> Running different tests"
 
 ## Estos valgrind solo muestran algo si hay errores.
 valgrind \
-		--leak-check=full --show-leak-kinds=all \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
 		./minishell -c "echo ${HOME}"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
 		./minishell -c "cd ${HOME}"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
 		./minishell -c "env"
 
 valgrind \
-		--leak-check=full --show-leak-kinds=all \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
 		./minishell -c "git status"

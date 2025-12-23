@@ -47,6 +47,22 @@ void	malloc_failed()
 	perror("malloc");
 }
 
+void	update_minishell_level(t_list **env)
+{
+	char *str = get_env_value(*env, "MSHLVL");
+	char *nbr;
+	if (!str)
+		nbr = ft_strdup("1");
+	else{
+		int i = ft_atoi(str) + 1;
+		nbr = ft_itoa(i);
+	}
+	set_env_value(env, "MSHLVL", nbr);
+	free(nbr);
+}
+
+// Vamos a usar una variable propia
+// MSHLVL para contar cuantas shells llevamos abiertas.
 int main(int argc, char **args, char **env)
 {
 	t_shell	*shell;
@@ -57,6 +73,9 @@ int main(int argc, char **args, char **env)
 	if (!shell)
 		return (malloc_failed(), 1);
 	shell->env = load_env_values(env);
+	update_minishell_level(&shell->env);
+	if (ft_atoi(get_env_value(shell->env, "MSHLVL")) > MAX_MINISHELL_LEVEL)
+		return (ft_printf("error: minishell refused to open.\n"), 1);
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 		exec_line(shell, args[2]);
 	else if (argc < 2)
