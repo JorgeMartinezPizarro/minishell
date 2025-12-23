@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 11:55:57 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 12:03:26 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	run_export(t_cmd *com)
 {
 	char	**item;
 
+	// Caso sin variables, parecido a env. Gestionarlo a parte.
+	// Las variables deben mostrarse alfabeticamente ordenadas.
 	if (com->args->next == NULL)
 		return run_env(com, "declare -x ");
 	item = ft_split(com->args->next->str, '=');
