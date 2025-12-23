@@ -76,7 +76,7 @@ void	exec_tree(t_tree *node, t_shell *shell)
 			return ;//exit y free
 		node->cmd->env = shell->env;
 		if (node->cmd->is_builtin)
-			exit_code = run_built_in(node->cmd, shell);
+			exit_code = run_built_in(node->cmd);
 		else
 			exit_code = run_program(node->cmd, shell);
 		
