@@ -83,7 +83,6 @@ void	exec_tree(t_tree *node, t_shell *shell)
 			exit_code = run_built_in(node->cmd);
 		else
 			exit_code = run_program(node->cmd, shell);
-		
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);

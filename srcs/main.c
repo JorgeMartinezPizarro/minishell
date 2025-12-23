@@ -29,7 +29,20 @@ static int	exec_line(t_shell *shell, char *line)
 
 static void	shell_loop(t_shell *shell)
 {
+	if (!isatty(STDIN_FILENO))
+	{
+		char *line = get_next_line(STDIN_FILENO);
+		while (line)
+		{
+			exec_line(shell, line);
+			free(line);
+			line = get_next_line(STDIN_FILENO);
+		}
+		return ;
+	}
 	char *head = get_prompt(shell->env);
+	// TODO: if is not interactive, read from stdin_fileno
+	
 	char *line = readline(head);
 	while (line)
 	{
