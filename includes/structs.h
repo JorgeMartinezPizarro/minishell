@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 00:52:09 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 12:11:46 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <unistd.h>
+
+typedef enum e_exit_code
+{
+    EXIT_OK            = 0,
+    EXIT_GENERAL_ERROR = 1,
+    EXIT_CANT_EXEC     = 126,
+    EXIT_NOT_FOUND     = 127,
+    EXIT_SIGINT        = 130
+}   t_exit_code;
 
 typedef enum e_token_type
 {
