@@ -40,9 +40,6 @@ static void	shell_loop(t_shell *shell)
 		}
 		return ;
 	}
-	
-	// TODO: if is not interactive, read from stdin_fileno
-	
 	char *head = get_prompt(shell->env);
 	char *line = readline(head);
 	while (line)
@@ -55,7 +52,6 @@ static void	shell_loop(t_shell *shell)
 	free(head);
 }
 
-// TODO: mover esto a utils?
 void	malloc_failed()
 {
 	exit_code = 1;
@@ -80,8 +76,6 @@ void	update_minishell_level(t_list **env)
 	free(nbr);
 }
 
-// Vamos a usar una variable propia
-// MSHLVL para contar cuantas shells llevamos abiertas.
 int main(int argc, char **args, char **env)
 {
 	t_shell	*shell;

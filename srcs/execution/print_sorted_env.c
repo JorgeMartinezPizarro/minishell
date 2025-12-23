@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 22:44:23 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:46:08 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:54:24 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	print_sorted_env(t_list *env)
 	i = 0;
 	while (arr[i])
 	{
-		printf("declare -x %s=%s\n", arr[i]->name, arr[i]->value);
+		printf("declare -x %s=\"%s\"\n", arr[i]->name, arr[i]->value);
 		i++;
 	}
 	free(arr);
