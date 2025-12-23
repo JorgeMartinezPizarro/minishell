@@ -3,12 +3,6 @@ Gestionar bien el heredoc con sus señales
 Expandir antes de crear las redirecciones
 
 
-Pensar en como gestionar el exit liberando todo
-en el exit se sale de el proceso actual, el problema es
-que no se debe gestionar igual en un proceso padre que en uno
-hijo
-
-
 Expandir $?
 
 hay casos incorrectos al usar env -i ./minishell,

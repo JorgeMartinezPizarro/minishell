@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 00:17:25 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 23:21:47 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_tokens	*division_point(t_tokens *start, t_tokens *end)
 	{
 		if (start->type == T_O_PAREN)
 			iter_paren(&start);
+		if (!start)
+			break ;
 		if (start->type == T_OR || start->type == T_AND)
 			last_b_op = start;
 		if (start->type == T_PIPE)
