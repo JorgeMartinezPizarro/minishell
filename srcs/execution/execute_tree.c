@@ -53,7 +53,7 @@ void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 		redirs = redirs->next;
 	}
 	expand_env_tokens(args, env);
-	expand_tokens(args, get_env_value(env, "PWD"));
+	expand_wildcard_tokens(args, get_env_value(env, "PWD"));
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)

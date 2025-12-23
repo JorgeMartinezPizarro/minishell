@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_tokens.c                                    :+:      :+:    :+:   */
+/*   expand_wildcard_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 23:42:53 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 16:39:19 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /*
 ** Expande wildcards en una lista de tokens
 */
-void	expand_tokens(t_tokens **tokens, char *cwd)
+void	expand_wildcard_tokens(t_tokens **tokens, char *cwd)
 {
 	t_tokens	*result;
 	t_tokens	*cur;

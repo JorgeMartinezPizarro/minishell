@@ -45,7 +45,7 @@ char	*get_prompt(t_list *env)
 	char *name;
 	char *tmp;
 
-	str = ft_strdup("\001\033[1;33m${USER}@#### >>> \033[0m\002");
+	str = ft_strdup("\001\033[1;33m\002${USER}@#### >>> \001\033[0m\002");
 	head = expand_vars(str, env);
 	name = get_name(env);
 	tmp = head;

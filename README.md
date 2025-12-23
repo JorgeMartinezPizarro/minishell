@@ -76,10 +76,6 @@ make test
 
 - Integrar bien los .h.
 
-- Reparar tokens memory usage.
-
-- Gestionar control + c.
-
 - Expandir $? en expand_cmds con exit_code
 
 - Los siguientes comandos fallan.

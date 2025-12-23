@@ -8,19 +8,6 @@
 
 int	exit_code = 0;
 
-static void	shell_loop(t_shell *shell)
-{
-	char *head = get_prompt(shell->env);
-	char *line = readline(head);
-	while (line)
-	{
-		exec_line(shell, line);
-		free(line);
-		line = readline(head);
-	}
-	free(head);
-}
-
 static int	exec_line(t_shell *shell, char *line)
 {
 	t_tokens	*tokens;
@@ -34,18 +21,30 @@ static int	exec_line(t_shell *shell, char *line)
 	if (!shell->first_node)
 		  return (syntax_error(), 1);
 	exec_tree(shell->first_node, shell);
-	free_tree(shell->first_node);
 	free_tokens(tokens);
+	free_tree(shell->first_node);
 	add_history(line);
 	return 1;
 }
 
+static void	shell_loop(t_shell *shell)
+{
+	char *head = get_prompt(shell->env);
+	char *line = readline(head);
+	while (line)
+	{
+		exec_line(shell, line);
+		free(line);
+		line = readline(head);
+	}
+	free(head);
+}
+
 // TODO: mover esto a utils?
-int	malloc_failed()
+void	malloc_failed()
 {
 	exit_code = 1;
 	perror("malloc");
-	return (1);
 }
 
 int main(int argc, char **args, char **env)
@@ -56,7 +55,7 @@ int main(int argc, char **args, char **env)
 	setup_signals_interactive();
 	shell = ft_calloc(sizeof(t_shell), 1);
 	if (!shell)
-		return malloc_failed();
+		return (malloc_failed(), 1);
 	shell->env = load_env_values(env);
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 		exec_line(shell, args[2]);

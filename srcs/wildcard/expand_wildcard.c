@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 16:56:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 18:12:22 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 16:37:51 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static char	**str_array_add(char **arr, char *s)
 		i++;
 	}
 	new[i] = s;
+	free(arr);
 	return (new);
 }
 

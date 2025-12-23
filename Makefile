@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/23 15:03:50 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/23 16:56:53 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FILES = execution/run_built_in main \
 	environ/environments3 \
 	execution/run_program wildcard/expand_wildcard \
 	tokenizer/token_utils tokenizer/tokenizer \
-	wildcard/expand_tokens utils/free_str_array \
+	wildcard/expand_wildcard_tokens utils/free_str_array \
 	utils/free execution/run_built_in_utils \
 	utils/join_paths execution/run_cd execution/run_echo \
 	parser/parser_utils parser/parser parser/tree_utils  \
@@ -59,7 +59,9 @@ test: fclean
 run: all
 	valgrind \
 		--leak-check=full --show-leak-kinds=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--gen-suppressions=all \
+		--suppressions=readline.supp \
+		--errors-for-leak-kinds=all \
 		./minishell
 clean:
 	make -C libft clean
