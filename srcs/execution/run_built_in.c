@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:19:31 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:47:05 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 int	run_export(t_cmd *com)
 {
 	char	**item;
-	// Caso sin variables, parecido a env. Gestionarlo a parte.
-	// Las variables deben mostrarse alfabeticamente ordenadas.
 	if (com->args->next == NULL)
-		return run_env(com, "declare -x ");
+	{
+		print_sorted_env(com->env);
+		return (EXIT_OK);
+	}
 	item = ft_split(com->args->next->str, '=');
-	// Caso regular, todo en un token, A=15
 	if (strarr_len(item) == 2)
 		set_env_value(&com->env, item[0], item[1]);
-	// Caso raro, dos tokens: export A="echo hola"
 	else if (strarr_len(item) == 1 && com->args->next->next) 
 		set_env_value(&com->env, item[0], com->args->next->next->str);
 	free_str_array(item);
@@ -43,7 +42,7 @@ int	run_built_in(t_cmd *com, t_shell *shell)
 	if (ft_strcmp(com->args->str, "echo") == 0)
 		return (run_echo(com));
 	else if (ft_strcmp(com->args->str, "env") == 0)
-		return (run_env(com, ""));
+		return (run_env(com));
 	else if (ft_strcmp(com->args->str, "pwd") == 0)
 		return (run_pwd(com));
 	else if (ft_strcmp(com->args->str, "cd") == 0)

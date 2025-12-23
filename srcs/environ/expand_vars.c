@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:12:02 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:36:33 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ static char	*apply_var_formats(char *s, char *var_name, char *value)
 	return (s);
 }
 
-// TODO: BASH expande tb $??????? y ${?????}
 static char	*expand_exit_code(char *s)
 {
 	char *tmp = s;
 
 	s = ft_strreplace(tmp, "$?", ft_itoa(exit_code));
 	free(tmp);
+	tmp = s;
+	s = ft_strreplace(tmp, "${?}", ft_itoa(exit_code));
 	return s;
 }
 

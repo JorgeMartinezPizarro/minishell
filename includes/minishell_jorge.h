@@ -25,11 +25,12 @@ int		run_built_in(t_cmd *com, t_shell *shell);
 int		run_program(t_cmd *com, t_shell *shell);
 int		run_cd(t_cmd *com);
 int 	run_echo(t_cmd *com);
-int 	run_env(t_cmd *com, char *prefix);
+int 	run_env(t_cmd *com);
 int 	run_pwd(t_cmd *com);
 int		run_export(t_cmd *com);
 int		run_unset(t_cmd *com);
 int		run_exit(t_shell *shell);
+void	print_sorted_env(t_list *env);
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);

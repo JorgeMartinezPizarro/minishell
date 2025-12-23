@@ -76,8 +76,10 @@ make test
 
 ### T0D0:
 
-- Trocear el codigo para mejor legibilidad. 
+- Revisar la norma.
 
 - Integrar bien los .h.
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h
+
+- Revisar al final los leaks.
