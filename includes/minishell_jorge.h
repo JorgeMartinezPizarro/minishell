@@ -10,7 +10,7 @@
 # include <readline/history.h>
 # include "minishell.h"
 
-# define MAX_MINISHELL_LEVEL 100
+# define MAX_MINISHELL_LEVEL 10
 
 // STRUCTURES
 typedef struct s_variable

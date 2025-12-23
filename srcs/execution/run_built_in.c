@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 21:22:28 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:19:31 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	run_export(t_cmd *com)
 	else if (strarr_len(item) == 1 && com->args->next->next) 
 		set_env_value(&com->env, item[0], com->args->next->next->str);
 	free_str_array(item);
-	return (0);
+	return (EXIT_OK);
 }
 
 int	run_unset(t_cmd *com)
 {
 	del_env_value(&com->env, com->args->next->str);
-	return (0);
+	return (EXIT_OK);
 }
 
 int	run_built_in(t_cmd *com, t_shell *shell)
@@ -57,7 +57,7 @@ int	run_built_in(t_cmd *com, t_shell *shell)
 	else
 	{
 		ft_printf("bash: command '%s' not found.\n", com->args->str);
-		return (1);
+		return (EXIT_GENERAL_ERROR);
 	}
 }
 

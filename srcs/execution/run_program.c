@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 20:44:16 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:21:11 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,18 @@ int	run_program(t_cmd *com, t_shell *shell)
 
 	argv = tokens_to_argv(com->args);
 	if (!argv)
-		return (free(exe), 1);
+		return (free(exe), EXIT_GENERAL_ERROR);
 
 	pid = fork();
 	if (pid == -1)
 		return (free_str_array(argv), free(exe), free_shell(shell),
-			exit(1), 0);
+			exit(EXIT_GENERAL_ERROR), 0);
 	if (pid == 0)
 	{
 		setup_signals_child();
 		execve(exe, argv, env_list_to_envp(shell->env));
 		perror("execve");
-		exit(126);
+		exit(EXIT_CANT_EXEC);
 	}
 	free_str_array(argv);
 	free(exe);

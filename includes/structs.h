@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 17:24:19 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:24:10 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ typedef enum e_exit_code
     EXIT_GENERAL_ERROR = 1,
     EXIT_CANT_EXEC     = 126,
     EXIT_NOT_FOUND     = 127,
-    EXIT_SIGINT        = 130,
-	EXIT_REQUIRED	   = 42
+    EXIT_SIGINT        = 130
 }   t_exit_code;
 
 typedef enum e_token_type

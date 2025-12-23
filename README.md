@@ -76,12 +76,8 @@ make test
 
 ### T0D0:
 
-- Gestion de exit (exit_code 42)
-
 - Trocear el codigo para mejor legibilidad. 
 
 - Integrar bien los .h.
-
-- Expandir $? en expand_cmds con exit_code
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h

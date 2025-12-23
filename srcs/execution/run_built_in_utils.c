@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 21:23:55 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 22:24:24 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ int	run_env(t_cmd *com, char *prefix)
 		ft_printf("%s%s=%s\n", prefix, v->name, v->value);
 		node = node->next;
 	}
-	return (0);
+	return (EXIT_OK);
 }
 
 int	run_pwd(t_cmd *com)
 {
 	(void)com;
 	ft_printf("%s\n", get_env_value(com->env, "PWD"));
-	return (0);
+	return (EXIT_OK);
 }
 
 int	run_exit(t_shell *shell)
 {
 	free_shell(shell);
-	exit(0);
+	exit(EXIT_OK);
 }
