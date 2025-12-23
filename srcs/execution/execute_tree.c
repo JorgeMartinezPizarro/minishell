@@ -42,8 +42,9 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 		return (free_shell(shell), exit(1));
 	if (pid == 0)
 	{
+		shell->is_child = true;
 		exec_tree(*node, shell);
-		exit(exit_code);//hay que transmitir el código de salida a el padre?
+		exit(exit_code);
 	}
 	waitpid(pid, &status, 0);
 	exit_code = WIFEXITED(status);
@@ -51,15 +52,17 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 
 void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 {
-	while (redirs)
+	t_redir	*tmp;
+
+	tmp = redirs;
+	while (tmp)
 	{
-		if (redirs->redir_type != T_HEREDOC && redirs->file->type != T_SINGLE_QUOTE)
-			redirs->file->str = expand_vars(redirs->file->str, env);
-		redirs = redirs->next;
+		if (tmp->redir_type != T_HEREDOC && tmp->file->type != T_SINGLE_QUOTE)
+			tmp->file->str = expand_vars(tmp->file->str, env);
+		tmp = tmp->next;
 	}
 	expand_env_tokens(args, env);
 	expand_wildcard_tokens(args, get_env_value(env, "PWD"));
-	// TODO: EXPAND $?
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
@@ -72,7 +75,7 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	if (node->subshell == true)
 		return (exec_subprocces(&node, shell), (void)0);
 	if (node->n_type == N_PIPE)
-		exec_pipe(node, shell);
+		exec_pipe(node, &shell);
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{

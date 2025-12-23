@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 19:29:08 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:43:58 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (redir->file->type != T_SINGLE_QUOTE)
-			line = expand_vars(line, env);
 		if (ft_strcmp(line, redir->file->str) == 0)
 		{
 			free(line);	
 			break ;
 		}
+		if (redir->file->type != T_SINGLE_QUOTE)
+			line = expand_vars(line, env);
 		ft_putendl_fd(line, fd[1]);
 		free(line);
 	}

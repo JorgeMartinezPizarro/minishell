@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 22:24:10 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:01:35 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct	s_shell
 {
 	t_tree	*first_node;
 	t_list	*env;
+	bool	is_child;
 }	t_shell;
 
 #endif

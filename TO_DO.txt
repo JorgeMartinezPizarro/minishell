@@ -3,19 +3,5 @@ Gestionar bien el heredoc con sus señales
 Expandir antes de crear las redirecciones
 
 
-Expandir $?
-
-hay casos incorrectos al usar env -i ./minishell,
-algún caso de cd y $VARIABLE_INEXISTENTE segfault
-
-cuando te pasan cat << $algo hay que expandir algo
-
-hay algún caso con "'$USER'" no expande bien porque ignora las comillas
-internas
-
-bash:echo "'$USER'"
-'maanguit'
-mshll:echo "'$USER'"
-maanguit
-
-$variable_no_definida-> segmentation fault
+hay casos incorrectos al usar env -i ./minishell
+y algún caso de cd

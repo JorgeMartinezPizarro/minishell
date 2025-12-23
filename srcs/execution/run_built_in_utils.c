@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:50:16 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:06:30 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	run_pwd(t_cmd *com)
 
 int	run_exit(t_shell *shell)
 {
+	if (shell->is_child == false)
+		ft_putendl_fd("exit", STDIN_FILENO);	
 	free_shell(shell);
 	exit(EXIT_OK);
 }
