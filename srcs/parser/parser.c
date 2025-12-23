@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/22 15:37:10 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 00:34:21 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,6 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 	return (&(*node)->cmd);
 }
 
-/*
-comprobar estas validaciones:
-&& ls → división inválida
-() → everything_inside_paren → vacío → error
-ls && → division_point detecta operador sin derecha
-(ls &&) → parse() falla
-(ls)(wc) → no hay operador → error (creo que este no lo gestiona el árbol)
-*/
 t_tree	*make_tree(t_tokens *start, t_tokens *end)
 {
 	t_tokens	*div_p;
@@ -54,13 +46,13 @@ t_tree	*make_tree(t_tokens *start, t_tokens *end)
 
 	if (!start || start == end)
 		return (NULL);
-	while (everything_inside_paren(start, end))
-		remove_paren(&node, &start, &end);
-	if (!start || start == end)
-		return (NULL);
 	node = ft_calloc(sizeof(t_tree), 1);
 	if (!node)
 		return (perror("malloc error"), NULL);
+	while (everything_inside_paren(start, end))
+		end = remove_paren(&node, &start, end);
+	if (!start || start == end)
+		return (NULL);
 	div_p = division_point(start, end);
 	assign_node_type(&node, div_p);
 	if (node->n_type == N_CMND)

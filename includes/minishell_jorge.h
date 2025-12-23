@@ -43,6 +43,9 @@ size_t	strarr_len(char **strs);
 void	free_str_array(char **arr);
 void	free_variable(void *content);
 
+//signal
+void sigint_handler(int sign);
+
 // For CWD management and command in PATH search.
 char	*join_paths(const char *base, const char *relative);
 

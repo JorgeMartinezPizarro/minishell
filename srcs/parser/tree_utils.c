@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 15:09:45 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 00:17:25 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,28 @@ t_tokens	*division_point(t_tokens *start, t_tokens *end)
 	return (last_pipe);
 }
 
-void	remove_paren(t_tree **tree, t_tokens **start, t_tokens **end)
+t_tokens	*remove_paren(t_tree **tree, t_tokens **start, t_tokens *end)
 {
 	t_tokens	*tmp;
 	int			opened;
 
-	if ((*start)->next == *end || (*start)->type != T_O_PAREN)
-		return ;
+	if ((*start)->next == end || (*start)->type != T_O_PAREN)
+		return (end);
 	opened = 1;
 	(*tree)->subshell = true;
 	*start = (*start)->next;
 	tmp = *start;
-	while (tmp && tmp != *end && opened != 0)
+	while (tmp && tmp != end && opened != 0)
 	{
-		if ((*start)->type == T_O_PAREN)
+		if (tmp->type == T_O_PAREN)
 			opened++;
-		else if ((*start)->type == T_C_PAREN)
+		else if (tmp->type == T_C_PAREN)
 			opened--;
-		*end = tmp;
 		if (opened == 0)
-			return ;
+			break ;
 		tmp = tmp->next;
 	}
+	return (tmp);
 }
 
 bool	everything_inside_paren(t_tokens *start, t_tokens *end)
@@ -84,7 +84,7 @@ bool	everything_inside_paren(t_tokens *start, t_tokens *end)
 			opened++;
 		else if (start->type == T_C_PAREN)
 			opened--;
-		if (opened == 0 && start->next == NULL)
+		if (opened == 0 && start->next == end)
 			return (true);
 		start = start->next;
 	}

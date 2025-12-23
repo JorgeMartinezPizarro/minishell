@@ -40,16 +40,15 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	{
 		(*node)->subshell = false;
 		exec_tree(*node, shell);
-		exit(0);
+		exit(0);//hay que transmitir el código de salida a el padre
 	}
-	waitpid(pid, NULL, 0);
 }
 
 void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 {
 	while (redirs)
 	{
-		if (redirs->redir_type != T_HEREDOC)
+		if (redirs->redir_type != T_HEREDOC && redirs->file->type != T_SINGLE_QUOTE)
 			redirs->file->str = expand_vars(redirs->file->str, env);
 		redirs = redirs->next;
 	}
@@ -64,7 +63,8 @@ void	exec_tree(t_tree *node, t_shell *shell)
 
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
-	exec_subprocces(&node, shell);
+	if (node->subshell == true)
+		return (exec_subprocces(&node, shell), (void)0);
 	if (node->n_type == N_PIPE)
 		exec_pipe(node, shell);
 	exec_b_op(node, shell);
@@ -72,6 +72,9 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	{
 		expand_cmds(&node->cmd->args, node->cmd->redirs, shell->env);
 		make_redirections(node->cmd->redirs, shell->env);
+		expand_cmds(node->cmd->args, node->cmd->redirs, shell->env);
+		if (make_redirections(node->cmd->redirs, shell->env) == -1)
+			return ;//exit y free
 		node->cmd->env = shell->env;
 		if (node->cmd->is_builtin)
 			exit_code = run_built_in(node->cmd);
@@ -82,6 +85,4 @@ void	exec_tree(t_tree *node, t_shell *shell)
 		close(fd_in);
 		close(fd_out);
 	}
-	(void)fd_in;
-	(void)fd_out;
 }

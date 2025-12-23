@@ -13,7 +13,7 @@ int	exit_code = 0;
 
 // Variable para identificar la minishell activa, para 
 // reaccionar a control + c como lo hace shell.
-volatile sig_atomic_t g_state = 0;
+volatile sig_atomic_t g_state = 0;//quitar esto y gestionarlo usando mejor señales
 
 void sigint_handler(int sign)
 {

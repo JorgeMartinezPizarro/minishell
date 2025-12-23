@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/22 13:31:02 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 00:52:09 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,5 @@ typedef struct	s_shell
 	t_tree	*first_node;
 	t_list	*env;
 }	t_shell;
-
 
 #endif

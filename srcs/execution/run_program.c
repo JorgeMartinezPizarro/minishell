@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 13:49:33 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/22 18:09:43 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static char **tokens_to_argv(t_tokens *tokens)
 		len++;
 		tmp = tmp->next;
 	}
-
 	argv = ft_calloc(len + 1, sizeof(char *));
 	if (!argv)
 		return NULL;
@@ -108,6 +107,7 @@ int	run_program(t_cmd *com, t_shell *shell)
 	}
 	free_str_array(argv);
 	free(exe);
+	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
