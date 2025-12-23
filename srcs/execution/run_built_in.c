@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 12:03:26 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 17:25:28 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int	run_export(t_cmd *com)
 {
 	char	**item;
-
 	// Caso sin variables, parecido a env. Gestionarlo a parte.
 	// Las variables deben mostrarse alfabeticamente ordenadas.
 	if (com->args->next == NULL)
@@ -30,13 +29,13 @@ int	run_export(t_cmd *com)
 	else if (strarr_len(item) == 1 && com->args->next->next) 
 		set_env_value(&com->env, item[0], com->args->next->next->str);
 	free_str_array(item);
-	return (1);
+	return (0);
 }
 
 int	run_unset(t_cmd *com)
 {
 	del_env_value(&com->env, com->args->next->str);
-	return (1);
+	return (0);
 }
 
 int	run_built_in(t_cmd *com)
@@ -53,10 +52,12 @@ int	run_built_in(t_cmd *com)
 		return (run_export(com));
 	else if (ft_strcmp(com->args->str, "unset") == 0)
 		return (run_unset(com));
+	else if (ft_strcmp(com->args->str, "exit") == 0)
+		return (run_exit(com));
 	else
 	{
 		ft_printf("bash: command '%s' not found.\n", com->args->str);
-		return (0);
+		return (1);
 	}
 }
 
@@ -67,7 +68,8 @@ int	is_built_in(char *str)
 		|| ft_strcmp(str, "pwd") == 0
 		|| ft_strcmp(str, "cd") == 0
 		|| ft_strcmp(str, "export") == 0
-		|| ft_strcmp(str, "unset") == 0)
+		|| ft_strcmp(str, "unset") == 0
+		|| ft_strcmp(str, "exit") == 0)
 		return (1);
 	return (0);
 }

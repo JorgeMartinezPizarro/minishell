@@ -27,6 +27,7 @@ int 	run_env(t_cmd *com, char *prefix);
 int 	run_pwd(t_cmd *com);
 int		run_export(t_cmd *com);
 int		run_unset(t_cmd *com);
+int		run_exit(t_cmd *com);
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);

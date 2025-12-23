@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 11:55:07 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/23 17:25:14 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,18 @@ int	run_env(t_cmd *com, char *prefix)
 		ft_printf("%s%s=%s\n", prefix, v->name, v->value);
 		node = node->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	run_pwd(t_cmd *com)
 {
 	(void)com;
 	ft_printf("%s\n", get_env_value(com->env, "PWD"));
-	return (1);
+	return (0);
 }
 
-// TODO: discutir con mangit como gestionar esto desde exec_tree
 int	run_exit(t_cmd *com)
 {
 	(void)com;
-	return (1);
+	return 42;
 }
