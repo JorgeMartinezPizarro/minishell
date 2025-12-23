@@ -4,7 +4,7 @@ char *get_color(t_list *env)
 {
 	char *str = get_env_value(env, "COLOR");
 
-	if (ft_strcmp(str, "GREEN"))
+	if (str && ft_strcmp(str, "GREEN"))
 		return "\033[1;33m";
 	else
 		return "\033[1;35m";
@@ -60,6 +60,9 @@ char	*get_prompt(t_list *env)
 	name = get_name(env);
 	tmp = head;
 	head = ft_strreplace(tmp, "####", name);
+	free(tmp);
+	tmp = head;
+	head = ft_strreplace(tmp, "XXXXX", get_color(env));
 	free(tmp);
 	free(name);
 	return (head);

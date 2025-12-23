@@ -67,7 +67,6 @@ int main(int argc, char **args, char **env)
 {
 	t_shell	*shell;
 
-	exit_code = 0;
 	setup_signals_interactive();
 	shell = ft_calloc(sizeof(t_shell), 1);
 	if (!shell)

@@ -70,7 +70,7 @@ make test
 
 ### T0D0:
 
-- Gestion de exit
+- Gestion de exit (exit_code 42)
 
 - Trocear el codigo para mejor legibilidad. 
 

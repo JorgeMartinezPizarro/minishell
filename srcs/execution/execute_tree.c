@@ -36,10 +36,10 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 
 	if ((*node)->subshell == false)
 		return ;
+	(*node)->subshell = false;
 	pid = fork();
 	if (pid == 0)
 	{
-		(*node)->subshell = false;
 		exec_tree(*node, shell);
 		exit(exit_code);//hay que transmitir el código de salida a el padre?
 	}
@@ -57,6 +57,7 @@ void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
 	}
 	expand_env_tokens(args, env);
 	expand_wildcard_tokens(args, get_env_value(env, "PWD"));
+	// TODO: EXPAND $?
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
