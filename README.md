@@ -49,8 +49,6 @@ make test
 
 - Gestion de exit
 
-- Gestionar export A="echo hola"
-
 - Trocear el codigo para mejor legibilidad. 
 
 - Integrar bien los .h.
@@ -58,6 +56,8 @@ make test
 - Reparar tokens memory usage.
 
 - Gestionar control + c.
+
+- Expandir $? en expand_cmds con exit_code
 
 - Los siguientes comandos fallan.
 	- (echo hola)
