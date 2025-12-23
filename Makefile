@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/22 23:20:25 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/23 15:03:50 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ FILES = execution/run_built_in main \
 	utils/join_paths execution/run_cd execution/run_echo \
 	parser/parser_utils parser/parser parser/tree_utils  \
 	execution/redirections execution/execute_tree \
-	execution/pipes wildcard/expand_env_tokens
+	execution/pipes wildcard/expand_env_tokens \
+	signals/signal_utils utils/get_prompt
 
 ## TODO: crear bonus target with some new files _bonus
 

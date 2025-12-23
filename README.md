@@ -6,6 +6,29 @@ Aqui podemos dejarnos comentarios o explicaciones de como van yendo las cosas.
 
 En el repositorio de 42madrid debemos eliminar cualquier test, README.md o pdfs. Revisar bien antes de finalizar.
 
+## GIT:
+
+Para trabajar en el mismo branch, hay dos vias:
+
+- Hacer commit del trabajo local:
+
+```sh
+	git commit -a -m "local changes"
+	git pull --rebase
+	## Aqui solucionamos los conflictos si los hay
+	git rebase --continue ## Si habia conflictos
+	git push
+```
+
+- Sin hacer commit del trabajo local:
+
+```sh
+	git stash
+	git pull
+	git stash pop
+	## Aqui solucionamos los conflictos si los hay
+```
+
 ### Commandos
 
 Use

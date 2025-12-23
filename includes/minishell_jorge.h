@@ -42,6 +42,7 @@ t_list	*extract_variables(const char *str);
 size_t	strarr_len(char **strs);
 void	free_str_array(char **arr);
 void	free_variable(void *content);
+char	*get_prompt(t_list *env);
 
 //signal
 void sigint_handler(int sign);
@@ -58,5 +59,11 @@ char	*get_env_value(t_list *env, char *name);
 void	free_env(t_list **env);
 t_list	*load_env_values(char **env);
 char **env_list_to_envp(t_list *env);
+
+// Signals management
+void	sigint_handler(int signo);
+void	setup_signals_interactive(void);
+void	setup_signals_child(void);
+void	setup_signals_parent_waiting(void);
 
 #endif

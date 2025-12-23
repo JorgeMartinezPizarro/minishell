@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 18:09:43 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/23 14:58:10 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,22 +92,30 @@ int	run_program(t_cmd *com, t_shell *shell)
 	exe = find_executable(com->args->str);
 	if (!exe)
 		return (ft_printf("%s: command not found\n", com->args->str), 127);
+
 	argv = tokens_to_argv(com->args);
 	if (!argv)
 		return (free(exe), 1);
+
 	pid = fork();
 	if (pid == -1)
-		return (1);//liberar shell
+		return (free_str_array(argv), free(exe), 1);
+
 	if (pid == 0)
 	{
+		setup_signals_child();
 		execve(exe, argv, env_list_to_envp(shell->env));
-		free(exe);
 		perror("execve");
 		exit(126);
 	}
+
 	free_str_array(argv);
 	free(exe);
-	signal(SIGINT, SIG_IGN);
+	setup_signals_parent_waiting();
 	waitpid(pid, &status, 0);
+	setup_signals_interactive();
+	
+	if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (WEXITSTATUS(status));
 }
