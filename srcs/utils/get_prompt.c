@@ -6,7 +6,7 @@
 //  Fallback to NAME for regular computers.
 //  Otherwise it returns unknown.
 ///////////////////////////////////////////////////////////////////////////////
-char	*get_prompt(t_list *env)
+static char	*get_name(t_list *env)
 {
 	char **vals;
 	char **its;
@@ -31,3 +31,27 @@ char	*get_prompt(t_list *env)
 	free_str_array(els);
 	return (sol);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Usando \001 y \002 permitimos a readline calcular el ancho de linea.
+// Los otros codigos ANSI son para darle color.
+// 
+// EXTRA: permitir via ENV cambiar el color?
+///////////////////////////////////////////////////////////////////////////////
+char	*get_prompt(t_list *env)
+{
+	char *str;
+	char *head;
+	char *name;
+	char *tmp;
+
+	str = ft_strdup("\001\033[1;33m${USER}@#### >>> \033[0m\002");
+	head = expand_vars(str, env);
+	name = get_name(env);
+	tmp = head;
+	head = ft_strreplace(tmp, "####", name);
+	free(tmp);
+	free(name);
+	return (head);
+}
+
