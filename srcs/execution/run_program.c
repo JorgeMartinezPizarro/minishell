@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:00:12 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 23:40:21 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char	*find_executable(const char *cmd)
+char	*find_executable(const char *cmd, t_list *env)
 {
 	char	*path_env;
 	char	**dirs;
@@ -28,7 +28,7 @@ char	*find_executable(const char *cmd)
 			return (ft_strdup(cmd));
 		return NULL;
 	}
-	path_env = getenv("PATH");
+	path_env = get_env_value(env, "PATH");
 	if (!path_env)
 		return (NULL);
 	dirs = ft_split(path_env, ':');
@@ -89,7 +89,7 @@ int	run_program(t_cmd *com, t_shell *shell)
 	int		status;
 	pid_t	pid;
 
-	exe = find_executable(com->args->str);
+	exe = find_executable(com->args->str, com->env);
 	if (!exe)
 		return (ft_printf("%s: command not found\n", com->args->str), 127);
 	argv = tokens_to_argv(com->args);

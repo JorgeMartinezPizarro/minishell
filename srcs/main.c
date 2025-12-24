@@ -76,6 +76,16 @@ void	update_minishell_level(t_list **env)
 	free(nbr);
 }
 
+void init_required_env(t_list **env)
+{
+	char *str = getcwd(NULL, 0);
+	if (!get_env_value(*env, "PWD"))
+		set_env_value(env, "PWD", str);
+	if (!get_env_value(*env, "OLDPWD"))
+		set_env_value(env, "OLDPWD", str);
+	free(str);
+}
+
 int main(int argc, char **args, char **env)
 {
 	t_shell	*shell;
@@ -85,6 +95,7 @@ int main(int argc, char **args, char **env)
 	if (!shell)
 		return (malloc_failed(), 1);
 	shell->env = load_env_values(env);
+	init_required_env(&shell->env);
 	update_minishell_level(&shell->env);
 	if (ft_atoi(get_env_value(shell->env, "MSHLVL")) > MAX_MINISHELL_LEVEL)
 		return (ft_printf("error: minishell refused to open.\n"), 1);

@@ -1,2 +1,0 @@
-hay casos incorrectos al usar env -i ./minishell
-y algún caso de cd
