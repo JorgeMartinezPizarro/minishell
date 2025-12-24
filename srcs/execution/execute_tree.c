@@ -47,7 +47,7 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 		exit(exit_code);
 	}
 	waitpid(pid, &status, 0);
-	exit_code = WIFEXITED(status);
+	exit_code = WEXITSTATUS(status);
 }
 
 void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)

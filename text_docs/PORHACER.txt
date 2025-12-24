@@ -1,0 +1,28 @@
+
+ESTRUCTURA: pasar de booleanos a enums
+
+ASIGNAR EL TIPO A CADA NODO
+
+ETAPAS DE VALIDACIÓN DE INPUT (MUY IMPORTANTE):
+	1 Pretokenización
+	2 Posttokenización
+		Pipes bien colocados
+		&& y || con operandos
+		Paréntesis balanceados
+		Redirecciones con target válido
+		No terminar en operador
+
+
+ETAPAS DE EXPANSIÓN (IMPORTANTE):
+	1 La expansión se realizará antes de construir el ast
+
+PARSEO: 
+	1 División y asignación por pipes
+	(durante make tree cuando no b_op ni paren)
+	2 Por cada parte dividida
+
+
+Para dividir simplemente necesitamos nodos con tipo b_op, paréntesis,
+PIPE y comando
+
+El paréntesis puede ser un booleano, quizás mejor que un tipo de nodo
