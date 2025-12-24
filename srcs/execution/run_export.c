@@ -6,17 +6,32 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 21:08:45 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 21:39:38 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-
+///////////////////////////////////////////////////////////////////////////////
 //
-// a=15 comando ejecuta comando con a en el env, pero no setea a
-// a=15         si agrega a al env como export.
-// export A=15 la agrega al env y la pasa a cada hijo.
+// a=15 b=15 comando
+// 		ejecuta comando con a en el env, 
+// 		pero no setea a ni b en el entorno actual.
+// a=15
+// 		si agrega a al env como export.
+// export A=15 B=15
+// 		las agrega al env actual.
+//
+// Metacodigo (split assign from export)
+//
+// assign:
+//
+//  haz un clone de env
+//	por cada token con =, haz la asignacion en el clone
+//  si llegamos a NULL, cambiamos el clone env con env.
+//	si llegamos a un comando, lanzamos el comando con el clone.
+//
+///////////////////////////////////////////////////////////////////////////////
 int	run_export(t_cmd *com)
 {
 	char	**item;
