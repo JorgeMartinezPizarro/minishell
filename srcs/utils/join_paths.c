@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 11:30:09 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 16:15:50 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:08:06 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ char	*join_paths(const char *base, const char *relative)
 	count = 0;
 	if (relative[0] != '/')
 	{
-		/* Arreglo crítico: un base vacío debe considerarse "/" */
 		if (base[0] == '\0')
 			base = "/";
 		if (!process_path(segments, &count, base))

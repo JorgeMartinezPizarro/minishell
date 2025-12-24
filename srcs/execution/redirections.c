@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/24 00:43:58 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:54:02 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 {
-	char *line;
+	char	*line;
 
 	signal(SIGINT, SIG_DFL);
 	close(fd[0]);
@@ -26,7 +26,7 @@ void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 			break ;
 		if (ft_strcmp(line, redir->file->str) == 0)
 		{
-			free(line);	
+			free(line);
 			break ;
 		}
 		if (redir->file->type != T_SINGLE_QUOTE)

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 20:23:49 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 20:23:50 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:07:40 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	free_str_array(char **arr)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	if (!arr)
 		return ;
 	while (arr[i])

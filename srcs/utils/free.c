@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:41:48 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 16:14:07 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:09:44 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ void	free_tree(t_tree *tree)
 	free(tree);
 }
 
-void free_variable(void *content)
+void	free_variable(void *content)
 {
-	t_variable *v = (t_variable *)content;
+	t_variable	*v;
+
+	v = (t_variable *)content;
 	free(v->name);
 	free(v->value);
 	free(v);
 }
 
-void free_env(t_list **vars)
+void	free_env(t_list **vars)
 {
 	ft_lstclear(vars, free_variable);
 }

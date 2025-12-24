@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 21:25:29 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/24 00:05:34 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:54:18 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	exec_pipe(t_tree *node, t_shell **shell)
 	if (pipe(fd) == -1)
 	{
 		perror("pipe");
-		free_shell(*shell);	
+		free_shell(*shell);
 		exit(1);
 	}
 	left_pipe(node, shell, fd);

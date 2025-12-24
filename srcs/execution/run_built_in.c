@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:47:05 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:06:26 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int	run_export(t_cmd *com)
 {
 	char	**item;
+
 	if (com->args->next == NULL)
 	{
 		print_sorted_env(com->env);
@@ -25,7 +26,7 @@ int	run_export(t_cmd *com)
 	item = ft_split(com->args->next->str, '=');
 	if (strarr_len(item) == 2)
 		set_env_value(&com->env, item[0], item[1]);
-	else if (strarr_len(item) == 1 && com->args->next->next) 
+	else if (strarr_len(item) == 1 && com->args->next->next)
 		set_env_value(&com->env, item[0], com->args->next->next->str);
 	free_str_array(item);
 	return (EXIT_OK);

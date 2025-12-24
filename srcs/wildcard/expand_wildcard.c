@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 16:56:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 16:37:51 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:51:37 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	match_star(const char *str, const char *pat)
 		return (0);
 	}
 	if (*str && *str == *pat)
-		return match_star(str + 1, pat + 1);
+		return (match_star(str + 1, pat + 1));
 	return (0);
 }
 
@@ -84,15 +84,15 @@ static int	is_directory(const char *path)
 */
 static char	*join_relpath(const char *base, const char *name)
 {
-	char *tmp;
-	char *res;
+	char	*tmp;
+	char	*res;
 
 	if (!base || base[0] == '\0')
-		return ft_strdup(name);
+		return (ft_strdup(name));
 	tmp = ft_strjoin(base, "/");
 	res = ft_strjoin(tmp, name);
 	free(tmp);
-	return res;
+	return (res);
 }
 
 /*

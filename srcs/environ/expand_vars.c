@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:36:33 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:10:45 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ static char	*apply_var_formats(char *s, char *var_name, char *value)
 		fnode = fnode->next;
 	}
 	ft_lstclear(&formats, free);
-	
 	return (s);
 }
 
 static char	*expand_exit_code(char *s)
 {
-	char *tmp = s;
+	char	*tmp;
 
+	tmp = s;
 	s = ft_strreplace(tmp, "$?", ft_itoa(exit_code));
 	free(tmp);
 	tmp = s;
 	s = ft_strreplace(tmp, "${?}", ft_itoa(exit_code));
-	return s;
+	return (s);
 }
 
 char	*expand_vars(char *s, t_list *env)

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/21 22:54:54 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:15:55 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	add_redir(t_redir **redirs, t_tokens *token)
 	if (!redirs || !*redirs)
 	{
 		*redirs = new_redir;
-		return ; 
+		return ;
 	}
 	tmp = *redirs;
 	while (tmp->next)

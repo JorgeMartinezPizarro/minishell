@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 16:32:33 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 00:52:53 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	expand_env_tokens(t_tokens **tokens, t_list *env)
 	t_tokens	*result;
 	t_tokens	*cur;
 	t_tokens	*tmp;
+	t_tokens 	*t;
 
 	cur = *tokens;
 	result = NULL;
@@ -31,7 +32,7 @@ void	expand_env_tokens(t_tokens **tokens, t_list *env)
 			&& ft_strchr(cur->str, '$'))
 		{
 			cur->str = expand_vars(cur->str, env);
-			t_tokens *t = NULL;
+			t = NULL;
 			tokenize(cur->str, &t);
 			tmp = t;
 			while (t)

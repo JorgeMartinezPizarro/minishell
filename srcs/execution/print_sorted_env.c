@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_sorted_env.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 22:44:23 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:54:24 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:07:03 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	list_len(t_list *lst)
 static t_variable	**list_to_array(t_list *lst, int len)
 {
 	t_variable	**arr;
-	int		i;
+	int			i;
 
 	arr = malloc(sizeof(t_variable *) * (len + 1));
 	if (!arr)
@@ -50,9 +50,9 @@ static t_variable	**list_to_array(t_list *lst, int len)
 
 static void	sort_env_array(t_variable **arr)
 {
-	int		i;
-	int		j;
 	t_variable	*tmp;
+	int			i;
+	int			j;
 
 	i = 0;
 	while (arr[i])
@@ -75,8 +75,8 @@ static void	sort_env_array(t_variable **arr)
 void	print_sorted_env(t_list *env)
 {
 	t_variable	**arr;
-	int		len;
-	int		i;
+	int			len;
+	int			i;
 
 	len = list_len(env);
 	arr = list_to_array(env, len);

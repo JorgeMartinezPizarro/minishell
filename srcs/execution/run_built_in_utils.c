@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 00:06:30 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 01:06:03 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	run_pwd(t_cmd *com)
 int	run_exit(t_shell *shell)
 {
 	if (shell->is_child == false)
-		ft_putendl_fd("exit", STDIN_FILENO);	
+		ft_putendl_fd("exit", STDIN_FILENO);
 	free_shell(shell);
 	exit(EXIT_OK);
 }
