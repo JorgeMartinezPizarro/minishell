@@ -74,7 +74,7 @@ Finally, to run the tests, you can run
 make test
 ```
 
-### T0D0:
+### TODO:
 
 - Revisar la norma.
 
@@ -82,4 +82,10 @@ make test
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h
 
-- Revisar al final los leaks.
+- Revisar leaks con valgrind.
+
+- bug tokenizer: `echo hola"adios"` falla contra shell.
+
+- usar \x01 para marcar los $ que deben expandirse.
+
+- tokens no saben de sus quotes, esas se usan para decidir si un $ se vuelve \x01$ para que sea reemplazado, o no.

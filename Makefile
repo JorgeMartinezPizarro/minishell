@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/23 22:44:07 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/24 20:29:59 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILES = execution/run_built_in main \
 	execution/redirections execution/execute_tree \
 	execution/pipes wildcard/expand_env_tokens \
 	signals/signal_utils utils/get_prompt \
-	execution/print_sorted_env
+	execution/print_sorted_env execution/run_export
 
 ## TODO: crear bonus target with some new files _bonus
 

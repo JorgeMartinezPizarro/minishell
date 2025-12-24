@@ -23,7 +23,7 @@ echo " -> Running different tests"
 ./minishell -c "echo \${HOME}"
 ./minishell -c "pwd"
 ./minishell -c "export A=5"
-./minishell -c "B=8"
+./minishell -c "export B=8"
 ./minishell -c "echo \${HOME}/dir"
 ## Comando que falla, lo silenciamos
 ./minishell -c "  \"hola\"  echo|hel*lo  " || true

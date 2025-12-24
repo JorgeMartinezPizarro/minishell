@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:06:26 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/24 21:34:09 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,7 @@
 #include "minishell_jorge.h"
 #include <sys/stat.h>
 
-int	run_export(t_cmd *com)
-{
-	char	**item;
-
-	if (com->args->next == NULL)
-	{
-		print_sorted_env(com->env);
-		return (EXIT_OK);
-	}
-	item = ft_split(com->args->next->str, '=');
-	if (strarr_len(item) == 2)
-		set_env_value(&com->env, item[0], item[1]);
-	else if (strarr_len(item) == 1 && com->args->next->next)
-		set_env_value(&com->env, item[0], com->args->next->next->str);
-	free_str_array(item);
-	return (EXIT_OK);
-}
-
+// TODO: hay casos de error a considerar?
 int	run_unset(t_cmd *com)
 {
 	del_env_value(&com->env, com->args->next->str);
