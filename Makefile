@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/24 21:45:40 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/24 23:16:19 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(LIBFT):
 
 re: fclean all
 
-test: fclean
+test: all
 	@./tests/test.sh
 
 ## Run minishell with valgrind. readline.supp suppress all LEAKS
@@ -86,4 +86,8 @@ stats:
 	echo "  - Total of files: \033[0;32m$$files\033[0m"; \
 	echo ""
 
+## Comando para visualizar minishells anidadas
+## en otra shell abre minishells anidadas para verlo
+view:
+	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
 .PHONY = test

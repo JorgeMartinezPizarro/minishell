@@ -1,67 +1,64 @@
-## Main script for batch testing 
+#!/bin/bash
 
-## Batch execution of several scenarios, 
-## add more with the new code.
+### Use bash to validate exit code
+### of commands and diff for results
 
-## Add new code, add here a working example
-
-echo " -> Compiling minishell"
-make 
 echo " -> Running different tests"
 
-./minishell -c "echo hola"
+./minishell -c "echo hola" > /dev/null
 
-./minishell -c "echo"
+./minishell -c "echo" > /dev/null
 
-./minishell -c "export"
+./minishell -c "export" > /dev/null
 
 ## Comando que falla, lo silenciamos
-./minishell -c "${HOME}" || true
+./minishell -c "${HOME}"  > /dev/null || true
 
-./minishell -c "cd"
-./minishell -c "cd \${HOME}"
-./minishell -c "echo \${HOME}"
-./minishell -c "pwd"
-./minishell -c "export A=5"
-./minishell -c "export B=8"
-./minishell -c "echo \${HOME}/dir"
+./minishell -c "cd" > /dev/null
+./minishell -c "cd \${HOME}" > /dev/null
+./minishell -c "echo \${HOME}" > /dev/null
+./minishell -c "pwd" > /dev/null
+./minishell -c "export A=5" > /dev/null
+./minishell -c "export B=8" > /dev/null
+./minishell -c "echo \${HOME}/dir" > /dev/null
 ## Comando que falla, lo silenciamos
-./minishell -c "  \"hola\"  echo|hel*lo  " || true
+./minishell -c "  \"hola\"  echo|hel*lo  "  > /dev/null || true
 
-
-## Estos valgrind solo muestran algo si hay errores.
+echo "Testing memory leaks of built ins"
+## Probamos que no haya leaks en varios comandos 
 valgrind \
 		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
-		./minishell -c "echo ${HOME}"
-
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "cd ${HOME}"
+		./minishell -c "echo ${HOME}" > /dev/null
 
 valgrind \
 		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
-		./minishell -c "env"
+		./minishell -c "cd ${HOME}" > /dev/null
 
 valgrind \
 		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet \
-		./minishell -c "git status"
+		./minishell -c "env" > /dev/null
 
-## Test para exec_tree
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./minishell -c "git status" > /dev/null
+
+
 ./minishell -c "echo hola && echo adios"
 
-## Test rotos aun por arreglar
 ./minishell -c "(echo hola) && echo adios"
 
 ./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2"
 
-echo " -> Cleanup"
-make fclean > /dev/null
+## Probamos que MSHLVL sube a 2.
+echo "./minishell -c 'echo \$MSHLVL'" | ./minishell
 
+## Ejecutamos un fichero!
+./minishell -c ./tests/run.sh

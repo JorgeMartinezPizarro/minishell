@@ -6,6 +6,14 @@ Aqui podemos dejarnos comentarios o explicaciones de como van yendo las cosas.
 
 En el repositorio de 42madrid debemos eliminar cualquier test, README.md o pdfs. Revisar bien antes de finalizar.
 
+### FORK BOMB
+
+Para destruir un sistema, el fork bomb clasico, que define funciones vacias y las lanza de forma recursiva en background, es el siguiente:
+
+```sh
+:(){ :|:& };:
+```
+
 ## COLORES:
 
 Se puede configurar el color del prompt usando la variable de entorno `COLOR`:
@@ -96,3 +104,17 @@ make test
 
 	- echo "hola"adios
 	- cd "sr"cs
+
+- Repasar nuestra decision al ejecutar ficheros:
+
+`README.md`
+
+Es distinta, bash si no encuentra shebang pero es texto, intenta ejecutarlo usando bash por defecto, y en este caso muestra un error por linea,
+nosotros, sin embargo
+
+```bash
+jorge@DESKTOP-LGCI8TT >>> README.md
+execve: Exec format error
+```
+
+- bash run.sh ejecuta el archivo run.sh, podemos imitarlo, no es demasiado muy complicado.
