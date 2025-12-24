@@ -76,6 +76,8 @@ make test
 
 ### TODO:
 
+- Implementar asignacion de variables sin export (run_assign)
+
 - Revisar la norma.
 
 - Integrar bien los .h.
@@ -89,3 +91,8 @@ make test
 - usar \x01 para marcar los $ que deben expandirse.
 
 - tokens no saben de sus quotes, esas se usan para decidir si un $ se vuelve \x01$ para que sea reemplazado, o no.
+
+- casos rotos:
+
+	- echo "hola"adios
+	- cd "sr"cs
