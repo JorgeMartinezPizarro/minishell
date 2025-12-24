@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/24 23:16:19 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/24 23:20:45 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,18 @@ ${NAME}: $(LIBFT) $(OBJECTS)
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
+clean:
+	make -C libft clean
+	rm -f $(OBJECTS)
+
+fclean: clean
+	make -C libft fclean
+	rm -f $(NAME)
+
 re: fclean all
 
+## Ejecuta el script de tests con todos los tests
+## TODO: terminar los tests
 test: all
 	@./tests/test.sh
 
@@ -64,14 +74,8 @@ run: all
 		--suppressions=readline.supp \
 		--errors-for-leak-kinds=all \
 		./minishell
-clean:
-	make -C libft clean
-	rm -f $(OBJECTS)
 
-fclean: clean
-	make -C libft fclean
-	rm -f $(NAME)
-
+## Estadisticas del proyecto
 stats:
 	@lines=$$( \
 		{ \
