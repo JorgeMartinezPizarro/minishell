@@ -6,7 +6,7 @@
 #    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 19:17:26 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/25 19:43:02 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ FILES = \
 	execution/redirections execution/execute_tree \
 	execution/pipes execution/run_program \
 	execution/run_program_utils \
-	signals/signal_utils utils/get_prompt
 	signals/signal_utils utils/get_prompt \
 	expanse/expansion_utils
 
