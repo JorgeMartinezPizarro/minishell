@@ -6,14 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:25:07 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:25:37 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_jorge.h"
 
-void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
+static void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 {
 	char	*delimiter;
 	char	*line;
@@ -41,13 +41,13 @@ void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 	exit(0);
 }
 
-int	here_doc(t_redir *redir, t_list *env)
+static int	here_doc(t_redir *redir, t_list *env)
 {
 	int		fd[2];
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-		return (-1);
+		return (close(fd[0]), close(fd[1]), -1);
 	pid = fork();
 	if (pid == -1)
 		return (-1);
@@ -60,7 +60,7 @@ int	here_doc(t_redir *redir, t_list *env)
 	return (0);
 }
 
-int	redir_files(t_redir *redir)
+static int	redir_files(t_redir *redir)
 {
 	int	fd;
 

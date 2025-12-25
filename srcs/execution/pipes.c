@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 21:25:29 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:23:57 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	left_pipe(t_tree *node, t_shell **shell, int *fd)
+static void	left_pipe(t_tree *node, t_shell **shell, int *fd)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 	{
+		close(fd[0]);
+		close(fd[1]);
 		perror("fork error");
 		free_shell(*shell);
 		exit(1);
@@ -34,13 +36,15 @@ void	left_pipe(t_tree *node, t_shell **shell, int *fd)
 	}
 }
 
-void	right_pipe(t_tree *node, t_shell **shell, int *fd)
+static void	right_pipe(t_tree *node, t_shell **shell, int *fd)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 	{
+		close(fd[0]);
+		close(fd[1]);
 		perror("fork error");
 		free_shell(*shell);
 		exit(1);

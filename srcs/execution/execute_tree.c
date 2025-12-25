@@ -6,14 +6,14 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:18:47 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:23:37 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 #include "minishell.h"
 
-void	exec_b_op(t_tree *node, t_shell *shell)
+static void	exec_b_op(t_tree *node, t_shell *shell)
 {
 	if (node->n_type == N_OR)
 	{
@@ -29,7 +29,7 @@ void	exec_b_op(t_tree *node, t_shell *shell)
 	}
 }
 
-void	exec_subprocces(t_tree **node, t_shell *shell)
+static void	exec_subprocces(t_tree **node, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -50,7 +50,7 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	g_exit_code = WEXITSTATUS(status);
 }
 
-void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
+static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 {
 	t_tokens	*tmp_args;
 	t_redir		*tmp;
@@ -75,31 +75,35 @@ void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 	expand_wildcard_tokens(args, get_env_value(shell->env, "PWD"));
 }
 
-void	exec_tree(t_tree *node, t_shell *shell)
+static void	exec_commands(t_tree *node, t_shell *shell)
 {
+	
 	int	fd_in;
 	int	fd_out;
 
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
+	expand_cmds(&node->cmd->args, node->cmd->redirs, shell);
+	if (make_redirections(node->cmd->redirs, shell->env) == -1)
+		return (free_shell(shell), exit(1));
+	node->cmd->env = shell->env;
+	if (node->cmd->is_builtin)
+		g_exit_code = run_built_in(node->cmd, shell);
+	else
+		g_exit_code = run_program(node->cmd, shell);
+	dup2(fd_in, STDIN_FILENO);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_in);
+	close(fd_out);
+}
+
+void	exec_tree(t_tree *node, t_shell *shell)
+{
 	if (node->subshell == true)
 		return (exec_subprocces(&node, shell), (void)0);
 	if (node->n_type == N_PIPE)
 		exec_pipe(node, &shell);
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
-	{
-		expand_cmds(&node->cmd->args, node->cmd->redirs, shell);
-		if (make_redirections(node->cmd->redirs, shell->env) == -1)
-			return (free_shell(shell), exit(1));
-		node->cmd->env = shell->env;
-		if (node->cmd->is_builtin)
-			g_exit_code = run_built_in(node->cmd, shell);
-		else
-			g_exit_code = run_program(node->cmd, shell);
-		dup2(fd_in, STDIN_FILENO);
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_in);
-		close(fd_out);
-	}
+		exec_commands(node, shell);
 }

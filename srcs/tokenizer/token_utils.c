@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:56:49 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:27:05 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,6 @@ int	which_operator(char *line)
 	return (T_WORD);
 }
 
-/*
-iter_line cambia la dirección de memoria de line
-
-si dependiendo del tipo de operador avanza 1 o 2 posiciones y cuando no es un
-operador avanza hasta que encuentre otro operador
-
-si el tipo actual es T_WORD recorre hasta un espacio
-
-si contenido de línea es espacio los recorre hasta el siguiente elemento
-
-si solo hay espacios después de recorrer el elemento actual devuelve NULL
-*/
 char	*iter_line(char *line)
 {
 	char	quote;
