@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 23:40:21 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 14:34:01 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,32 @@ char	*find_executable(const char *cmd, t_list *env)
 	char	**dirs;
 	char	*full;
 	int		i;
+	struct stat st;
 
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
-		return NULL;
+		if (stat(cmd, &st) != 0)
+			return (ft_putstr_fd("minishell: no such file or directory\n", 2), NULL);
+		if (!S_ISREG(st.st_mode))
+			return (ft_putstr_fd("minishell: not a file\n", 2), NULL);
+		if (access(cmd, X_OK) != 0)
+			return (ft_putstr_fd("minishell: permission denied\n", 2), NULL);
+		return (ft_strdup(cmd));
 	}
+
 	path_env = get_env_value(env, "PATH");
 	if (!path_env)
-		return (NULL);
+		return (ft_putstr_fd("minishell: command not found\n", 2), NULL);
+
 	dirs = ft_split(path_env, ':');
 	if (!dirs)
 		return (NULL);
+
 	i = 0;
 	while (dirs[i])
 	{
 		full = join_paths(dirs[i], cmd);
-		if (access(full, X_OK) == 0)
+		if (stat(full, &st) == 0 && S_ISREG(st.st_mode) && access(full, X_OK) == 0)
 		{
 			free_str_array(dirs);
 			return (full);
@@ -46,7 +54,9 @@ char	*find_executable(const char *cmd, t_list *env)
 		free(full);
 		i++;
 	}
+
 	free_str_array(dirs);
+	ft_putstr_fd("minishell: command not found\n", 2);
 	return (NULL);
 }
 
@@ -91,7 +101,7 @@ int	run_program(t_cmd *com, t_shell *shell)
 
 	exe = find_executable(com->args->str, com->env);
 	if (!exe)
-		return (ft_printf("%s: command not found\n", com->args->str), 127);
+		return (127);
 	argv = tokens_to_argv(com->args);
 	if (!argv)
 		return (free(exe), EXIT_GENERAL_ERROR);

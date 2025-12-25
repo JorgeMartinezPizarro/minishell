@@ -82,6 +82,15 @@ Finally, to run the tests, you can run
 make test
 ```
 
+You can also use shebang as usual:
+
+```sh
+#!/path/to/minishell 
+echo hola
+```
+
+Al ejecutar ./script.sh, se ejecutara usando minishell.
+
 ### TODO:
 
 - Implementar asignacion de variables sin export (run_assign)
