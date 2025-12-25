@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    test.sh                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/12/25 23:15:11 by jomarti3          #+#    #+#              #
+#    Updated: 2025/12/25 23:15:12 by jomarti3         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/bash
 
 OK="\033[1;32mOK\033[0m "
@@ -124,6 +136,18 @@ else
     echo "$expected"
     echo "Got:"
     echo "$output"
+fi
+
+## Validamos expansiones complejas!
+
+OUTPUT1=$(echo "hola'$USER'"adios)
+
+OUTPUT2=$(./minishell -c "echo \"hola'$USER'\"adios")
+
+if [[ "$OUTPUT1" == "$OUTPUT2" ]]; then
+    echo -ne "$OK"
+else
+    echo -ne "$KO"
 fi
 
 echo -e "\n"
