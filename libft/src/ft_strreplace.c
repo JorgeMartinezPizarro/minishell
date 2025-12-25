@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 19:47:34 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 20:09:55 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:46:16 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,36 @@ static size_t	final_len(const char *s, const char *a, const char *b)
 	return (ft_strlen(s) + n * (lb - la));
 }
 
+static void	replace_copy(const char **s, size_t la,
+				const char *b, char **p)
+{
+	ft_memcpy(*p, b, ft_strlen(b));
+	*p += ft_strlen(b);
+	*s += la;
+}
+
 char	*ft_strreplace(const char *s, const char *a, const char *b)
 {
-	char		*r;
-	size_t		la;
-	size_t		lb;
-	char		*p;
+	char	*r;
+	size_t	la;
+	char	*p;
 
 	if (!s || !a || !b)
 		return (NULL);
 	la = ft_strlen(a);
 	if (la == 0)
 		return (ft_strdup(s));
-	lb = ft_strlen(b);
 	r = malloc(final_len(s, a, b) + 1);
 	if (!r)
 		return (NULL);
 	p = r;
 	while (*s)
-		if (ft_strnstr(s, a, la) == s && (p += lb))
-		{
-			ft_memcpy(p - lb, b, lb);
-			s += la;
-		}
+	{
+		if (ft_strnstr(s, a, la) == s)
+			replace_copy(&s, la, b, &p);
 		else
 			*p++ = *s++;
+	}
 	*p = '\0';
 	return (r);
 }
