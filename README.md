@@ -111,7 +111,7 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 - Comentarios solo en español para la entrega.
 
-- 
+- Revisar file descriptors abiertos con pipes o heredocs
 
 - Repasar nuestra decision al ejecutar ficheros:
 
