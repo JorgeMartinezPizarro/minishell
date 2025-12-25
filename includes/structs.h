@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:58:06 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:25:09 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,15 @@ typedef struct s_shell
 	t_list	*env;
 	bool	is_child;
 }	t_shell;
+
+// Estructura auxiliar para la expansion de wildcards
+typedef struct s_expand_ctx
+{
+	const char	*fs_base;
+	const char	*rel_base;
+	char		**segments;
+	int			idx;
+	char		***out;
+}	t_expand_ctx;
 
 #endif

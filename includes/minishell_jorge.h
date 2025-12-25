@@ -43,6 +43,7 @@ t_list	*extract_variables(const char *str);
 void	restore_dollars(char *s, char mark);
 void	mark_dollars(char *s, char mark);
 char	*trim_quotes(char *s);
+void	expand_recursive_rel(t_expand_ctx *ctx);
 
 // UTILS
 size_t	strarr_len(char **strs);
@@ -52,6 +53,8 @@ char	*get_prompt(t_list *env);
 char	*join_paths(const char *base, const char *relative);
 void	print_error(const char *str1, const char *str2);
 void	malloc_failed(void);
+char	**str_array_add(char **arr, char *s);
+int		is_directory(const char *path);
 
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);

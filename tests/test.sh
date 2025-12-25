@@ -3,6 +3,11 @@
 ### Use bash to validate exit code
 ### of commands and diff for results
 
+
+echo "Validating norminette"
+
+norminette srcs
+
 echo " -> Running different tests"
 
 ./minishell -c "echo hola" > /dev/null

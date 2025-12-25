@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 20:53:08 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:20:29 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	is_valid_identifier(const char *name)
 
 	if (!name || !name[0])
 		return (0);
-	if (!( (name[0] >= 'A' && name[0] <= 'Z')
-	    || (name[0] >= 'a' && name[0] <= 'z')
-	    ||  name[0] == '_' ))
+	if (!((name[0] >= 'A' && name[0] <= 'Z')
+			|| (name[0] >= 'a' && name[0] <= 'z')
+			|| name[0] == '_' ))
 		return (0);
 	i = 1;
 	while (name[i])
 	{
-		if (!( (name[i] >= 'A' && name[i] <= 'Z')
-		    || (name[i] >= 'a' && name[i] <= 'z')
-		    || (name[i] >= '0' && name[i] <= '9')
-		    ||  name[i] == '_' ))
+		if (!((name[i] >= 'A' && name[i] <= 'Z')
+				|| (name[i] >= 'a' && name[i] <= 'z')
+				|| (name[i] >= '0' && name[i] <= '9')
+				|| name[i] == '_' ))
 			return (0);
 		i++;
 	}
