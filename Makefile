@@ -6,7 +6,7 @@
 #    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 21:14:43 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/25 21:29:06 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ run: all
 		--gen-suppressions=all \
 		--suppressions=readline.supp \
 		--errors-for-leak-kinds=all \
+		--track-fds=yes \
 		./minishell
 
 ## Estadisticas del proyecto

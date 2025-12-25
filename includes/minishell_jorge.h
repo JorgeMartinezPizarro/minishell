@@ -32,6 +32,7 @@ int		run_unset(t_cmd *com);
 int		run_exit(t_shell *shell);
 int		run_assign(t_cmd *com, t_shell *shell);
 char	*find_executable(const char *cmd, t_list *env);
+int		is_valid_identifier(const char *name);
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);
