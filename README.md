@@ -107,7 +107,9 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 - Revisar leaks con valgrind.
 
-- Comentarios solo en español para la entrega (no es mejor en ingles?)
+- Comentarios solo en español para la entrega.
+
+- Revisar file descriptors abiertos con pipes o heredocs
 
 - Repasar nuestra decision al ejecutar ficheros:
 
