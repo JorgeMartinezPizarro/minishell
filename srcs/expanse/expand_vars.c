@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:01:59 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,16 @@ static char	*apply_var_formats(char *s, char *var_name, char *value)
 static char	*expand_exit_code(char *s)
 {
 	char	*tmp;
+	char	*nbr;
 
 	tmp = s;
-	s = ft_strreplace(tmp, "$?", ft_itoa(g_exit_code));
+	nbr = ft_itoa(g_exit_code);
+	s = ft_strreplace(tmp, "$?", nbr);
 	free(tmp);
 	tmp = s;
-	s = ft_strreplace(tmp, "${?}", ft_itoa(g_exit_code));
+	s = ft_strreplace(tmp, "${?}", nbr);
 	free(tmp);
+	free(nbr);
 	return (s);
 }
 
