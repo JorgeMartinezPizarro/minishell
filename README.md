@@ -111,10 +111,7 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 - Comentarios solo en español para la entrega.
 
-- casos rotos:
-
-	- echo "hola"adios
-	- cd "sr"cs
+- 
 
 - Repasar nuestra decision al ejecutar ficheros:
 

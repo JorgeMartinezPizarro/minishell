@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:52:59 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:09:24 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ static void	handle_input(int argc, char **args, t_shell *shell)
 		fd = open(args[1], O_RDONLY);
 		if (fd < 0)
 		{
+			close(fd);
 			perror(args[1]);
 			g_exit_code = 1;
 		}
