@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/23 22:20:14 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:00:54 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int	run_cd(t_cmd *com)
 	char	*new_path;
 	char	*old;
 
+	if (com->args->next && com->args->next->next)
+	{
+		ft_putstr_fd("cd: too many arguments\n", 2);
+		return (EXIT_GENERAL_ERROR);
+	}
 	old = get_env_value(com->env, "PWD");
 	target = get_cd_target(com);
 	if (!target)

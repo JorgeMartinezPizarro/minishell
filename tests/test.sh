@@ -69,7 +69,7 @@ valgrind \
 		./minishell -c "./minishell ./tests/run.sh" > /dev/null
 
 
-./minishell -c "echo hola && echo adios"
+./minishell -c "echo hola && echo adios" 
 
 ./minishell -c "(echo hola) && echo adios"
 
@@ -83,3 +83,5 @@ echo "./minishell -c 'echo \$MSHLVL'" | ./minishell
 
 ## Ejecutamos el comando desde shell 
 ./minishell -c ./tests/run.sh
+
+./minishell -c "cd srcs hola" || true
