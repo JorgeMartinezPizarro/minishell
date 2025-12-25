@@ -1,23 +1,10 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    test.sh                                            :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/12/25 23:15:11 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 23:15:12 by jomarti3         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #!/bin/bash
 
 OK="\033[1;32mOK\033[0m "
 KO="\033[1;31mKO\033[0m "
 
-### Use bash to validate exit code
+### Use bash to validate exit codes
 ### of commands and diff for results
-
 
 echo -ne " -> Running norminette\n\n "
 
