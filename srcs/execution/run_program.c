@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 15:20:10 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 15:22:07 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ char	*find_executable(const char *cmd, t_list *env)
 	if (ft_strchr(cmd, '/'))
 	{
 		if (stat(cmd, &st) != 0)
-			return (print_error(cmd, "no such file or directory\n"), NULL);
+			return (print_error(cmd, "file not found"), NULL);
 		if (!S_ISREG(st.st_mode))
-			return (print_error(cmd, "not a file\n"), NULL);
+			return (print_error(cmd, "file not found"), NULL);
 		if (access(cmd, X_OK) != 0)
-			return (print_error(cmd, "permission denied\n"), NULL);
+			return (print_error(cmd, "permission denied"), NULL);
 		return (ft_strdup(cmd));
 	}
 
 	path_env = get_env_value(env, "PATH");
 	if (!path_env)
-		return (print_error(cmd, "command not found\n"), NULL);
+		return (print_error(cmd, "command not found"), NULL);
 
 	dirs = ft_split(path_env, ':');
 	if (!dirs)
@@ -64,7 +64,7 @@ char	*find_executable(const char *cmd, t_list *env)
 	}
 
 	free_str_array(dirs);
-	print_error(cmd, "command not found\n");
+	print_error(cmd, "command not found");
 	return (NULL);
 }
 
