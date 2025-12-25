@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:23:37 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:33:42 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 
 static void	exec_commands(t_tree *node, t_shell *shell)
 {
-	
 	int	fd_in;
 	int	fd_out;
 
