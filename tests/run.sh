@@ -1,4 +1,4 @@
-#!/mnt/c/Users/USUARIO/Projects/minishell/minishell
+#!/usr/bin/env minishell
 echo hola
 
 echo adios

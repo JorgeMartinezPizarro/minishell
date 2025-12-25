@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 16:42:23 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 17:43:55 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,10 +61,11 @@ fclean: clean
 
 re: fclean all
 
-## Ejecuta el script de tests con todos los tests
-## TODO: terminar los tests
+## Incorpora temporalmente este repo al PATH para el shebang!
+## Ejecuta varias pruebas variadas, incluyendo ejecutar script
+## con shebang minishell!
 test: all
-	@./tests/test.sh
+	PATH="${PATH}:${PWD}" ./tests/test.sh
 
 ## Run minishell with valgrind. readline.supp suppress all LEAKS
 ## from readline. All supp rules are readline or add_history 
