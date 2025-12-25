@@ -50,6 +50,17 @@ valgrind \
 		--quiet \
 		./minishell -c "git status" > /dev/null
 
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./minishell ./tests/run.sh > /dev/null
+
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./tests/run.sh > /dev/null
 
 ./minishell -c "echo hola && echo adios"
 
