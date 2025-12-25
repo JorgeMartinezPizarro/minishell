@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 21:29:06 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/25 22:47:41 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ re: fclean all
 ## Incorpora temporalmente este repo al PATH para el shebang!
 ## Ejecuta varias pruebas variadas, incluyendo ejecutar script
 ## con shebang minishell!
-test: all
+test: all stats
 	@PATH="${PATH}:${PWD}" ./tests/test.sh
 
 ## Run minishell with valgrind. readline.supp suppress all LEAKS
