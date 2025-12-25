@@ -14,6 +14,8 @@ Para destruir un sistema, el fork bomb clasico, que define funciones vacias y la
 :(){ :|:& };:
 ```
 
+Pero no nos es util, esto solo sirve para destruir sistemas en general. 
+
 ## COLORES:
 
 Se puede configurar el color del prompt usando la variable de entorno `COLOR`:
@@ -99,19 +101,13 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 ### TODO:
 
-- Implementar asignacion de variables sin export (run_assign)
-
-- Revisar la norma.
-
 - Integrar bien los .h.
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h
 
 - Revisar leaks con valgrind.
 
-- Comentarios solo en español para la entrega.
-
-- 
+- Comentarios solo en español para la entrega (no es mejor en ingles?)
 
 - Repasar nuestra decision al ejecutar ficheros:
 
@@ -124,10 +120,3 @@ nosotros, sin embargo
 jorge@DESKTOP-LGCI8TT >>> README.md
 execve: Exec format error
 ```
-
-- bash run.sh ejecuta el archivo run.sh, podemos imitarlo, no es demasiado muy complicado.
-
-- Ficheros con problemas de norma (primero arreglar el tokenizer antes de pasar la norma)
-
-expand_env_tokens.c: Error!
-expand_wildcard.c: Error!
