@@ -109,11 +109,7 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 - Revisar leaks con valgrind.
 
-- bug tokenizer: `echo hola"adios"` falla contra shell.
-
-- usar \x01 para marcar los $ que deben expandirse.
-
-- tokens no saben de sus quotes, esas se usan para decidir si un $ se vuelve \x01$ para que sea reemplazado, o no.
+- Comentarios solo en español para la entrega.
 
 - casos rotos:
 
@@ -138,6 +134,3 @@ execve: Exec format error
 
 expand_env_tokens.c: Error!
 expand_wildcard.c: Error!
-parser_utils.c: Error!
-tokenizer.c: Error!
-token_utils.c: Error!
