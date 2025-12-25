@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 14:34:01 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 14:42:13 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+static void	print_error(const char *str1, const char *str2)
+{
+	ft_putstr_fd((char *)str1, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd((char *)str2, 2);
+}
 
 char	*find_executable(const char *cmd, t_list *env)
 {
@@ -26,17 +33,17 @@ char	*find_executable(const char *cmd, t_list *env)
 	if (ft_strchr(cmd, '/'))
 	{
 		if (stat(cmd, &st) != 0)
-			return (ft_putstr_fd("minishell: no such file or directory\n", 2), NULL);
+			return (print_error(cmd, "no such file or directory\n"), NULL);
 		if (!S_ISREG(st.st_mode))
-			return (ft_putstr_fd("minishell: not a file\n", 2), NULL);
+			return (print_error(cmd, "not a file\n"), NULL);
 		if (access(cmd, X_OK) != 0)
-			return (ft_putstr_fd("minishell: permission denied\n", 2), NULL);
+			return (print_error(cmd, "permission denied\n"), NULL);
 		return (ft_strdup(cmd));
 	}
 
 	path_env = get_env_value(env, "PATH");
 	if (!path_env)
-		return (ft_putstr_fd("minishell: command not found\n", 2), NULL);
+		return (print_error(cmd, "command not found\n"), NULL);
 
 	dirs = ft_split(path_env, ':');
 	if (!dirs)
@@ -56,7 +63,7 @@ char	*find_executable(const char *cmd, t_list *env)
 	}
 
 	free_str_array(dirs);
-	ft_putstr_fd("minishell: command not found\n", 2);
+	print_error(cmd, "command not found\n");
 	return (NULL);
 }
 
