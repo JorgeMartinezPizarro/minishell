@@ -53,6 +53,12 @@ make
 
 to compile the latest version of minishell. 
 
+To see the total progress of the repo:
+
+```sh
+make stats
+```
+
 The command
 
 
@@ -128,9 +134,8 @@ execve: Exec format error
 
 - bash run.sh ejecuta el archivo run.sh, podemos imitarlo, no es demasiado muy complicado.
 
-- Ficheros con problemas de norma:
+- Ficheros con problemas de norma (primero arreglar el tokenizer antes de pasar la norma)
 
-main.c: Error!
 expand_env_tokens.c: Error!
 expand_wildcard.c: Error!
 parser_utils.c: Error!
