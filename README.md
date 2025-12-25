@@ -132,7 +132,6 @@ execve: Exec format error
 
 main.c: Error!
 run_assign.c: Error!
-run_built_in.c: Error!
 run_export.c: Error!
 environments3.c: Error!
 run_program.c: Error!
