@@ -103,6 +103,8 @@ You can also use shebang as usual:
 ```sh
 #!/path/to/minishell 
 echo hola
+export A=15
+echo $A
 ```
 
 Al ejecutar ./script.sh, se ejecutara usando minishell.
