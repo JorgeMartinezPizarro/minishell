@@ -6,10 +6,9 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/26 00:10:34 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/26 00:35:23 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = minishell
 
@@ -35,8 +34,6 @@ FILES = \
 	signals/signal_utils utils/get_prompt \
 	expanse/expansion_utils
 
-## TODO: crear bonus target with some new files _bonus
-
 OBJECTS = $(addprefix srcs/, $(FILES:=.o))
 
 CC       = cc
@@ -45,6 +42,8 @@ CFLAGS   = -Wall -Wextra -Werror \
 	-I./includes -I./$(LIBFT_DIR)/src -g
 
 all: $(NAME)
+
+bonus: $(NAME)
 
 ${NAME}: $(LIBFT) $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) \
@@ -62,6 +61,11 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+###############################################################################
+## Estos comandos son adicionales para tests, y no hay que
+## subirlos a 42.
+###############################################################################
 
 ## Incorpora temporalmente este repo al PATH para el shebang!
 ## Ejecuta varias pruebas variadas, incluyendo ejecutar script
@@ -81,7 +85,7 @@ run: all
 		--track-fds=yes \
 		./minishell
 
-## Estadisticas del proyecto
+## Metricas del proyecto
 stats:
 	@lines=$$( \
 		{ \
@@ -100,4 +104,5 @@ stats:
 ## en otra shell abre minishells anidadas para verlo
 view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
-.PHONY = test
+
+.PHONY: test view stats run re all clean fclean
