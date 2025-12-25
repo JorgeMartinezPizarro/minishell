@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:33:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 21:36:30 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 		tmp = tmp->next;
 	}
 	expand_env_tokens(args, shell->env);
+	expand_wildcard_tokens(args, get_env_value(shell->env, "PWD"));
 	tmp_args = *args;
 	while (tmp_args)
 	{
 		tmp_args->str = trim_quotes(tmp_args->str);
 		tmp_args = tmp_args->next;
 	}
-	expand_wildcard_tokens(args, get_env_value(shell->env, "PWD"));
 }
 
 static void	exec_commands(t_tree *node, t_shell *shell)
