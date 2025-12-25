@@ -62,6 +62,13 @@ valgrind \
 		--quiet \
 		./tests/run.sh > /dev/null
 
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./minishell -c "./minishell ./tests/run.sh" > /dev/null
+
+
 ./minishell -c "echo hola && echo adios"
 
 ./minishell -c "(echo hola) && echo adios"
