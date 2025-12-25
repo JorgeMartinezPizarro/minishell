@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 14:42:13 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 15:20:10 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	print_error(const char *str1, const char *str2)
 	ft_putstr_fd((char *)str1, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd((char *)str2, 2);
+	ft_putstr_fd("\n", 2);
 }
 
 char	*find_executable(const char *cmd, t_list *env)
@@ -120,7 +121,7 @@ int	run_program(t_cmd *com, t_shell *shell)
 	{
 		setup_signals_child();
 		execve(exe, argv, env_list_to_envp(shell->env));
-		perror("execve");
+		print_error(com->args->str, "invalid command");
 		exit(EXIT_CANT_EXEC);
 	}
 	free_str_array(argv);
