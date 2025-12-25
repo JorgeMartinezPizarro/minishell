@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 01:13:11 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 14:06:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,23 @@ int	run_assign(t_cmd *com, t_shell *shell)
 	t = com->args;
 	while (t && ft_strchr(t->str, '=') != NULL)
 	{
+		// TODO: create a funcion with this part.
 		item = ft_split(t->str, '=');
 		char *name = item[0];
 		char *value = ft_strchr(t->str, '=');
 		set_env_value(&tmp_env, name, ++value);
-		free(item);
+		free_str_array(item);
 		t = t->next;
 	}
 	if (t)
 	{
+		// TODO: create a funcion with this part.
+		// El formato a=15 && ./command crea un entorno 
+		// extra para el command, que no interfiere en el
+		// entorno actual.		
 		t_cmd new_cmd;
 		t_shell new_shell;
-		
+
 		new_cmd.args = t;
 		new_cmd.env = tmp_env;
 		new_cmd.redirs = com->redirs;
@@ -66,6 +71,5 @@ int	run_assign(t_cmd *com, t_shell *shell)
 			return run_program(&new_cmd, &new_shell);
 	}
 	com->env = tmp_env;
-	free_str_array(item);
 	return (EXIT_OK);
 }

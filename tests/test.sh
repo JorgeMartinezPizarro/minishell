@@ -60,5 +60,8 @@ valgrind \
 ## Probamos que MSHLVL sube a 2.
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell
 
-## Ejecutamos un fichero!
+## Ejecutamos un fichero directamente
+./minishell ./tests/run.sh
+
+## Ejecutamos el comando desde shell 
 ./minishell -c ./tests/run.sh
