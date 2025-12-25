@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:50:58 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:54:58 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ int	count_word_len(char *str)
 	return (len);
 }
 
-/*
-añade al final de la lista un nuevo nodo que contiene la información
-de qué tipo de token es, el string del token y la dirección del siguiente nodo
-*/
 void	add_token(t_tokens **tokens, char *str)
 {
 	char	*token_str;
@@ -92,10 +88,6 @@ void	add_token(t_tokens **tokens, char *str)
 	free(token_str);
 }
 
-/*
-esta función crea una lista enlazada en la cual cada nodo contiene
-un string, el tipo de token y la dirección del siguiente nodo
-*/
 int	tokenize(char *line, t_tokens **tokens)
 {
 	if (!valid_quotes(line) || !valid_paren(line))
@@ -109,16 +101,3 @@ int	tokenize(char *line, t_tokens **tokens)
 	}
 	return (1);
 }
-
-/*int main(int ac, char **av)
-{
-	t_token_list	*tokens;
-
-	if (ac < 1)
-		return (1);
-	tokens = NULL;
-	tokenize(av[1], &tokens);
-	print_tokens(tokens);
-	return (0);
-}
-*/

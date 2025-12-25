@@ -107,6 +107,8 @@ echo hola
 
 Al ejecutar ./script.sh, se ejecutara usando minishell.
 
+Esta opcion del shebang es limitada, el parser intenta ejecutar cada linea no vacia asi pues no es exactamente igual que bash pero permite ejecutar scripts!
+
 ### TODO:
 
 - Integrar bien los .h.
@@ -115,18 +117,6 @@ Al ejecutar ./script.sh, se ejecutara usando minishell.
 
 - Revisar leaks con valgrind.
 
-- Comentarios solo en español para la entrega.
+- Comentarios solo en el .h y solo en ingles.
 
 - Revisar file descriptors abiertos con pipes o heredocs
-
-- Repasar nuestra decision al ejecutar ficheros:
-
-`README.md`
-
-Es distinta, bash si no encuentra shebang pero es texto, intenta ejecutarlo usando bash por defecto, y en este caso muestra un error por linea,
-nosotros, sin embargo
-
-```bash
-jorge@DESKTOP-LGCI8TT >>> README.md
-execve: Exec format error
-```

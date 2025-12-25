@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   join_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 11:30:09 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:08:06 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:55:55 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** Añade un segmento normal.
-** Maneja ".", vacío y ".." igual que bash:
-**   ""  -> ignorar
-**   "." -> ignorar
-**   ".." -> eliminar un nivel si existe, nunca añadir ".."
-*/
 static void	append_segment(char **arr, int *count, const char *seg)
 {
 	if (ft_strcmp(seg, "") == 0 || ft_strcmp(seg, ".") == 0)
@@ -35,10 +28,6 @@ static void	append_segment(char **arr, int *count, const char *seg)
 	(*count)++;
 }
 
-/*
-** Divide un path por "/", procesa cada segmento.
-** ft_split elimina múltiples '/', lo cual es correcto.
-*/
 static int	process_path(char **arr, int *count, const char *path)
 {
 	char	**tmp;
@@ -58,9 +47,6 @@ static int	process_path(char **arr, int *count, const char *path)
 	return (1);
 }
 
-/*
-** Reconstruye: "/a/b/c"
-*/
 static char	*build_path(char **arr, int count)
 {
 	char	*res;
@@ -88,13 +74,6 @@ static char	*build_path(char **arr, int count)
 	return (res);
 }
 
-/*
-** Igual a bash:
-**   - Si 'relative' empieza con '/', ignora base.
-**   - Normaliza ".", "..", y múltiples "/".
-**   - Nunca permite subir por encima de "/".
-**   - No conserva nunca ".." en el resultado final.
-*/
 char	*join_paths(const char *base, const char *relative)
 {
 	char	**segments;

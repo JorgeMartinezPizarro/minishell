@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 15:40:21 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 15:41:23 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:55:31 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ char	*get_color(t_list *env)
 	return ("\033[0m");
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Get bash PC identifier from env.
-//	Try to load the 42 variables.
-//  Fallback to NAME for regular computers.
-//  Otherwise it returns unknown.
-///////////////////////////////////////////////////////////////////////////////
 static char	*get_name(t_list *env)
 {
 	char	**vals;
@@ -70,12 +64,6 @@ static char	*get_name(t_list *env)
 	return (sol);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// Usando \001 y \002 permitimos a readline calcular el ancho de linea.
-// Los otros codigos ANSI son para darle color.
-// 
-// EXTRA: permitir via ENV cambiar el color?
-///////////////////////////////////////////////////////////////////////////////
 char	*get_prompt(t_list *env)
 {
 	char	*str;
