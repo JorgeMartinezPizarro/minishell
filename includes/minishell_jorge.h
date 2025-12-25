@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:47:38 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 23:41:28 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/history.h>
 # include "minishell.h"
 
-# define MAX_MINISHELL_LEVEL 10
+# define MAX_MINISHELL_LEVEL 1000
 
 // STRUCTURES
 typedef struct s_variable
