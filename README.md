@@ -90,6 +90,14 @@ Finally, to run the tests, you can run
 make test
 ```
 
+You can also see the current minishells openend (with nested view) using:
+
+```sh
+make view
+```
+
+For it, open some nested minishells and run the command in another tab.
+
 You can also use shebang as usual:
 
 ```sh
