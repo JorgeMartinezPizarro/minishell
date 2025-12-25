@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 00:46:34 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static char	*expand_exit_code(char *s)
 	char	*tmp;
 
 	tmp = s;
-	s = ft_strreplace(tmp, "$?", ft_itoa(exit_code));
+	s = ft_strreplace(tmp, "$?", ft_itoa(g_exit_code));
 	free(tmp);
 	tmp = s;
-	s = ft_strreplace(tmp, "${?}", ft_itoa(exit_code));
+	s = ft_strreplace(tmp, "${?}", ft_itoa(g_exit_code));
 	free(tmp);
 	return (s);
 }

@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 16:33:17 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 16:42:23 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES = \
 	tokenizer/token_utils tokenizer/tokenizer \
 	expanse/expand_wildcard_tokens expanse/expand_wildcard \
 	expanse/expand_env_tokens expanse/expand_vars \
-	utils/free2 utils/free utils/join_paths \
+	utils/free2 utils/free utils/join_paths utils/utils \
 	parser/parser_utils parser/parser parser/tree_utils  \
 	execution/redirections execution/execute_tree \
 	execution/pipes execution/run_program \

@@ -14,6 +14,6 @@
 # include "execution.h"
 # include "parser.h"
 
-extern int exit_code;
+extern int g_exit_code;
 
 #endif

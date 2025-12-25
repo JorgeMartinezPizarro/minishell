@@ -48,6 +48,7 @@ void	free_variable(void *content);
 char	*get_prompt(t_list *env);
 char	*join_paths(const char *base, const char *relative);
 void	print_error(const char *str1, const char *str2);
+void	malloc_failed();
 
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);
@@ -59,6 +60,8 @@ void	free_env(t_list **env);
 t_list	*load_env_values(char **env);
 char	**env_list_to_envp(t_list *env);
 void	print_sorted_env(t_list *env);
+void	update_minishell_level(t_list **env);
+void	init_required_env(t_list **env);
 
 // SIGNALS
 void	setup_signals_interactive(void);

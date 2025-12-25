@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 12:41:54 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	exec_b_op(t_tree *node, t_shell *shell)
 	if (node->n_type == N_OR)
 	{
 		exec_tree(node->left, shell);
-		if (exit_code != 0)
+		if (g_exit_code != 0)
 			exec_tree(node->right, shell);
 	}
 	if (node->n_type == N_AND)
 	{
 		exec_tree(node->left, shell);
-		if (exit_code == 0)
+		if (g_exit_code == 0)
 			exec_tree(node->right, shell);
 	}
 }
@@ -44,10 +44,10 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	{
 		shell->is_child = true;
 		exec_tree(*node, shell);
-		exit(exit_code);
+		exit(g_exit_code);
 	}
 	waitpid(pid, &status, 0);
-	exit_code = WEXITSTATUS(status);
+	g_exit_code = WEXITSTATUS(status);
 }
 
 void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
@@ -84,9 +84,9 @@ void	exec_tree(t_tree *node, t_shell *shell)
 			return (free_shell(shell), exit(1));
 		node->cmd->env = shell->env;
 		if (node->cmd->is_builtin)
-			exit_code = run_built_in(node->cmd, shell);
+			g_exit_code = run_built_in(node->cmd, shell);
 		else
-			exit_code = run_program(node->cmd, shell);
+			g_exit_code = run_program(node->cmd, shell);
 		dup2(fd_in, STDIN_FILENO);
 		dup2(fd_out, STDOUT_FILENO);
 		close(fd_in);
