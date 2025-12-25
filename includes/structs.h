@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/24 00:01:35 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:34:54 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ typedef enum e_token_type
 	T_O_PAREN = '(',
 	T_C_PAREN = ')',
 	T_REDIR_IN = '<',
-	T_REDIR_TR = '>',
-	T_SINGLE_QUOTE = '\'',
-	T_DOUBLE_QUOTE = '\"'
+	T_REDIR_TR = '>'
 }	e_token_type;
 
 typedef enum e_node_type

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 16:20:59 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:11:40 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,25 @@ void	add_token_to_list(t_tokens **tokens, char *str, int type)
 	add_last_token(tokens, new_token);
 }
 
+int	count_word_len(char *str)
+{
+	char	quote;
+	int		len;
+
+	len = 0;
+	quote = 0;
+	while (quote || (str[len] != ' '
+		&& which_operator(str + len) == T_WORD))
+	{
+		if (!quote && (str[len] == '\"' || str[len] == '\''))
+			quote = str[len];
+		else if (quote && str[len] == quote)
+			quote = 0;
+		len++;
+	}
+	return (len);
+}
+
 /*
 añade al final de la lista un nuevo nodo que contiene la información
 de qué tipo de token es, el string del token y la dirección del siguiente nodo
@@ -52,20 +71,17 @@ void	add_token(t_tokens **tokens, char *str)
 {
 	char	*token_str;
 	int		type;
-	int		i;
+	int		len;
 
-	i = 0;
+	len = 0;
 	type = which_operator(str);
 	if (type == T_WORD)
-	{
-		while (str[i] != ' ' && which_operator(str + i) == T_WORD)
-			i++;
-		token_str = ft_substr(str, 0, i);
-	}
+		len = count_word_len(str);
 	else if (type <= 4)
-		token_str = ft_substr(str, 0, 2);
+		len = 2;
 	else
-		token_str = ft_substr(str, 0, 1);
+		len = 1;
+	token_str = ft_substr(str, 0, len);
 	if (!token_str)
 	{
 		free_tokens(*tokens);
@@ -74,32 +90,6 @@ void	add_token(t_tokens **tokens, char *str)
 	}
 	add_token_to_list(tokens, token_str, type);
 	free(token_str);
-}
-
-void	add_quotes(t_tokens **tokens, char *str)
-{
-	char	*string;
-	char	quote;
-	int		type;
-	int		len;
-
-	quote = *str;
-	type = quote;
-	str++;
-	len = 0;
-	while (str[len] != quote)
-		len++;
-	if (len == 0)
-		return ;
-	string = ft_substr(str, 0, len);
-	if (!string)
-	{
-		free_tokens(*tokens);
-		perror("malloc error");
-		exit(1);
-	}	
-	add_token_to_list(tokens, string, type);
-	free(string);
 }
 
 /*
@@ -114,13 +104,8 @@ int	tokenize(char *line, t_tokens **tokens)
 		line = iter_line(line);
 	while (line && *line)
 	{
-		if (*line == '\"' || *line == '\'')
-			add_quotes(tokens, line);
-		else if (which_operator(line) != T_WORD)
-			add_token(tokens, line);
-		else
-			add_token(tokens, line);
-		line = iter_line(line);
+		add_token(tokens, line);
+		line = iter_line(line);//revisar
 	}
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:18:17 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	exec_line(t_shell *shell, char *line)
 		return (1);
 	shell->first_node = make_tree(tokens, NULL);
 	if (!shell->first_node)
-		return (syntax_error(), 1);
+		  return (write(2, "Syntax error\n", 13), 1);
 	exec_tree(shell->first_node, shell);
 	free_tokens(tokens);
 	free_tree(shell->first_node);

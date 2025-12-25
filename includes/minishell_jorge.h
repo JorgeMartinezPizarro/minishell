@@ -40,6 +40,9 @@ void	expand_wildcard_tokens(t_tokens **tokens, char *cwd);
 void	expand_env_tokens(t_tokens **tokens, t_list *env);
 char	**expand_wildcard(const char *cwd, const char *pattern);
 t_list	*extract_variables(const char *str);
+void	restore_dollars(char *s, char mark);
+void	mark_dollars(char *s, char mark);
+char	*trim_quotes(char *s);
 
 // UTILS
 size_t	strarr_len(char **strs);

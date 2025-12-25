@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:47:42 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:18:47 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,29 @@ void	exec_subprocces(t_tree **node, t_shell *shell)
 	g_exit_code = WEXITSTATUS(status);
 }
 
-void	expand_cmds(t_tokens **args, t_redir *redirs, t_list *env)
+void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 {
-	t_redir	*tmp;
+	t_tokens	*tmp_args;
+	t_redir		*tmp;
 
 	tmp = redirs;
 	while (tmp)
 	{
-		if (tmp->redir_type != T_HEREDOC && tmp->file->type != T_SINGLE_QUOTE)
-			tmp->file->str = expand_vars(tmp->file->str, env);
+		if (tmp->redir_type != T_HEREDOC)
+		{
+			tmp->file->str = expand_vars(tmp->file->str, shell->env);
+			tmp->file->str = trim_quotes(tmp->file->str);
+		}
 		tmp = tmp->next;
 	}
-	expand_env_tokens(args, env);
-	expand_wildcard_tokens(args, get_env_value(env, "PWD"));
+	expand_env_tokens(args, shell->env);
+	tmp_args = *args;
+	while (tmp_args)
+	{
+		tmp_args->str = trim_quotes(tmp_args->str);
+		tmp_args = tmp_args->next;
+	}
+	expand_wildcard_tokens(args, get_env_value(shell->env, "PWD"));
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)
@@ -79,7 +89,7 @@ void	exec_tree(t_tree *node, t_shell *shell)
 	exec_b_op(node, shell);
 	if (node->n_type == N_CMND)
 	{
-		expand_cmds(&node->cmd->args, node->cmd->redirs, shell->env);
+		expand_cmds(&node->cmd->args, node->cmd->redirs, shell);
 		if (make_redirections(node->cmd->redirs, shell->env) == -1)
 			return (free_shell(shell), exit(1));
 		node->cmd->env = shell->env;

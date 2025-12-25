@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 17:01:59 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:19:00 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*expand_vars(char *s, t_list *env)
 
 	if (!s)
 		return (NULL);
+	mark_dollars(s, '\x03');
 	vars = extract_variables(s);
 	node = vars;
 	while (node)
@@ -83,5 +84,7 @@ char	*expand_vars(char *s, t_list *env)
 		node = node->next;
 	}
 	ft_lstclear(&vars, free);
-	return (expand_exit_code(s));
+	s = expand_exit_code(s);
+	restore_dollars(s, '\x03');
+	return (s);
 }

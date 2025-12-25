@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 00:50:32 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:20:49 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	expand_wildcard_tokens(t_tokens **tokens, char *cwd)
 	result = NULL;
 	while (cur)
 	{
-		if ((cur->type == T_WORD || cur->type == T_DOUBLE_QUOTE)
-			&& ft_strchr(cur->str, '*'))
+		if (ft_strchr(cur->str, '*'))
 		{
 			expanded = expand_wildcard(cwd, cur->str);
 			i = 0;

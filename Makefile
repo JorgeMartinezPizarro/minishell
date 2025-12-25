@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 17:45:14 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 19:17:26 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME = minishell
 
@@ -32,6 +33,8 @@ FILES = \
 	execution/pipes execution/run_program \
 	execution/run_program_utils \
 	signals/signal_utils utils/get_prompt
+	signals/signal_utils utils/get_prompt \
+	expanse/expansion_utils
 
 ## TODO: crear bonus target with some new files _bonus
 

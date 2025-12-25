@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/18 13:07:09 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:48:42 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	which_operator(char *line)
 	if (!ft_strncmp("||", line, 2))
 		return (T_OR);
 	if (*line == '>' || *line == '<' || *line == '|' || *line == '('
-		|| *line == ')' || *line == '\"' || *line == '\'')
+		|| *line == ')')
 		return (*line);
 	return (T_WORD);
 }
@@ -82,18 +82,20 @@ si solo hay espacios después de recorrer el elemento actual devuelve NULL
 char	*iter_line(char *line)
 {
 	char	quote;
-	int		type;
 
-	quote = *line;
-	if (*line == '\"' || *line == '\'')
-		line = ft_strchr(++line, quote);
-	type = which_operator(line);
-	if (type > 4)
+	if (which_operator(line) > 4)
 		line += 1;
-	else if (type == T_WORD)
+	else if (which_operator(line) == T_WORD)
+	{
 		while (*line != ' ' && which_operator(line) == T_WORD)
+		{
+			quote = *line;
+			if (*line == '\"' || *line == '\'')
+				line = ft_strchr(++line, quote);	
 			line++;
-	else if (type != EOF)
+		}
+	}
+	else if (which_operator(line) != EOF)
 		line += 2;
 	while (*line == ' ')
 		line++;

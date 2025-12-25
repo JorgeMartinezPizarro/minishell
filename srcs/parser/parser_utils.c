@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 01:35:11 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/24 01:15:55 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 17:15:09 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,6 @@ void	free_redirs(t_redir *redirs)
 		free_tokens(tmp->file);
 		free(tmp);
 	}
-}
-
-bool	is_string(t_tokens *token)
-{
-	if (token->type == T_WORD || token->type == T_SINGLE_QUOTE
-		|| token->type == T_DOUBLE_QUOTE)
-		return (true);
-	return (false);
 }
 
 bool	is_redir(t_tokens *token)
@@ -81,9 +73,4 @@ void	iter_paren(t_tokens **tokens)
 		if (opened == 0)
 			break ;
 	}
-}
-
-void	syntax_error(void)
-{
-	write(2, "Syntax error\n", 13);
 }
