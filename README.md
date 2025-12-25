@@ -131,7 +131,6 @@ execve: Exec format error
 - Ficheros con problemas de norma:
 
 main.c: Error!
-run_program.c: Error!
 expand_env_tokens.c: Error!
 expand_wildcard.c: Error!
 parser_utils.c: Error!

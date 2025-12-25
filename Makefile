@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 00:48:07 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 16:33:17 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES = \
 	parser/parser_utils parser/parser parser/tree_utils  \
 	execution/redirections execution/execute_tree \
 	execution/pipes execution/run_program \
+	execution/run_program_utils \
 	signals/signal_utils utils/get_prompt
 
 ## TODO: crear bonus target with some new files _bonus

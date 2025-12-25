@@ -31,6 +31,8 @@ int		run_export(t_cmd *com);
 int		run_unset(t_cmd *com);
 int		run_exit(t_shell *shell);
 int		run_assign(t_cmd *com, t_shell *shell);
+char	*find_executable(const char *cmd, t_list *env);
+
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);
@@ -45,6 +47,7 @@ void	free_str_array(char **arr);
 void	free_variable(void *content);
 char	*get_prompt(t_list *env);
 char	*join_paths(const char *base, const char *relative);
+void	print_error(const char *str1, const char *str2);
 
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);

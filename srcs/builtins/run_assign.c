@@ -6,13 +6,13 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:19:00 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:30:54 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-static void	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
+static int	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
 {
 	t_cmd	new_cmd;
 	t_shell	new_shell;
