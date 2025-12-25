@@ -11,6 +11,14 @@ int	exit_code = 0;
 static int	exec_line(t_shell *shell, char *line)
 {
 	t_tokens	*tokens;
+	int			i;
+
+	// ignorar líneas vacías o solo espacios/tabs
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t' || line[i] == '\n')
+		i++;
+	if (line[i] == '\0')
+		return 1;
 
 	tokens = NULL;
 	if (!tokenize(line, &tokens))
@@ -23,7 +31,10 @@ static int	exec_line(t_shell *shell, char *line)
 	exec_tree(shell->first_node, shell);
 	free_tokens(tokens);
 	free_tree(shell->first_node);
-	add_history(line);
+
+	if (isatty(STDIN_FILENO))
+		add_history(line);
+
 	return 1;
 }
 
@@ -31,9 +42,21 @@ static void	shell_loop(t_shell *shell)
 {
 	if (!isatty(STDIN_FILENO))
 	{
-		char *line = get_next_line(STDIN_FILENO);
+		char	*line;
+		int		first_line;
+
+		first_line = 1;
+		line = get_next_line(STDIN_FILENO);
 		while (line)
 		{
+			if (first_line && line[0] == '#' && line[1] == '!')
+			{
+				first_line = 0;
+				free(line);
+				line = get_next_line(STDIN_FILENO);
+				continue;
+			}
+			first_line = 0;
 			exec_line(shell, line);
 			free(line);
 			line = get_next_line(STDIN_FILENO);
@@ -101,15 +124,25 @@ int main(int argc, char **args, char **env)
 		return (ft_printf("error: minishell refused to open.\n"), 1);
 	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 		exec_line(shell, args[2]);
-	else if (argc < 2)
-		shell_loop(shell);
-	else
+	else if (argc == 2)
 	{
-		ft_printf("Usage %s -c <command>\n", args[0]);
-		free_env(&shell->env);
-		free(shell);
-		return (1);
+		int fd;
+
+		fd = open(args[1], O_RDONLY);
+		if (fd < 0)
+		{
+			perror(args[1]);
+			exit_code = 1;
+		}
+		else
+		{
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			shell_loop(shell);
+		}
 	}
+	else
+		shell_loop(shell);
 	free_env(&shell->env);
 	free(shell);
 	return (exit_code);
