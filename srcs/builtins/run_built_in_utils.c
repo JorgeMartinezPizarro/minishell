@@ -6,17 +6,54 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 00:18:13 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 20:53:08 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
 
-// TODO: hay casos de error a considerar?
+int	is_valid_identifier(const char *name)
+{
+	int	i;
+
+	if (!name || !name[0])
+		return (0);
+	if (!( (name[0] >= 'A' && name[0] <= 'Z')
+	    || (name[0] >= 'a' && name[0] <= 'z')
+	    ||  name[0] == '_' ))
+		return (0);
+	i = 1;
+	while (name[i])
+	{
+		if (!( (name[i] >= 'A' && name[i] <= 'Z')
+		    || (name[i] >= 'a' && name[i] <= 'z')
+		    || (name[i] >= '0' && name[i] <= '9')
+		    ||  name[i] == '_' ))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	run_unset(t_cmd *com)
 {
-	del_env_value(&com->env, com->args->next->str);
-	return (EXIT_OK);
+	t_tokens	*t;
+	int			status;
+
+	t = com->args->next;
+	status = EXIT_OK;
+	while (t)
+	{
+		if (!is_valid_identifier(t->str))
+		{
+			print_error(t->str, "invalid identifier");
+			status = EXIT_GENERAL_ERROR;
+		}
+		else
+			del_env_value(&com->env, t->str);
+		t = t->next;
+	}
+	return (status);
 }
 
 int	run_env(t_cmd *com)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
+#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 19:43:02 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/25 20:36:49 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ run: all
 		--gen-suppressions=all \
 		--suppressions=readline.supp \
 		--errors-for-leak-kinds=all \
+		--track-fds=yes \
 		./minishell
 
 ## Estadisticas del proyecto

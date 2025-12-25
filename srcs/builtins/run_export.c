@@ -6,11 +6,32 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:20:17 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 20:54:52 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
+
+static int	export_one(t_cmd *com, char *arg)
+{
+	char	*eq;
+	char	*name;
+
+	eq = ft_strchr(arg, '=');
+	if (eq)
+		name = ft_substr(arg, 0, eq - arg);
+	else
+		name = ft_strdup(arg);
+	if (!is_valid_identifier(name))
+		return (print_error(name, "invalid identifier"),
+			free(name), EXIT_GENERAL_ERROR);
+	if (eq)
+		set_env_value(&com->env, name, eq + 1);
+	else
+		set_env_value(&com->env, name, "");
+	free(name);
+	return (EXIT_OK);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,28 +55,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 int	run_export(t_cmd *com)
 {
-	char		**item;
 	t_tokens	*t;
-	char		*name;
-	char		*value;
+	int			status;
 
 	if (com->args->next == NULL)
-	{
-		print_sorted_env(com->env);
-		return (EXIT_OK);
-	}
+		return (print_sorted_env(com->env), EXIT_OK);
 	t = com->args->next;
+	status = EXIT_OK;
 	while (t)
 	{
-		item = ft_split(t->str, '=');
-		name = item[0];
-		value = ft_strchr(t->str, '=');
-		if (value == NULL)
-			set_env_value(&com->env, name, "");
-		else
-			set_env_value(&com->env, name, ++value);
-		free_str_array(item);
+		if (export_one(com, t->str) != EXIT_OK)
+			status = EXIT_GENERAL_ERROR;
 		t = t->next;
 	}
-	return (EXIT_OK);
+	return (status);
 }
