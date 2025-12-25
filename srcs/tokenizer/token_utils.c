@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 16:48:42 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:56:49 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	valid_paren(char *line)
 	}
 	if (opened - closed == 0)
 		return (true);
-	return (false);	
+	return (false);
 }
 
 int	which_operator(char *line)
@@ -91,7 +91,7 @@ char	*iter_line(char *line)
 		{
 			quote = *line;
 			if (*line == '\"' || *line == '\'')
-				line = ft_strchr(++line, quote);	
+				line = ft_strchr(++line, quote);
 			line++;
 		}
 	}
@@ -101,15 +101,5 @@ char	*iter_line(char *line)
 		line++;
 	if (!*line || *line == '\n')
 		return (NULL);
-	return (line); 
-}
-
-void	print_tokens(t_tokens *tokens)
-{
-	while (tokens)//borrar antes de entregar
-	{
-		printf("content: %s\n", tokens->str);
-		printf("type: %d\n", tokens->type);
-		tokens = tokens->next;
-	}
+	return (line);
 }

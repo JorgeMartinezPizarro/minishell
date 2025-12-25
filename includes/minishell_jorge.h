@@ -24,15 +24,14 @@ int		is_built_in(char *str);
 int		run_built_in(t_cmd *com, t_shell *shell);
 int		run_program(t_cmd *com, t_shell *shell);
 int		run_cd(t_cmd *com);
-int 	run_echo(t_cmd *com);
-int 	run_env(t_cmd *com);
-int 	run_pwd(t_cmd *com);
+int		run_echo(t_cmd *com);
+int		run_env(t_cmd *com);
+int		run_pwd(t_cmd *com);
 int		run_export(t_cmd *com);
 int		run_unset(t_cmd *com);
 int		run_exit(t_shell *shell);
 int		run_assign(t_cmd *com, t_shell *shell);
 char	*find_executable(const char *cmd, t_list *env);
-
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);
@@ -51,7 +50,7 @@ void	free_variable(void *content);
 char	*get_prompt(t_list *env);
 char	*join_paths(const char *base, const char *relative);
 void	print_error(const char *str1, const char *str2);
-void	malloc_failed();
+void	malloc_failed(void);
 
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);

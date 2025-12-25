@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strreplace.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/25 19:47:34 by maanguit          #+#    #+#             */
+/*   Updated: 2025/12/25 19:49:39 by maanguit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-static size_t count_occur(const char *s, const char *a)
+static size_t	count_occur(const char *s, const char *a)
 {
 	size_t	count;
 	size_t	len_a;
@@ -9,15 +21,17 @@ static size_t count_occur(const char *s, const char *a)
 		return (0);
 	count = 0;
 	len_a = ft_strlen(a);
-	while ((s = ft_strnstr(s, a, ft_strlen(s))))
+	s = ft_strnstr(s, a, ft_strlen(s));
+	while (s)
 	{
 		count++;
 		s += len_a;
+		s = ft_strnstr(s, a, ft_strlen(s));
 	}
 	return (count);
 }
 
-static size_t final_len(const char *s, const char *a, const char *b)
+static size_t	final_len(const char *s, const char *a, const char *b)
 {
 	size_t	n;
 	size_t	la;
@@ -29,7 +43,7 @@ static size_t final_len(const char *s, const char *a, const char *b)
 	return (ft_strlen(s) + n * (lb - la));
 }
 
-char    *ft_strreplace(const char *s, const char *a, const char *b)
+char	*ft_strreplace(const char *s, const char *a, const char *b)
 {
 	char		*r;
 	size_t		la;

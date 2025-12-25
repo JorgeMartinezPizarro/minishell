@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 18:04:24 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:20:32 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:44:52 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*trim_quotes(char *s)
 	char	quote;
 	int		i;
 	int		j;
-	
+
 	res = malloc(ft_strlen(s) + 1);
 	if (!res)
 		return (perror("malloc error"), NULL);

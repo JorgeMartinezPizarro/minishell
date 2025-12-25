@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 16:56:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 00:51:37 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:59:39 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,27 +109,23 @@ static void	expand_recursive_rel(const char *fs_base,
 	if (!segments[idx])
 	{
 		*out = str_array_add(*out, ft_strdup(rel_base));
-		return;
+		return ;
 	}
 	dir = opendir(fs_base);
 	if (!dir)
-		return;
+		return ;
 	while ((ent = readdir(dir)))
 	{
 		if (ent->d_name[0] == '.' && segments[idx][0] != '.')
-			continue;
+			continue ;
 		if (!match_star(ent->d_name, segments[idx]))
-			continue;
+			continue ;
 		next_fs = join_paths(fs_base, ent->d_name);
 		next_rel = join_relpath(rel_base, ent->d_name);
 		if (!segments[idx + 1])
-		{
 			*out = str_array_add(*out, ft_strdup(next_rel));
-		}
 		else if (is_directory(next_fs))
-		{
 			expand_recursive_rel(next_fs, next_rel, segments, idx + 1, out);
-		}
 		free(next_fs);
 		free(next_rel);
 	}

@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 17:11:40 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:50:58 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	count_word_len(char *str)
 	len = 0;
 	quote = 0;
 	while (quote || (str[len] != ' '
-		&& which_operator(str + len) == T_WORD))
+			&& which_operator(str + len) == T_WORD))
 	{
 		if (!quote && (str[len] == '\"' || str[len] == '\''))
 			quote = str[len];
@@ -105,7 +105,7 @@ int	tokenize(char *line, t_tokens **tokens)
 	while (line && *line)
 	{
 		add_token(tokens, line);
-		line = iter_line(line);//revisar
+		line = iter_line(line);
 	}
 	return (1);
 }

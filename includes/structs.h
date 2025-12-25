@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 13:43:46 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 16:34:54 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:58:06 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 
 typedef enum e_exit_code
 {
-    EXIT_OK            = 0,
-    EXIT_GENERAL_ERROR = 1,
-    EXIT_CANT_EXEC     = 126,
-    EXIT_NOT_FOUND     = 127,
-    EXIT_SIGINT        = 130
-}   t_exit_code;
+	EXIT_OK = 0,
+	EXIT_GENERAL_ERROR = 1,
+	EXIT_CANT_EXEC = 126,
+	EXIT_NOT_FOUND = 127,
+	EXIT_SIGINT = 130
+}	t_exit_code;
 
-typedef enum e_token_type
+typedef enum t_token_type
 {
 	T_OR,
 	T_AND,
@@ -39,32 +39,31 @@ typedef enum e_token_type
 	T_C_PAREN = ')',
 	T_REDIR_IN = '<',
 	T_REDIR_TR = '>'
-}	e_token_type;
+}	t_token_type;
 
-typedef enum e_node_type
+typedef enum t_node_type
 {
 	N_OR,
 	N_AND,
 	N_PIPE,
 	N_CMND
-}	e_node_type;
+}	t_node_type;
 
-typedef struct	s_tokens
+typedef struct s_tokens
 {
 	struct s_tokens	*next;
 	char			*str;
 	int				type;
 }	t_tokens;
 
-typedef struct	s_redir
+typedef struct s_redir
 {
-	e_token_type	redir_type;
+	t_token_type	redir_type;
 	t_tokens		*file;
 	struct s_redir	*next;
 }	t_redir;
 
-
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	t_list		*env;
 	t_tokens	*args;
@@ -72,16 +71,16 @@ typedef struct	s_cmd
 	bool		is_builtin;
 }	t_cmd;
 
-typedef struct	s_tree
+typedef struct s_tree
 {
 	struct s_tree	*right;
 	struct s_tree	*left;
-	e_node_type		n_type;
+	t_node_type		n_type;
 	t_cmd			*cmd;
 	bool			subshell;
 }	t_tree;
 
-typedef struct	s_shell
+typedef struct s_shell
 {
 	t_tree	*first_node;
 	t_list	*env;

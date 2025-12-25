@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:08:54 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 19:58:54 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expand_env_tokens(t_tokens **tokens, t_list *env)
 	t_tokens	*result;
 	t_tokens	*cur;
 	t_tokens	*tmp;
-	t_tokens 	*t;
+	t_tokens	*t;
 
 	cur = *tokens;
 	result = NULL;
