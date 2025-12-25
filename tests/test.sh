@@ -64,5 +64,8 @@ valgrind \
 
 ./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2"
 
+## Prueba de que las wildcards se expanden apropiadamente.
+echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell
+
 ## Probamos que MSHLVL sube a 2.
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell
