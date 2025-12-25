@@ -127,3 +127,17 @@ execve: Exec format error
 ```
 
 - bash run.sh ejecuta el archivo run.sh, podemos imitarlo, no es demasiado muy complicado.
+
+- Ficheros con problemas de norma:
+
+main.c: Error!
+run_assign.c: Error!
+run_built_in.c: Error!
+run_export.c: Error!
+environments3.c: Error!
+run_program.c: Error!
+expand_env_tokens.c: Error!
+expand_wildcard.c: Error!
+parser_utils.c: Error!
+tokenizer.c: Error!
+token_utils.c: Error!
