@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/25 17:43:55 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 17:45:14 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ re: fclean all
 ## Ejecuta varias pruebas variadas, incluyendo ejecutar script
 ## con shebang minishell!
 test: all
-	PATH="${PATH}:${PWD}" ./tests/test.sh
+	@PATH="${PATH}:${PWD}" ./tests/test.sh
 
 ## Run minishell with valgrind. readline.supp suppress all LEAKS
 ## from readline. All supp rules are readline or add_history 
