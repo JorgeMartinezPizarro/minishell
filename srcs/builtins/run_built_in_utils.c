@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:06:03 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 00:18:13 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
+
+// TODO: hay casos de error a considerar?
+int	run_unset(t_cmd *com)
+{
+	del_env_value(&com->env, com->args->next->str);
+	return (EXIT_OK);
+}
 
 int	run_env(t_cmd *com)
 {

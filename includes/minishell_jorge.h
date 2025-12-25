@@ -30,7 +30,7 @@ int 	run_pwd(t_cmd *com);
 int		run_export(t_cmd *com);
 int		run_unset(t_cmd *com);
 int		run_exit(t_shell *shell);
-void	print_sorted_env(t_list *env);
+int		run_assign(t_cmd *com, t_shell *shell);
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);
@@ -48,13 +48,14 @@ char	*join_paths(const char *base, const char *relative);
 
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);
-t_list	*ft_clone_env(t_list *env);
+t_list	*clone_env(t_list *env);
 void	set_env_value(t_list **env, char *name, char *value);
 void	del_env_value(t_list **env, char *value);
 char	*get_env_value(t_list *env, char *name);
 void	free_env(t_list **env);
 t_list	*load_env_values(char **env);
 char	**env_list_to_envp(t_list *env);
+void	print_sorted_env(t_list *env);
 
 // SIGNALS
 void	setup_signals_interactive(void);

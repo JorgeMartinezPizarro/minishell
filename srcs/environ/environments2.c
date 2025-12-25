@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:22:47 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/21 11:41:13 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 00:33:55 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	*dup_env_var(void *content)
 	return (copy);
 }
 
-t_list	*ft_clone_env(t_list *env)
+t_list	*clone_env(t_list *env)
 {
 	return (ft_lstclone(env, dup_env_var));
 }

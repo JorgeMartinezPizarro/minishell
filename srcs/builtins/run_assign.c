@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   run_export.c                                       :+:      :+:    :+:   */
+/*   run_assign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 21:39:38 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 01:13:11 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,40 @@
 //	si llegamos a un comando, lanzamos el comando con el clone.
 //
 ///////////////////////////////////////////////////////////////////////////////
-int	run_export(t_cmd *com)
+int	run_assign(t_cmd *com, t_shell *shell)
 {
 	char	**item;
-
-	if (com->args->next == NULL)
+	t_tokens *t;
+	t_list *tmp_env = clone_env(com->env);
+	
+	t = com->args;
+	while (t && ft_strchr(t->str, '=') != NULL)
 	{
-		print_sorted_env(com->env);
-		return (EXIT_OK);
+		item = ft_split(t->str, '=');
+		char *name = item[0];
+		char *value = ft_strchr(t->str, '=');
+		set_env_value(&tmp_env, name, ++value);
+		free(item);
+		t = t->next;
 	}
-	//print_tokens(com->args);
-	item = ft_split(com->args->next->str, '=');
-	if (strarr_len(item) == 2)
-		set_env_value(&com->env, item[0], item[1]);
-	else
+	if (t)
 	{
-		ft_putstr_fd("bash: invalid expression\n", 2);
-		return (EXIT_GENERAL_ERROR);
+		t_cmd new_cmd;
+		t_shell new_shell;
+		
+		new_cmd.args = t;
+		new_cmd.env = tmp_env;
+		new_cmd.redirs = com->redirs;
+		// TODO: Tenemos el env dos veces, arreglar esto!
+		new_shell.env = tmp_env;
+		new_shell.first_node = shell->first_node;
+		new_shell.is_child = false;
+		if (is_built_in(t->str))
+			return run_built_in(&new_cmd, &new_shell);
+		else
+			return run_program(&new_cmd, &new_shell);
 	}
+	com->env = tmp_env;
 	free_str_array(item);
 	return (EXIT_OK);
 }

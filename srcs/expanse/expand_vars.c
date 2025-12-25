@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:10:45 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/25 00:46:34 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static char	*expand_exit_code(char *s)
 	free(tmp);
 	tmp = s;
 	s = ft_strreplace(tmp, "${?}", ft_itoa(exit_code));
+	free(tmp);
 	return (s);
 }
 

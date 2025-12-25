@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/24 23:20:45 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/25 00:48:07 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,21 @@ LIBFT_DIR = libft
 
 LIBFT=$(LIBFT_DIR)/libft.a
 
-FILES = execution/run_built_in main \
-	environ/expand_vars environ/extract_variables \
+FILES = \
+	builtins/run_built_in main builtins/run_built_in_utils \
+	builtins/run_cd builtins/run_echo builtins/run_export \
+	builtins/run_assign \
+	environ/extract_variables \
 	environ/environments environ/environments2 \
-	environ/environments3 \
-	execution/run_program wildcard/expand_wildcard \
+	environ/environments3 environ/print_sorted_env \
 	tokenizer/token_utils tokenizer/tokenizer \
-	wildcard/expand_wildcard_tokens utils/free2 \
-	utils/free execution/run_built_in_utils \
-	utils/join_paths execution/run_cd execution/run_echo \
+	expanse/expand_wildcard_tokens expanse/expand_wildcard \
+	expanse/expand_env_tokens expanse/expand_vars \
+	utils/free2 utils/free utils/join_paths \
 	parser/parser_utils parser/parser parser/tree_utils  \
 	execution/redirections execution/execute_tree \
-	execution/pipes wildcard/expand_env_tokens \
-	signals/signal_utils utils/get_prompt \
-	execution/print_sorted_env execution/run_export
+	execution/pipes execution/run_program \
+	signals/signal_utils utils/get_prompt
 
 ## TODO: crear bonus target with some new files _bonus
 
