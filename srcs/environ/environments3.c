@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 12:39:12 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 00:07:39 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:21:41 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ char	**env_list_to_envp(t_list *env)
 	t_list		*node;
 	char		**envp;
 	char		*tmp;
-	int			len;
 	int			i;
 
 	i = 0;
 	node = env;
-	len = ft_lstsize(env);
-	envp = ft_calloc(len + 1, sizeof(char *));
+	envp = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
 	while (node)
 	{
 		var = (t_variable *)node->content;
@@ -39,4 +37,3 @@ char	**env_list_to_envp(t_list *env)
 	envp[i] = NULL;
 	return (envp);
 }
-

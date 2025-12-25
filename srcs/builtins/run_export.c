@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 14:06:34 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:20:17 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 int	run_export(t_cmd *com)
 {
-	char	**item;
-	t_tokens *t;
-	
+	char		**item;
+	t_tokens	*t;
+	char		*name;
+	char		*value;
+
 	if (com->args->next == NULL)
 	{
 		print_sorted_env(com->env);
@@ -46,14 +48,14 @@ int	run_export(t_cmd *com)
 	while (t)
 	{
 		item = ft_split(t->str, '=');
-		char *name = item[0];
-		char *value = ft_strchr(t->str, '=');
+		name = item[0];
+		value = ft_strchr(t->str, '=');
 		if (value == NULL)
 			set_env_value(&com->env, name, "");
 		else
-			set_env_value(&com->env, name, ++value);		
+			set_env_value(&com->env, name, ++value);
 		free_str_array(item);
 		t = t->next;
-	}	
+	}
 	return (EXIT_OK);
 }

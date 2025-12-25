@@ -6,11 +6,28 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 14:06:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/25 16:19:00 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell_jorge.h"
+
+static void	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
+{
+	t_cmd	new_cmd;
+	t_shell	new_shell;
+
+	new_cmd.args = t;
+	new_cmd.env = t_env;
+	new_cmd.redirs = com->redirs;
+	new_shell.env = t_env;
+	new_shell.first_node = shell->first_node;
+	new_shell.is_child = false;
+	if (is_built_in(t->str))
+		return (run_built_in(&new_cmd, &new_shell));
+	else
+		return (run_program(&new_cmd, &new_shell));
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -34,42 +51,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 int	run_assign(t_cmd *com, t_shell *shell)
 {
-	char	**item;
-	t_tokens *t;
-	t_list *tmp_env = clone_env(com->env);
-	
+	char		**item;
+	t_tokens	*t;
+	t_list		*tmp_env;
+	char		*name;
+	char		*value;
+
+	tmp_env = clone_env(com->env);
 	t = com->args;
 	while (t && ft_strchr(t->str, '=') != NULL)
 	{
-		// TODO: create a funcion with this part.
 		item = ft_split(t->str, '=');
-		char *name = item[0];
-		char *value = ft_strchr(t->str, '=');
+		name = item[0];
+		value = ft_strchr(t->str, '=');
 		set_env_value(&tmp_env, name, ++value);
 		free_str_array(item);
 		t = t->next;
 	}
 	if (t)
-	{
-		// TODO: create a funcion with this part.
-		// El formato a=15 && ./command crea un entorno 
-		// extra para el command, que no interfiere en el
-		// entorno actual.		
-		t_cmd new_cmd;
-		t_shell new_shell;
-
-		new_cmd.args = t;
-		new_cmd.env = tmp_env;
-		new_cmd.redirs = com->redirs;
-		// TODO: Tenemos el env dos veces, arreglar esto!
-		new_shell.env = tmp_env;
-		new_shell.first_node = shell->first_node;
-		new_shell.is_child = false;
-		if (is_built_in(t->str))
-			return run_built_in(&new_cmd, &new_shell);
-		else
-			return run_program(&new_cmd, &new_shell);
-	}
+		return (run_with_env(t, tmp_env, shell, com));
 	com->env = tmp_env;
 	return (EXIT_OK);
 }
