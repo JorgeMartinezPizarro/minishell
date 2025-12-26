@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 21:25:29 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 21:23:57 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 16:55:59 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	left_pipe(t_tree *node, t_shell **shell, int *fd)
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
+		free_shell(*shell);
 		exec_tree(node->left, *shell);
 		exit(g_exit_code);
 	}
@@ -56,6 +57,7 @@ static void	right_pipe(t_tree *node, t_shell **shell, int *fd)
 		close(fd[0]);
 		close(fd[1]);
 		exec_tree(node->right, *shell);
+		free_shell(*shell);
 		exit(g_exit_code);
 	}
 }

@@ -2407,3 +2407,18 @@
    fun:handle_input
    fun:main
 }
+{
+   readline_all_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,indirect
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   readline_history_all_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable,indirect
+   ...
+   fun:add_history
+}
