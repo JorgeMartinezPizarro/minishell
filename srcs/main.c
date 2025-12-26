@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 12:36:58 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 12:39:12 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ int	main(int argc, char **args, char **env)
 	if (ft_atoi(get_env_value(shell->env, "MSHLVL")) > MAX_MINISHELL_LEVEL)
 		return (ft_printf("error: minishell refused to open.\n"), 1);
 	handle_input(argc, args, shell);
-	free_env(&shell->env);
 	free_shell(shell);
-	free(shell);
 	return (g_exit_code);
 }
