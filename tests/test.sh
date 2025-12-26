@@ -181,5 +181,4 @@ test_command 'NOMBRE="George" && cat <<EOF
 Hola $NOMBRE
 EOF'
 
-
 echo -e "\n"
