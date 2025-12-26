@@ -72,6 +72,10 @@ $VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
 
 $VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
 
+$VALGRIND ./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
+
+$VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
+
 ## Test actualmente ROTO
 $VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
 
