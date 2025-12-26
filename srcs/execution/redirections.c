@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 21:25:37 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 17:54:42 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	here_doc(t_redir *redir, t_list *env)
 		return (close(fd[0]), close(fd[1]), -1);
 	pid = fork();
 	if (pid == -1)
-		return (-1);
+		return (close(fd[0]), close(fd[1]), -1);
 	if (pid == 0)
 		here_doc_aux(redir, env, fd);
 	close(fd[1]);
