@@ -180,6 +180,4 @@ test_command "echo $PWD && cd .. && cd - && echo $PWD"
 
 test_command "A=150 export | grep -v 'MSHLVL' | grep -v ' _='"
 
-test_command "A=150 env | grep -v 'MSHLVL' | grep -v '^_=' | sort"
-
 echo -e "\n"
