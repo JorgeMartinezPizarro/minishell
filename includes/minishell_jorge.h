@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 17:02:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 18:05:12 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		run_exit(t_shell *shell);
 int		run_assign(t_cmd *com, t_shell *shell);
 char	*find_executable(const char *cmd, t_list *env);
 int		is_valid_identifier(const char *name);
-int		exec_line(t_shell *shell, char *line);
 
 // EXPANSION
 char	*expand_vars(char *s, t_list *env);

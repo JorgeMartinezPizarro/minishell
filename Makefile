@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/26 17:04:34 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/26 17:58:59 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ FILES = \
 	parser/parser_utils parser/parser parser/tree_utils  \
 	execution/redirections execution/execute_tree \
 	execution/pipes execution/run_program \
-	execution/exec_line \
 	execution/run_program_utils \
 	signals/signal_utils utils/get_prompt \
 	expanse/expansion_utils
