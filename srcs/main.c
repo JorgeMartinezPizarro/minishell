@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 19:00:17 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 19:26:15 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static int	exec_line(t_shell *shell, char *line)
 		return (1);
 	shell->first_node = make_tree(tokens, NULL);
 	if (!shell->first_node)
-		return (write(2, "Syntax error\n", 13), 1);
-	exec_tree(shell->first_node, shell);
+		return (free_tokens(tokens), write(2, "Syntax error\n", 13), 1);
 	free_tokens(tokens);
+	exec_tree(shell->first_node, shell);
 	free_tree(shell->first_node);
 	if (isatty(STDIN_FILENO))
 		add_history(line);
@@ -78,9 +78,9 @@ static void	shell_loop(t_shell *shell)
 	line = readline(head);
 	while (line)
 	{
+		free(head);
 		exec_line(shell, line);
 		free(line);
-		free(head);
 		head = get_prompt(shell->env);
 		line = readline(head);
 	}

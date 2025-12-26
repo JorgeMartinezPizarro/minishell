@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/26 18:05:41 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/26 19:31:13 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ test: all stats
 ## usage.
 run: all
 	valgrind \
-		--leak-check=full --show-leak-kinds=definite,indirect \
+		--leak-check=full --show-leak-kinds=all \
 		--gen-suppressions=all \
 		--suppressions=readline.supp \
 		--errors-for-leak-kinds=all \
