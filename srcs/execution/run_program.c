@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:47:49 by jomarti3         ###   ########.fr       */
+/*   Created: 2025/12/27 00:51:33 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/12/27 00:51:34 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
 
 char	**tokens_to_argv(t_tokens *tokens)
 {
@@ -40,11 +41,16 @@ char	**tokens_to_argv(t_tokens *tokens)
 	return (argv);
 }
 
-static int	run_child(t_cmd *com, t_shell *shell, char *exe, char **argv)
+static void	run_child(t_cmd *com, t_shell *shell, char *exe, char **argv)
 {
+	char	**envp;
+
 	setup_signals_child();
-	execve(exe, argv, env_list_to_envp(shell->env));
-	print_error(com->args->str, "invalid command");
+	envp = env_list_to_envp(shell->env);
+	execve(exe, argv, envp);
+	print_error(com->args->str, strerror(errno));
+	if (errno == ENOENT)
+		exit(EXIT_NOT_FOUND);
 	exit(EXIT_CANT_EXEC);
 }
 
@@ -68,17 +74,17 @@ int	run_program(t_cmd *com, t_shell *shell)
 
 	exe = find_executable(com->args->str, com->env);
 	if (!exe)
-		return (127);
+		return (g_exit_code);
 	argv = tokens_to_argv(com->args);
 	if (!argv)
-		return (free(exe), EXIT_GENERAL_ERROR);
+		return (free(exe), g_exit_code = EXIT_GENERAL_ERROR, g_exit_code);
 	pid = fork();
 	if (pid == -1)
-		return (free_str_array(argv), free(exe), free_shell(shell),
-			exit(EXIT_GENERAL_ERROR), 0);
+		return (free_str_array(argv), free(exe),
+			free_shell(shell), g_exit_code = EXIT_GENERAL_ERROR, g_exit_code);
 	if (pid == 0)
 		run_child(com, shell, exe, argv);
 	free_str_array(argv);
 	free(exe);
-	return (wait_child(pid));
+	return (g_exit_code = wait_child(pid));
 }

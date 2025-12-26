@@ -36,16 +36,22 @@ test_command() {
     EXPECTED_EXIT=$?
 
     # Comparar salida y exit code
-    if [[ "$OUTPUT" == "$EXPECTED" && $EXIT_CODE -eq $EXPECTED_EXIT ]]; then
-        echo -ne "$OK"
-    else
-        echo -ne "$KO"
-        echo -e "\nCommand: $COMMAND"
-        echo -e "\nExpected output:\n$EXPECTED"
-        echo -e "\nGot output:\n$OUTPUT"
-        echo -e "\nExpected exit code: $EXPECTED_EXIT"
-        echo -e "Got exit code: $EXIT_CODE"
-    fi
+	if [[ "$OUTPUT" == "$EXPECTED" && $EXIT_CODE -eq $EXPECTED_EXIT ]]; then
+		echo -ne "$OK"
+	else
+		echo -ne "$KO"
+		echo -e "\nCommand: $COMMAND"
+
+		if [[ "$OUTPUT" != "$EXPECTED" ]]; then
+			echo -e "\nExpected output:\n$EXPECTED"
+			echo -e "\nGot output:\n$OUTPUT"
+		fi
+
+		if [[ $EXIT_CODE -ne $EXPECTED_EXIT ]]; then
+			echo -e "\nExpected exit code: $EXPECTED_EXIT"
+			echo -e "Got exit code: $EXIT_CODE"
+		fi
+	fi
 }
 
 echo -ne " -> Running norminette.\n\n "
@@ -56,21 +62,21 @@ validate_norm ./libft
 
 echo -ne "\n\n -> Exit code validation.\n\n "
 
-./minishell -c "echo hola" > /dev/null && echo -ne "$OK"
-./minishell -c "echo" > /dev/null && echo -ne "$OK"
-./minishell -c "export" > /dev/null && echo -ne "$OK"
-./minishell -c "${HOME}"  > /dev/null 2>&1 || echo -ne "$OK"
-./minishell -c "cd" > /dev/null && echo -ne "$OK"
-./minishell -c "cd \${HOME}" > /dev/null && echo -ne "$OK"
-./minishell -c "echo \${HOME}" > /dev/null && echo -ne "$OK"
-./minishell -c "pwd" > /dev/null && echo -ne "$OK"
-./minishell -c "export A=5" > /dev/null && echo -ne "$OK"
-./minishell -c "export B=8" > /dev/null && echo -ne "$OK"
-./minishell -c "echo \${HOME}/dir" > /dev/null && echo -ne "$OK"
-./minishell -c "  \"hola\"  echo|hel*lo  "  > /dev/null 2>&1 || echo -ne "$OK"
-./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
-./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
-./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2" > /dev/null 2>&1 && echo -ne "$OK"
+test_command "echo hola"
+test_command "echo"
+test_command "export | grep -v SHLVL | grep -v ' _='"
+test_command "${HOME}"
+test_command "cd"
+test_command "cd \${HOME}"
+test_command "echo \${HOME}"
+test_command "pwd"
+test_command "export A=5"
+test_command "export B=8"
+test_command "echo \${HOME}/dir"
+test_command "  \"hola\"  echo|hel*lo  "
+test_command "echo hola && echo adios"
+test_command "(echo hola) && echo adios"
+test_command "(cd r || echo fail 1 && cd x) || echo fail 2"
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 

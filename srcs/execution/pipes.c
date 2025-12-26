@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/21 21:25:29 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 17:59:05 by maanguit         ###   ########.fr       */
+/*   Created: 2025/12/27 00:51:40 by jomarti3          #+#    #+#             */
+/*   Updated: 2025/12/27 00:53:02 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	left_pipe(t_tree *node, t_shell **shell, int *fd)
+static pid_t	left_pipe(t_tree *node, t_shell **shell, int *fd)
 {
 	pid_t	pid;
 
@@ -35,9 +35,10 @@ static void	left_pipe(t_tree *node, t_shell **shell, int *fd)
 		free_shell(*shell);
 		exit(g_exit_code);
 	}
+	return (pid);
 }
 
-static void	right_pipe(t_tree *node, t_shell **shell, int *fd)
+static pid_t	right_pipe(t_tree *node, t_shell **shell, int *fd)
 {
 	pid_t	pid;
 
@@ -60,11 +61,15 @@ static void	right_pipe(t_tree *node, t_shell **shell, int *fd)
 		free_shell(*shell);
 		exit(g_exit_code);
 	}
+	return (pid);
 }
 
 void	exec_pipe(t_tree *node, t_shell **shell)
 {
 	int		fd[2];
+	pid_t	pid_left;
+	pid_t	pid_right;
+	int		status;
 
 	if (pipe(fd) == -1)
 	{
@@ -72,10 +77,14 @@ void	exec_pipe(t_tree *node, t_shell **shell)
 		free_shell(*shell);
 		exit(1);
 	}
-	left_pipe(node, shell, fd);
-	right_pipe(node, shell, fd);
+	pid_left = left_pipe(node, shell, fd);
+	pid_right = right_pipe(node, shell, fd);
 	close(fd[0]);
 	close(fd[1]);
-	wait(NULL);
-	wait(NULL);
+	waitpid(pid_left, &status, 0);
+	waitpid(pid_right, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_code = 128 + WTERMSIG(status);
 }
