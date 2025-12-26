@@ -117,7 +117,7 @@ Esta opcion del shebang es limitada, el parser intenta ejecutar cada linea no va
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h
 
-- Revisar leaks con valgrind.
+- Leaks en run_assign a=15 b=17.
 
 - Comentarios solo en el .h y solo en ingles.
 

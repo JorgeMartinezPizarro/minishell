@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 01:47:55 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 02:39:06 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
 {
 	t_cmd	new_cmd;
 	t_shell	new_shell;
+	int		status;
 
 	new_cmd.args = t;
 	new_cmd.env = t_env;
@@ -39,9 +40,11 @@ static int	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
 	new_shell.first_node = shell->first_node;
 	new_shell.is_child = false;
 	if (is_built_in(t->str))
-		return (run_built_in(&new_cmd, &new_shell));
+		status = run_built_in(&new_cmd, &new_shell);
 	else
-		return (run_program(&new_cmd, &new_shell));
+		status = run_program(&new_cmd, &new_shell);
+	free_env(&t_env);
+	return (status);
 }
 
 int	run_assign(t_cmd *com, t_shell *shell)
@@ -59,7 +62,8 @@ int	run_assign(t_cmd *com, t_shell *shell)
 	}
 	if (t)
 		return (run_with_env(t, tmp_env, shell, com));
-	free_env(&com->env);
+	if (shell->env != com->env)
+		free_env(&com->env);
 	com->env = tmp_env;
 	return (EXIT_OK);
 }
