@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 17:54:42 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:39 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell_jorge.h"
 
 static void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 {

@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 18:04:24 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 19:44:52 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:10 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
 #include "minishell.h"
 
 char	*trim_quotes(char *s)

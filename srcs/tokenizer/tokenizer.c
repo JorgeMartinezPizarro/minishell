@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:29:57 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 23:54:58 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:57 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/tokenizer.h"
+#include "minishell.h"
 
 void	add_last_token(t_tokens **tokens, t_tokens *new_token)
 {

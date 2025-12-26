@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 01:48:15 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 static char	*get_cd_target(t_cmd *com)
 {

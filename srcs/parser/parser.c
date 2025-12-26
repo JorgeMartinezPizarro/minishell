@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 04:29:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 17:21:23 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:26 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
-#include "../../includes/minishell_jorge.h"
+#include "minishell.h"
 
 void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 {

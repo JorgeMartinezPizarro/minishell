@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 22:36:17 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/25 23:55:01 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:50 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/tokenizer.h"
+#include "minishell.h"
 
 bool	valid_quotes(char *line)
 {

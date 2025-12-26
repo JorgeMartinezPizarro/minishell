@@ -6,14 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:55:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:31:45 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:49 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "minishell.h"
 
 char	**tokens_to_argv(t_tokens *tokens)
 {

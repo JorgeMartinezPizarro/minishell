@@ -6,12 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:34:42 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 20:00:34 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:08 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
-#include "libft.h"
+#include "minishell.h"
 
 size_t	strarr_len(char **strs)
 {

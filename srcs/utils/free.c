@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:41:48 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 16:48:50 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:51:01 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
 #include "minishell.h"
-#include "libft.h"
 
 void	free_tokens(t_tokens *tokens)
 {

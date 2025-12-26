@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 15:40:21 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 23:55:31 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 char	*get_color(t_list *env)
 {

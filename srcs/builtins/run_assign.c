@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 02:51:40 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:20 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 static int	assign_one(t_list **env, char *arg)
 {

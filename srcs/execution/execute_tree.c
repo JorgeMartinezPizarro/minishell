@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   execute_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 19:40:44 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:32 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
 #include "minishell.h"
 
 static void	exec_b_op(t_tree *node, t_shell *shell)

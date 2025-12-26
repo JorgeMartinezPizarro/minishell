@@ -6,12 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:22:47 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 01:44:05 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:14 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 static void	*dup_env_var(void *content)
 {

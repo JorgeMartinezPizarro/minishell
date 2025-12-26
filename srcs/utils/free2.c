@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 20:23:49 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 12:38:44 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 void	free_str_array(char **arr)
 {

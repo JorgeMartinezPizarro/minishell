@@ -6,11 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:20:29 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 int	is_valid_identifier(const char *name)
 {

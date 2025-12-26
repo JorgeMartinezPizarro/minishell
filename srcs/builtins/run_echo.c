@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   run_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:52:15 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 01:05:43 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 int	is_echo_n(const char *s)
 {

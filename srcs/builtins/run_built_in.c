@@ -6,13 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 15:45:26 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:46:55 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell_jorge.h"
-#include <sys/stat.h>
+#include "minishell.h"
 
 int	run_built_in(t_cmd *com, t_shell *shell)
 {

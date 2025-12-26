@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard_tokens.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 12:58:30 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:20:49 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:49:59 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell_jorge.h"
 #include "minishell.h"
 
-/*
-** Expande wildcards en una lista de tokens
-*/
 void	expand_wildcard_tokens(t_tokens **tokens, char *cwd)
 {
 	t_tokens	*result;

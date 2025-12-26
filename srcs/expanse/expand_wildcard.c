@@ -6,19 +6,12 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 16:56:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:29:24 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:04 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include "libft.h"
-#include "minishell_jorge.h"
+#include "minishell.h"
 
-/*
-** Match string against pattern with '*' (multiple allowed)
-*/
 static int	match_star(const char *str, const char *pat)
 {
 	if (*pat == '\0')

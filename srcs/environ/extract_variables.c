@@ -6,12 +6,11 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:01:02 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/16 21:34:18 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:47:25 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell_jorge.h"
+#include "minishell.h"
 
 static int	is_var_char(char c)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 14:05:14 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:19:00 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:48:00 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_jorge.h"
-#include "libft.h"
+#include "minishell.h"
 
 static t_list	*build_var_formats(const char *var)
 {

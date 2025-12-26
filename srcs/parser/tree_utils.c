@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/23 23:21:47 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:36 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
+#include "minishell.h"
 
 void	assign_node_type(t_tree **node, t_tokens *token)
 {

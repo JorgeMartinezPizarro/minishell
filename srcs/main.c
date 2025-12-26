@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 19:26:15 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:51:26 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft.h"
-#include "minishell_jorge.h"
-#include <signal.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdio.h>
 
 int	g_exit_code = 0;
 

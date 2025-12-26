@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 14:59:49 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/24 00:49:53 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:50:41 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "minishell_jorge.h"
 
 static void	sigint_handler(int signo)
 {
