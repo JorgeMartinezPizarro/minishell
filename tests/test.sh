@@ -72,11 +72,12 @@ $VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
 
 $VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
 
-$VALGRIND ./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "git ls-files | grep \"\.c\"" > /dev/null && echo -ne "$OK"
+
+$VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && echo -ne "$OK"
 
 $VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
 
-## Test actualmente ROTO
 $VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
 
 ## Exportamos path para ejecutar run.sh, ese fichero busca
@@ -98,8 +99,6 @@ echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "
 
 ## Probamos que MSHLVL sube a 2.
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
-
-## Validamos expansiones complejas!
 
 ## Helper para comparar output de minishell contra 
 ## output de bash. Ojo que los mensajes de error pueden
@@ -139,7 +138,7 @@ test_command "echo hola && (echo adios)"
 
 test_command "echo hola && echo adios"
 
-test_command "cd .. && echo hola && cd -"
+test_command "cd .. && echo hola && cd - && echo $PWD"
 
 test_command "echo hola'adios'"
 
