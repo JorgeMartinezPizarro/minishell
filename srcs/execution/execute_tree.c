@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:36:30 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 19:40:44 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	exec_subprocces(t_tree **node, t_shell *shell)
 	{
 		shell->is_child = true;
 		exec_tree(*node, shell);
+		free_shell(shell);
 		exit(g_exit_code);
 	}
 	waitpid(pid, &status, 0);
