@@ -113,10 +113,12 @@ Esta opcion del shebang es limitada, el parser intenta ejecutar cada linea no va
 
 ### TODO:
 
-- Integrar bien los .h.
+- Reorganizar los *.h
 
 - Recordar para la entrega solo entregar Makefile, *.c y *.h
 
 - Comentarios solo en el .h y solo en ingles.
 
 - Revisar file descriptors abiertos con pipes o heredocs
+
+- Arreglar heredoc.
