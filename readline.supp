@@ -2211,3 +2211,43 @@
    fun:readline
    fun:shell_loop
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.2
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:shell_loop
+   fun:handle_input
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.2
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:shell_loop
+   fun:handle_input
+   fun:main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:readline_internal_teardown
+   fun:readline
+   fun:shell_loop
+   fun:handle_input
+   fun:main
+}

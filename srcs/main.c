@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:09:24 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/26 12:36:58 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int	main(int argc, char **args, char **env)
 		return (ft_printf("error: minishell refused to open.\n"), 1);
 	handle_input(argc, args, shell);
 	free_env(&shell->env);
+	free_shell(shell);
 	free(shell);
 	return (g_exit_code);
 }
