@@ -86,6 +86,7 @@ $VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && 
 $VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
 $VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
 $VALGRIND ./minishell -c "a=15 export | grep -v 'hola'" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "( echo L1 && ( echo L2 && ( echo L3 && ( echo L4 ) ) ) )" > /dev/null && echo -ne "$OK"
 
 ## Test para el shebang de minishell.
 export PATH="$PATH:$PWD"
@@ -99,8 +100,9 @@ echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK
 echo -ne "\n\n -> Command comparison.\n\n "
 
 test_command "(echo hola) && echo adios"
-test_command "(echo hola) && (echo adios)"
+test_command "( echo L1 && ( echo L2 && ( echo L3 && ( echo L4 ) ) ) )"
 test_command "echo hola && (echo adios)"
+test_command "( echo A && ( false || ( echo B && ( echo C || echo D ) ) ) )"
 test_command "echo hola && echo adios"
 test_command "cd .. && echo hola && cd - && echo $PWD"
 test_command "echo hola'adios'"
