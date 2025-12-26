@@ -89,6 +89,13 @@ valgrind \
 		--quiet \
 		./minishell -c "git status" > /dev/null && echo -ne "$OK"
 
+## Test actualmente ROTO
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
+
 ## Exportamos path para ejecutar run.sh, ese fichero busca
 ## minishell para ejecutarse (shebang). Esto valida que nuestra
 ## minishell es usable para ejecutar ficheros.
@@ -200,11 +207,13 @@ test_command "A=150 env | grep -v 'MSHLVL' | grep -v '^_=' | sort"
 ## Test heredoc
 echo -ne "\n\n -> Testing heredoc\n\n "
 
+## Test actualmente ROTO
 test_command 'cat <<EOF
 Hola
 Adios
 EOF'
 
+## Test actualmente ROTO
 # Testeamos heredoc con variable
 test_command 'NOMBRE="George" && cat <<EOF
 Hola $NOMBRE
