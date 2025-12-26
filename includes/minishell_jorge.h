@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 23:41:28 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:49:05 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_variable
 {
 	char	*name;
 	char	*value;
+	int		exported;
 }	t_variable;
 
 // EXECUTION
@@ -71,7 +72,7 @@ int		is_directory(const char *path);
 // ENVIRONMENTS
 size_t	env_len_list(t_list *vars);
 t_list	*clone_env(t_list *env);
-void	set_env_value(t_list **env, char *name, char *value);
+void	set_env_value(t_list **env, char *name, char *value, int exported);
 void	del_env_value(t_list **env, char *value);
 char	*get_env_value(t_list *env, char *name);
 void	free_env(t_list **env);

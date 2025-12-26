@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 21:05:04 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:47:55 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	assign_one(t_list **env, char *arg)
 	if (!is_valid_identifier(name))
 		return (print_error(name, "invalid identifier"),
 			free(name), EXIT_GENERAL_ERROR);
-	set_env_value(env, name, eq + 1);
+	set_env_value(env, name, eq + 1, 0);
 	free(name);
 	return (EXIT_OK);
 }

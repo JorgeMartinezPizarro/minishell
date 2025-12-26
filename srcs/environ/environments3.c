@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 12:39:12 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 16:41:11 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:49:22 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	update_minishell_level(t_list **env)
 		i = ft_atoi(str) + 1;
 		nbr = ft_itoa(i);
 	}
-	set_env_value(env, "MSHLVL", nbr);
+	set_env_value(env, "MSHLVL", nbr, 1);
 	free(nbr);
 }
 
@@ -62,8 +62,8 @@ void	init_required_env(t_list **env)
 
 	str = getcwd(NULL, 0);
 	if (!get_env_value(*env, "PWD"))
-		set_env_value(env, "PWD", str);
+		set_env_value(env, "PWD", str, 1);
 	if (!get_env_value(*env, "OLDPWD"))
-		set_env_value(env, "OLDPWD", str);
+		set_env_value(env, "OLDPWD", str, 1);
 	free(str);
 }

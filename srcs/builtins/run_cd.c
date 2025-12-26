@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 01:28:07 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:48:15 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	run_cd(t_cmd *com)
 		return (EXIT_GENERAL_ERROR);
 	if (!change_directory(new_path))
 		return (free(new_path), EXIT_GENERAL_ERROR);
-	set_env_value(&com->env, "OLDPWD", old);
-	set_env_value(&com->env, "PWD", new_path);
+	set_env_value(&com->env, "OLDPWD", old, 1);
+	set_env_value(&com->env, "PWD", new_path, 1);
 	free(new_path);
 	return (EXIT_OK);
 }

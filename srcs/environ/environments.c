@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:34:42 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/22 15:52:29 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 02:04:50 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,18 @@ size_t	env_len_list(t_list *vars)
 
 static int	add_env_var(t_list **vars, char *env_line)
 {
-	char		**s;
 	t_variable	*v;
+	char		*eq;
 
-	s = ft_split(env_line, '=');
-	if (!s || !s[0])
-		return (free_str_array(s), 0);
+	eq = ft_strchr(env_line, '=');
+	if (!eq)
+		return (0);
 	v = malloc(sizeof(t_variable));
 	if (!v)
-		return (free_str_array(s), -1);
-	v->name = ft_strdup(s[0]);
-	if (s[1])
-		v->value = ft_strdup(s[1]);
-	else
-		v->value = ft_strdup("");
-	free_str_array(s);
+		return (-1);
+	v->name = ft_substr(env_line, 0, eq - env_line);
+	v->value = ft_strdup(eq + 1);
+	v->exported = true;
 	if (!v->name || !v->value)
 		return (free_variable(v), -1);
 	ft_lstadd_back(vars, ft_lstnew(v));
