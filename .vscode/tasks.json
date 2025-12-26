@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "valgrind-pipe-once",
+			"type": "shell",
+			"command": "valgrind --leak-check=full --show-leak-kinds=definite,indirect --trace-children=no --track-origins=yes --suppressions=readline.supp ./minishell -c \"echo hola | cat\"",
+			"args": [],
+			"isBackground": false
+		}
+	]
+}
