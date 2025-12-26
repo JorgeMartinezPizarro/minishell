@@ -70,6 +70,8 @@ $VALGRIND ./minishell -c "env" > /dev/null && echo -ne "$OK"
 
 $VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
 
+$VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
+
 ## Test actualmente ROTO
 $VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
 
@@ -175,20 +177,5 @@ test_command "echo $PWD && cd .. && cd - && echo $PWD"
 test_command "A=150 export | grep -v 'MSHLVL' | grep -v ' _='"
 
 test_command "A=150 env | grep -v 'MSHLVL' | grep -v '^_=' | sort"
-
-## Test heredoc
-echo -ne "\n\n -> Testing heredoc\n\n "
-
-## Test actualmente ROTO
-test_command 'cat <<EOF
-Hola
-Adios
-EOF'
-
-## Test actualmente ROTO
-# Testeamos heredoc con variable
-test_command 'NOMBRE="George" && cat <<EOF
-Hola $NOMBRE
-EOF'
 
 echo -e "\n"

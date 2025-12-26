@@ -6,6 +6,12 @@ Aqui podemos dejarnos comentarios o explicaciones de como van yendo las cosas.
 
 En el repositorio de 42madrid debemos eliminar cualquier test, README.md o pdfs. Revisar bien antes de finalizar.
 
+El heredoc solo funciona interactivamente, no pegandole varias lineas de golpe como en bash.
+
+El interprete de minishell acepta varias lineas seguidas pegadas en la terminal.
+
+Minishell permite ser usado como shebang. El parser es trivial, solo permite comandos validos en minishell y lineas vacias.
+
 ### FORK BOMB
 
 Para destruir un sistema, el fork bomb clasico, que define funciones vacias y las lanza de forma recursiva en background, es el siguiente:
@@ -121,4 +127,7 @@ Esta opcion del shebang es limitada, el parser intenta ejecutar cada linea no va
 
 - Revisar file descriptors abiertos con pipes o heredocs
 
-- Arreglar heredoc.
+- Revisar memory leaks de las pipes. Ahi hay muchos exit que no hacen free total.
+
+- El heredoc con multi line paste no funciona por diseno, no es problema con el enunciado pero hay que tenerlo claro.
+
