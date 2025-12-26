@@ -1,6 +1,6 @@
-### Minishell work for 42
+### Abstract
 
-The MINIshell
+The MINISHELL
 
 ### COLORES:
 
