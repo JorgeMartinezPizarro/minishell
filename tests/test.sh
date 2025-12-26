@@ -8,11 +8,6 @@ VALGRIND="valgrind \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet"
 
-### Use bash to validate exit codes
-### of commands and diff for results
-
-echo -ne " -> Running norminette\n\n "
-
 validate_norm(){
     
     # Ejecutar norminette, capturar stdout y stderr
@@ -31,96 +26,20 @@ validate_norm(){
     fi
 }
 
-validate_norm ./srcs
-validate_norm ./includes
-validate_norm ./libft
-
-echo -ne "\n\n -> Running different tests\n\n "
-
-./minishell -c "echo hola" > /dev/null && echo -ne "$OK"
-
-./minishell -c "echo" > /dev/null && echo -ne "$OK"
-
-./minishell -c "export" > /dev/null && echo -ne "$OK"
-
-## Comando que falla, lo silenciamos
-./minishell -c "${HOME}"  > /dev/null 2>&1 || echo -ne "$OK"
-
-./minishell -c "cd" > /dev/null && echo -ne "$OK"
-./minishell -c "cd \${HOME}" > /dev/null && echo -ne "$OK"
-./minishell -c "echo \${HOME}" > /dev/null && echo -ne "$OK"
-./minishell -c "pwd" > /dev/null && echo -ne "$OK"
-./minishell -c "export A=5" > /dev/null && echo -ne "$OK"
-./minishell -c "export B=8" > /dev/null && echo -ne "$OK"
-./minishell -c "echo \${HOME}/dir" > /dev/null && echo -ne "$OK"
-## Comando que falla, lo silenciamos
-./minishell -c "  \"hola\"  echo|hel*lo  "  > /dev/null 2>&1 || echo -ne "$OK"
-
-echo -ne "\n\n -> Testing memory leaks\n\n "
-## Probamos que no haya leaks en varios comandos 
-$VALGRIND ./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "export" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "cd ${HOME}" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "env" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "git ls-files | grep \"\.c\"" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
-
-$VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
-
-## Exportamos path para ejecutar run.sh, ese fichero busca
-## minishell para ejecutarse (shebang). Esto valida que nuestra
-## minishell es usable para ejecutar ficheros.
-export PATH="$PATH:$PWD"
-$VALGRIND ./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
-
-./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
-
-./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
-
-./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2" > /dev/null 2>&1 && echo -ne "$OK"
-
-echo -ne "\n\n -> Some additional tests\n\n "
-
-## Prueba de que las wildcards se expanden apropiadamente.
-echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
-
-## Probamos que MSHLVL sube a 2.
-echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
-
-## Helper para comparar output de minishell contra 
-## output de bash. Ojo que los mensajes de error pueden
-## diferir.
 test_command() {
-	# Usamos timeout para que no se quede bloqueado
-	HEREDOC_CMD="$1"
-	OUTPUT=$(timeout 1s ./minishell -c "$HEREDOC_CMD" 2>/dev/null) 
+	# Usamos timeout por si algun comando se atasca.
+	COMMAND="$1"
+	OUTPUT=$(timeout 1s ./minishell -c "$COMMAND" 2>/dev/null) 
 	EXIT_CODE=$?
 
-	# Bash reference output
-	EXPECTED=$(bash -c "$HEREDOC_CMD")
+	EXPECTED=$(bash -c "$COMMAND")
 
-	# Evaluamos
 	if [[ $EXIT_CODE -ne 0 ]]; then
-		# Se bloquea o falla como se espera
 		echo -ne "$KO"
-		echo -e "\n\n Command: \n $HEREDOC_CMD "
+		echo -e "\n\n Command: \n $COMMAND "
 		echo -e "\n\n The command did not finish properly."
 		echo -e "\n Expected:\n $EXPECTED\n Got:\n $OUTPUT"
 	else
-		# Compara con bash para ver si accidentalmente funciona
 		if [[ "$OUTPUT" == "$EXPECTED" ]]; then
 			echo -ne "$OK"
 		else
@@ -130,22 +49,63 @@ test_command() {
 	fi
 }
 
+echo -ne " -> Running norminette\n\n "
+
+validate_norm ./srcs
+validate_norm ./includes
+validate_norm ./libft
+
+echo -ne "\n\n -> Running different tests\n\n "
+
+./minishell -c "echo hola" > /dev/null && echo -ne "$OK"
+./minishell -c "echo" > /dev/null && echo -ne "$OK"
+./minishell -c "export" > /dev/null && echo -ne "$OK"
+./minishell -c "${HOME}"  > /dev/null 2>&1 || echo -ne "$OK"
+./minishell -c "cd" > /dev/null && echo -ne "$OK"
+./minishell -c "cd \${HOME}" > /dev/null && echo -ne "$OK"
+./minishell -c "echo \${HOME}" > /dev/null && echo -ne "$OK"
+./minishell -c "pwd" > /dev/null && echo -ne "$OK"
+./minishell -c "export A=5" > /dev/null && echo -ne "$OK"
+./minishell -c "export B=8" > /dev/null && echo -ne "$OK"
+./minishell -c "echo \${HOME}/dir" > /dev/null && echo -ne "$OK"
+./minishell -c "  \"hola\"  echo|hel*lo  "  > /dev/null 2>&1 || echo -ne "$OK"
+
+echo -ne "\n\n -> Testing memory leaks\n\n "
+
+$VALGRIND ./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "export" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "cd ${HOME}" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "env" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "git ls-files | grep \"\.c\"" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
+
+## Test para el shebang de minishell.
+export PATH="$PATH:$PWD"
+$VALGRIND ./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
+
+./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
+./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
+./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2" > /dev/null 2>&1 && echo -ne "$OK"
+
+echo -ne "\n\n -> Some additional tests\n\n "
+
+echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
+echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
+
+
 test_command "(echo hola) && echo adios"
-
 test_command "(echo hola) && (echo adios)"
-
 test_command "echo hola && (echo adios)"
-
 test_command "echo hola && echo adios"
-
 test_command "cd .. && echo hola && cd - && echo $PWD"
-
 test_command "echo hola'adios'"
-
 test_command "echo hola'$HOME'"
-
 test_command "echo $PWD && cd .. && cd - && echo $PWD"
-
 test_command "A=150 export | grep -v 'MSHLVL' | grep -v ' _='"
 
 echo -e "\n"
