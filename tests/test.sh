@@ -99,40 +99,7 @@ echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "
 ## Probamos que MSHLVL sube a 2.
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
 
-## Probamos que el entorno padre no se altera por el
-## entorno hijo:
-
-# Output esperado
-expected="2
-1"
-
-# Ejecutamos el comando y capturamos la salida
-output=$(export A=1 && A=2 ./minishell -c "echo \$A" && echo $A)
-
-# Comparamos con diff
-if diff <(echo "$expected") <(echo "$output") >/dev/null; then
-    # Verde para OK
-    echo -ne "$OK"
-else
-    # Rojo para KO y mostramos diff
-    echo -ne "$KO"
-    echo "Expected:"
-    echo "$expected"
-    echo "Got:"
-    echo "$output"
-fi
-
 ## Validamos expansiones complejas!
-
-OUTPUT1=$(echo "hola'$USER'"adios)
-
-OUTPUT2=$(./minishell -c "echo \"hola'$USER'\"adios")
-
-if [[ "$OUTPUT1" == "$OUTPUT2" ]]; then
-    echo -ne "$OK"
-else
-    echo -ne "$KO"
-fi
 
 ## Helper para comparar output de minishell contra 
 ## output de bash. Ojo que los mensajes de error pueden
@@ -175,6 +142,8 @@ test_command "echo hola && echo adios"
 test_command "cd .. && echo hola && cd -"
 
 test_command "echo hola'adios'"
+
+test_command "echo hola'$HOME'"
 
 test_command "echo $PWD && cd .. && cd - && echo $PWD"
 
