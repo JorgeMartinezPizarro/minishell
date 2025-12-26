@@ -179,6 +179,12 @@ test_command() {
 	fi
 }
 
+test_command "(echo hola) && echo adios"
+
+test_command "(echo hola) && (echo adios)"
+
+test_command "echo hola && (echo adios)"
+
 test_command "echo hola && echo adios"
 
 test_command "cd .. && echo hola && cd -"
@@ -193,6 +199,11 @@ test_command "A=150 env | grep -v 'MSHLVL' | grep -v '^_=' | sort"
 
 ## Test heredoc
 echo -ne "\n\n -> Testing heredoc\n\n "
+
+test_command 'cat <<EOF
+Hola
+Adios
+EOF'
 
 # Testeamos heredoc con variable
 test_command 'NOMBRE="George" && cat <<EOF
