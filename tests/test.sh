@@ -3,6 +3,11 @@
 OK="\033[1;32mOK\033[0m "
 KO="\033[1;31mKO\033[0m "
 
+VALGRIND="valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet"
+
 ### Use bash to validate exit codes
 ### of commands and diff for results
 
@@ -17,7 +22,7 @@ validate_norm(){
     error_count=$(echo "$norm_out" | grep -c "Error:" || true)
 
     if [ "$error_count" -ne 0 ]; then
-		norminette -R CheckForbiddenHeaders -R CheckDefine "$1" | head -n40
+		norminette "$1" | head -n40
         echo -ne "$KO"
         return 1
     else
@@ -53,59 +58,26 @@ echo -ne "\n\n -> Running different tests\n\n "
 
 echo -ne "\n\n -> Testing memory leaks\n\n "
 ## Probamos que no haya leaks en varios comandos 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "export" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "export" > /dev/null && echo -ne "$OK"
 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "cd ${HOME}" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "cd ${HOME}" > /dev/null && echo -ne "$OK"
 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "env" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "env" > /dev/null && echo -ne "$OK"
 
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "git status" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
 
 ## Test actualmente ROTO
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
 
 ## Exportamos path para ejecutar run.sh, ese fichero busca
 ## minishell para ejecutarse (shebang). Esto valida que nuestra
 ## minishell es usable para ejecutar ficheros.
 export PATH="$PATH:$PWD"
-
-valgrind \
-		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
-		--quiet \
-		./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
 
 ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
 
