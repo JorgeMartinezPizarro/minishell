@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 02:39:06 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 02:51:40 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,24 @@ static int	assign_one(t_list **env, char *arg)
 	char	*name;
 
 	eq = ft_strchr(arg, '=');
+	if (!eq)
+		return (EXIT_GENERAL_ERROR);
 	name = ft_substr(arg, 0, eq - arg);
+	if (!name)
+		return (EXIT_GENERAL_ERROR);
 	if (!is_valid_identifier(name))
-		return (print_error(name, "invalid identifier"),
-			free(name), EXIT_GENERAL_ERROR);
+	{
+		print_error(name, "invalid identifier");
+		free(name);
+		return (EXIT_GENERAL_ERROR);
+	}
 	set_env_value(env, name, eq + 1, 0);
 	free(name);
 	return (EXIT_OK);
 }
 
-static int	run_with_env(t_tokens *t, t_list *t_env, t_shell *shell, t_cmd *com)
+static int	run_with_env(t_tokens *t, t_list *t_env,
+						t_shell *shell, t_cmd *com)
 {
 	t_cmd	new_cmd;
 	t_shell	new_shell;
@@ -53,17 +61,22 @@ int	run_assign(t_cmd *com, t_shell *shell)
 	t_list		*tmp_env;
 
 	tmp_env = clone_env(com->env);
+	if (!tmp_env)
+		return (EXIT_GENERAL_ERROR);
 	t = com->args;
 	while (t && ft_strchr(t->str, '='))
 	{
 		if (assign_one(&tmp_env, t->str) != EXIT_OK)
-			return (free_env(&tmp_env), EXIT_GENERAL_ERROR);
+		{
+			free_env(&tmp_env);
+			return (EXIT_GENERAL_ERROR);
+		}
 		t = t->next;
 	}
 	if (t)
 		return (run_with_env(t, tmp_env, shell, com));
-	if (shell->env != com->env)
-		free_env(&com->env);
+	free_env(&com->env);
 	com->env = tmp_env;
+	shell->env = tmp_env;
 	return (EXIT_OK);
 }

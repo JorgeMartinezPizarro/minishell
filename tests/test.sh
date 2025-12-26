@@ -65,12 +65,11 @@ valgrind \
 		--quiet \
 		./minishell -c "export" > /dev/null && echo -ne "$OK"
 
-# Test por reparar
-#valgrind \
-#		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-#		--suppressions=readline.supp --errors-for-leak-kinds=all \
-#		--quiet \
-#		./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
+valgrind \
+		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
+		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--quiet \
+		./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
 
 valgrind \
 		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
