@@ -12,7 +12,6 @@
    fun:*add_history*
    obj:*libreadline.so*
 }
-
 {
    readline_all_leaks
    Memcheck:Leak

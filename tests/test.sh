@@ -9,13 +9,11 @@ VALGRIND="valgrind \
 		--quiet"
 
 validate_norm(){
-    
     # Ejecutar norminette, capturar stdout y stderr
     norm_out=$(norminette "$1" | grep -v locale || true)
 	files=$(find $1 -type f | wc -l)
     # Contar cuántas veces aparece "Error:"
     error_count=$(echo "$norm_out" | grep -c "Error:" || true)
-
     if [ "$error_count" -ne 0 ]; then
 		norminette "$1" | head -n40
         echo -ne "$KO"
@@ -27,35 +25,36 @@ validate_norm(){
 }
 
 test_command() {
-	# Usamos timeout por si algun comando se atasca.
-	COMMAND="$1"
-	OUTPUT=$(timeout 1s ./minishell -c "$COMMAND" 2>/dev/null) 
-	EXIT_CODE=$?
+    COMMAND="$1"
 
-	EXPECTED=$(bash -c "$COMMAND")
+    # Ejecutar en minishell
+    OUTPUT=$(./minishell -c "$COMMAND" 2>/dev/null)
+    EXIT_CODE=$?
 
-	if [[ $EXIT_CODE -ne 0 ]]; then
-		echo -ne "$KO"
-		echo -e "\n\n Command: \n $COMMAND "
-		echo -e "\n\n The command did not finish properly."
-		echo -e "\n Expected:\n $EXPECTED\n Got:\n $OUTPUT"
-	else
-		if [[ "$OUTPUT" == "$EXPECTED" ]]; then
-			echo -ne "$OK"
-		else
-			echo -ne "$KO"
-			echo -e "\n Expected:\n $EXPECTED\n Got:\n $OUTPUT"
-		fi
-	fi
+    # Ejecutar en bash
+    EXPECTED=$(bash -c "$COMMAND" 2>/dev/null)
+    EXPECTED_EXIT=$?
+
+    # Comparar salida y exit code
+    if [[ "$OUTPUT" == "$EXPECTED" && $EXIT_CODE -eq $EXPECTED_EXIT ]]; then
+        echo -ne "$OK"
+    else
+        echo -ne "$KO"
+        echo -e "\nCommand: $COMMAND"
+        echo -e "\nExpected output:\n$EXPECTED"
+        echo -e "\nGot output:\n$OUTPUT"
+        echo -e "\nExpected exit code: $EXPECTED_EXIT"
+        echo -e "Got exit code: $EXIT_CODE"
+    fi
 }
 
-echo -ne " -> Running norminette\n\n "
+echo -ne " -> Running norminette.\n\n "
 
 validate_norm ./srcs
 validate_norm ./includes
 validate_norm ./libft
 
-echo -ne "\n\n -> Running different tests\n\n "
+echo -ne "\n\n -> Exit code validation.\n\n "
 
 ./minishell -c "echo hola" > /dev/null && echo -ne "$OK"
 ./minishell -c "echo" > /dev/null && echo -ne "$OK"
@@ -69,8 +68,11 @@ echo -ne "\n\n -> Running different tests\n\n "
 ./minishell -c "export B=8" > /dev/null && echo -ne "$OK"
 ./minishell -c "echo \${HOME}/dir" > /dev/null && echo -ne "$OK"
 ./minishell -c "  \"hola\"  echo|hel*lo  "  > /dev/null 2>&1 || echo -ne "$OK"
+./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
+./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
+./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2" > /dev/null 2>&1 && echo -ne "$OK"
 
-echo -ne "\n\n -> Testing memory leaks\n\n "
+echo -ne "\n\n -> Testing memory leaks.\n\n "
 
 $VALGRIND ./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
 $VALGRIND ./minishell -c "export" > /dev/null && echo -ne "$OK"
@@ -83,20 +85,18 @@ $VALGRIND ./minishell -c "git ls-files | grep \"\.c\"" > /dev/null && echo -ne "
 $VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && echo -ne "$OK"
 $VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
 $VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
+$VALGRIND ./minishell -c "a=15 export | grep -v 'hola'" > /dev/null && echo -ne "$OK"
 
 ## Test para el shebang de minishell.
 export PATH="$PATH:$PWD"
 $VALGRIND ./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
 
-./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
-./minishell -c "(echo hola) && echo adios" > /dev/null && echo -ne "$OK"
-./minishell -c "(cd r || echo fail 1 && cd x) || echo fail 2" > /dev/null 2>&1 && echo -ne "$OK"
-
-echo -ne "\n\n -> Some additional tests\n\n "
+echo -ne "\n\n -> Not interactive usage.\n\n "
 
 echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
 
+echo -ne "\n\n -> Command comparison.\n\n "
 
 test_command "(echo hola) && echo adios"
 test_command "(echo hola) && (echo adios)"
@@ -106,6 +106,14 @@ test_command "cd .. && echo hola && cd - && echo $PWD"
 test_command "echo hola'adios'"
 test_command "echo hola'$HOME'"
 test_command "echo $PWD && cd .. && cd - && echo $PWD"
-test_command "A=150 export | grep -v 'MSHLVL' | grep -v ' _='"
+test_command "A=150 env | grep -v '^MSHLVL' | grep -v '^SHLVL' | grep -v '^_=' | sort"
+test_command "((echo a && echo b) || (echo c && echo d))"
+test_command "((cd r && echo b) || (echo c && echo d))"
+test_command "cd unknown && unnamed"
+test_command "mkdir"
+test_command "touch hola && rm -f hola"
+test_command "echo hola > tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "echo hola > tmpfile && echo adios >> tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "echo 'hola' > tmpfile && cat < tmpfile && rm -f tmpfile"
 
 echo -e "\n"

@@ -12,3 +12,7 @@ echo $A *
 
 echo aprobado
 
+env
+echo $PWD
+
+cd srcs/environ && cd ../.. && echo $PWD
