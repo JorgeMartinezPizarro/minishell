@@ -6,7 +6,7 @@
 #    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/29 17:32:34 by maanguit         ###   ########.fr        #
+#    Updated: 2025/12/29 17:36:18 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ stats:
 	echo ""
 
 ###############################################################################
-## Visualize nested minishells processes.
+## Visualize nested minishell processes.
 ###############################################################################
 view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"

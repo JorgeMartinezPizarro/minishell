@@ -7,11 +7,16 @@ MINISHELL – a simple, interactive shell.
 
 It implements:
 
-- cd, pwd, export, env, exit.
+- cd, echo (-n), pwd, export (a=1), env, exit (n).
 - (), &&, ||, |, <<, >>, >, <.
 - PATH expansion for other commands.
 - Interactive usage.
 - Limited shebang and non-interactive usage.
+
+Limitations:
+
+- for multiline commands, only the first line is executed.
+- advanced shell usage may not work.
 
 ### USAGE
 
