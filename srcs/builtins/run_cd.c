@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/25 19:00:54 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/26 01:28:07 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ static char	*get_cd_target(t_cmd *com)
 	if (com->args->next == NULL || ft_strcmp(com->args->next->str, "~") == 0)
 		return (get_env_value(com->env, "HOME"));
 	else if (ft_strcmp(com->args->next->str, "-") == 0)
+	{
+		ft_printf("%s\n", get_env_value(com->env, "OLDPWD"));
 		return (get_env_value(com->env, "OLDPWD"));
+	}
 	return (com->args->next->str);
 }
 

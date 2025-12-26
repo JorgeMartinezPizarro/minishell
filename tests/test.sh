@@ -137,4 +137,49 @@ else
     echo -ne "$KO"
 fi
 
+## Helper para comparar output de minishell contra 
+## output de bash. Ojo que los mensajes de error pueden
+## diferir.
+test_command() {
+	# Usamos timeout para que no se quede bloqueado
+	HEREDOC_CMD="$1"
+	OUTPUT=$(timeout 1s ./minishell -c "$HEREDOC_CMD" 2>/dev/null) 
+	EXIT_CODE=$?
+
+	# Bash reference output
+	EXPECTED=$(bash -c "$HEREDOC_CMD")
+
+	# Evaluamos
+	if [[ $EXIT_CODE -ne 0 ]]; then
+		# Se bloquea o falla como se espera
+		echo -ne "$KO"
+		echo -e "\n\n Command: \n $HEREDOC_CMD "
+		echo -e "\n\n The command did not finish properly."
+		echo -e "\n Expected:\n $EXPECTED\n Got:\n $OUTPUT"
+	else
+		# Compara con bash para ver si accidentalmente funciona
+		if [[ "$OUTPUT" == "$EXPECTED" ]]; then
+			echo -ne "$OK"
+		else
+			echo -ne "$KO"
+			echo -e "\n Expected:\n $EXPECTED\n Got:\n $OUTPUT"
+		fi
+	fi
+}
+
+test_command "echo hola && echo adios"
+
+test_command "cd .. && echo hola && cd -"
+
+test_command "echo $PWD && cd .. && cd - && echo $PWD"
+
+## Test heredoc (YET BROKEN)
+echo -ne "\n\n -> Testing heredoc (expected to fail)\n\n "
+
+# Testeamos heredoc con variable
+test_command 'NOMBRE="George" && cat <<EOF
+Hola $NOMBRE
+EOF'
+
+
 echo -e "\n"
