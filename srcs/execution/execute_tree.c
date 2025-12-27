@@ -85,7 +85,8 @@ static void	exec_commands(t_tree *node, t_shell *shell)
 	expand_cmds(&node->cmd->args, node->cmd->redirs, shell);
 	node->cmd->env = shell->env;
 	if (make_redirections(node->cmd->redirs, shell->env) == -1)
-		return (g_exit_code = 1, free_shell(shell), (void)0);
+		return (close(fd_in), close(fd_out),
+			g_exit_code = 1, free_shell(shell), (void)0);
 	if (node->cmd->is_builtin)
 		g_exit_code = run_built_in(node->cmd, shell);
 	else
