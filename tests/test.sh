@@ -15,7 +15,7 @@ validate_norm()
     error_count=$(echo "$norm_out" | grep -c "Error:" || true)
     if [ "$error_count" -ne 0 ]; then
 		norminette "$1" | head -n40
-        echo -ne "$KO"
+        echo -ne "\n$KO"
         return 1
     else
         echo -ne "$OK"
@@ -33,7 +33,7 @@ test_command()
 	if [[ "$OUTPUT" == "$EXPECTED" && $EXIT_CODE -eq $EXPECTED_EXIT ]]; then
 		echo -ne "$OK"
 	else
-		echo -ne "$KO"
+		echo -ne "\n$KO"
 		echo -e "\nCommand: $COMMAND"
 		if [[ "$OUTPUT" != "$EXPECTED" ]]; then
 			echo -e "\nExpected output:\n$EXPECTED"
