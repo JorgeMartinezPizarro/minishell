@@ -71,7 +71,7 @@ static int	redir_files(t_redir *redir)
 	else if (redir->redir_type == T_APPEND)
 		fd = open(redir->file->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (perror("error opening file"), -1);
+		return (perror("open error:"), -1);
 	if (redir->redir_type == T_APPEND || redir->redir_type == T_REDIR_TR)
 		dup2(fd, STDOUT_FILENO);
 	else if (redir->redir_type == T_REDIR_IN)
