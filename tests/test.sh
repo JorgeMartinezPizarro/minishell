@@ -108,6 +108,7 @@ echo -ne "\n\n -> Not interactive usage.\n\n "
 echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
 PATH="$PATH:$PWD" test_leaks ./tests/run.sh
+echo "echo hola || echo adios && echo que" | ./minishell > /dev/null && echo -ne "$OK"
 
 echo -ne "\n\n -> Test extended commands.\n\n "
 
