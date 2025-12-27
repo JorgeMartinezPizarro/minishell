@@ -8,11 +8,10 @@ VALGRIND="valgrind \
 		--suppressions=readline.supp --errors-for-leak-kinds=all \
 		--quiet"
 
-validate_norm(){
-    # Ejecutar norminette, capturar stdout y stderr
+validate_norm()
+{
     norm_out=$(norminette "$1" | grep -v locale || true)
 	files=$(find $1 -type f | wc -l)
-    # Contar cuántas veces aparece "Error:"
     error_count=$(echo "$norm_out" | grep -c "Error:" || true)
     if [ "$error_count" -ne 0 ]; then
 		norminette "$1" | head -n40
@@ -24,29 +23,22 @@ validate_norm(){
     fi
 }
 
-test_command() {
+test_command()
+{
     COMMAND="$1"
-
-    # Ejecutar en minishell
     OUTPUT=$(./minishell -c "$COMMAND" 2>/dev/null)
     EXIT_CODE=$?
-
-    # Ejecutar en bash
     EXPECTED=$(bash -c "$COMMAND" 2>/dev/null)
     EXPECTED_EXIT=$?
-
-    # Comparar salida y exit code
 	if [[ "$OUTPUT" == "$EXPECTED" && $EXIT_CODE -eq $EXPECTED_EXIT ]]; then
 		echo -ne "$OK"
 	else
 		echo -ne "$KO"
 		echo -e "\nCommand: $COMMAND"
-
 		if [[ "$OUTPUT" != "$EXPECTED" ]]; then
 			echo -e "\nExpected output:\n$EXPECTED"
 			echo -e "\nGot output:\n$OUTPUT"
 		fi
-
 		if [[ $EXIT_CODE -ne $EXPECTED_EXIT ]]; then
 			echo -e "\nExpected exit code: $EXPECTED_EXIT"
 			echo -e "Got exit code: $EXIT_CODE"
@@ -77,6 +69,10 @@ test_command "  \"hola\"  echo|hel*lo  "
 test_command "echo hola && echo adios"
 test_command "(echo hola) && echo adios"
 test_command "(cd r || echo fail 1 && cd x) || echo fail 2"
+test_command "(echo hola | grep h) && (echo mundo || echo falló)"
+test_command '(ls | grep txt) || (echo "no hay txt" && echo "fin")'
+test_command '(echo 1 && echo 2) | (grep 2 || echo "no se encontró 2")'
+test_command "(echo start && false) || (echo retry | grep r && echo done)"
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 
