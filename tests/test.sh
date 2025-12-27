@@ -109,6 +109,7 @@ echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
 PATH="$PATH:$PWD" test_leaks ./tests/run.sh
 echo "echo hola || echo adios && echo que" | ./minishell > /dev/null && echo -ne "$OK"
+echo "echo hola | grep hola || echo adios | grep adios && echo que | grep que" | ./minishell > /dev/null && echo -ne "$OK"
 
 echo -ne "\n\n -> Test extended commands.\n\n "
 
