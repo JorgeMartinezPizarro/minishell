@@ -46,6 +46,12 @@ test_command()
 	fi
 }
 
+test_leaks()
+{
+	$VALGRIND ./minishell -c "$1" > /dev/null && echo -ne "$OK"
+}
+
+
 echo -ne " -> Running norminette.\n\n "
 
 validate_norm ./srcs
@@ -78,29 +84,30 @@ test_command "echo \"$HOME\""
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 
-$VALGRIND ./minishell -c "echo ${HOME}" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "export" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "a=15 b=17" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "cd ${HOME}" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "env" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "git status" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "echo hola && echo adios" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "git ls-files | grep \"\.c\"" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "(echo hola) && echo adios || echo que" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "echo hola && (echo adios)" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "echo hola adios | grep hola" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "a=15 export | grep -v 'hola'" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "( echo L1 && ( echo L2 && ( echo L3 && ( echo L4 ) ) ) )" > /dev/null && echo -ne "$OK"
-$VALGRIND ./minishell -c "( echo X && ( echo Y && ( false && ( echo Z ) ) ) )" > /dev/null && echo -ne "$OK"
-
-## Test para el shebang de minishell.
-export PATH="$PATH:$PWD"
-$VALGRIND ./minishell -c ./tests/run.sh > /dev/null && echo -ne "$OK"
+test_leaks "echo ${HOME}"
+test_leaks "export"
+test_leaks "a=15 b=17"
+test_leaks "cd ${HOME}"
+test_leaks "env"
+test_leaks "git status"
+test_leaks "echo hola && echo adios"
+test_leaks "git ls-files | grep \"\.c\""
+test_leaks "(echo hola) && echo adios || echo que"
+test_leaks "echo hola && (echo adios)"
+test_leaks "echo hola adios | grep hola"
+test_leaks "a=15 export | grep -v 'hola'"
+test_leaks "( echo L1 && ( echo L2 && ( echo L3 && ( echo L4 ) ) ) )"
+test_leaks "( echo X && ( echo Y && ( false && ( echo Z ) ) ) )"
+test_leaks "echo hola > tmpfile && cat tmpfile && rm -f tmpfile"
+test_leaks "echo hola > tmpfile && echo adios >> tmpfile && cat tmpfile && rm -f tmpfile"
+test_leaks "echo 'hola' > tmpfile && cat < tmpfile && rm -f tmpfile"
+test_leaks "( echo X && ( echo Y && ( false && ( echo Z | grep -v X | grep Z) ) ) )"
 
 echo -ne "\n\n -> Not interactive usage.\n\n "
 
 echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
+PATH="$PATH:$PWD" test_leaks ./tests/run.sh
 
 echo -ne "\n\n -> Test extended commands.\n\n "
 
@@ -123,5 +130,16 @@ test_command "echo hola > tmpfile && cat tmpfile && rm -f tmpfile"
 test_command "echo hola > tmpfile && echo adios >> tmpfile && cat tmpfile && rm -f tmpfile"
 test_command "echo 'hola' > tmpfile && cat < tmpfile && rm -f tmpfile"
 test_command "( echo X && ( echo Y && ( false && ( echo Z ) ) ) )"
+test_command "true && false && echo $?"
+test_command "false || true && echo $?"
+test_command "(false && true) || false && echo $?"
+test_command "(false && true) || false && echo $?"
+test_command "echo hola > /no/existe && echo nunca"
+test_command "cat < /no/existe || echo fallback"
+test_command "echo hola > dir_sin_permiso && rm dir_sin_permiso"
+test_command "A=1 echo hola && echo $A"
+test_command "cd / | pwd"
+test_command "false && true || echo ok"
+test_command "true || false && echo no"
 
 echo -e "\n"
