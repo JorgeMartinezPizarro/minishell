@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/27 00:42:53 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/27 14:47:18 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-//	NOTES:
+//  NOTES:
 //
-//	The MiniShell come with the following features:
+//  The MiniShell comes with the following features:
 //
-//	1 - Minishell accept single line commands, pasting multiline will execute
-//		only the first line.
-//	2 - Minishell can be used as shebang, with a ver limited syntaxis.
-//	3 - Minishell accept not interactive execution, can run scripts and is also 
-//		able to be used as ./minishell -c "command"
-//	4 - Minishell implements env, export, cd, unset, exit and pwd, for other 
-//		commands it search in PATH for runnables, as bash do.
+//  1 - MiniShell accepts single-line commands; pasting multiline commands
+//      will execute only the first line.
+//  2 - MiniShell can be used as a shebang, with a very limited syntax.
+//  3 - MiniShell accepts non-interactive execution, can run scripts, and can
+//      also be used as ./minishell -c "command".
+//  4 - MiniShell implements env, export, cd, unset, exit, and pwd. For other
+//      commands it searches in PATH for executables, as Bash does.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
