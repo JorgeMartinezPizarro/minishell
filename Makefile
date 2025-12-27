@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/26 23:08:34 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/27 02:00:30 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,30 +61,22 @@ fclean: clean
 
 re: fclean all
 
-###############################################################################
-## Estos comandos son adicionales para tests, y no hay que
-## subirlos a 42.
-###############################################################################
-
-## Incorpora temporalmente este repo al PATH para el shebang!
-## Ejecuta varias pruebas variadas, incluyendo ejecutar script
-## con shebang minishell!
+## Run the tests for minishell.
 test: all stats
 	@./tests/test.sh
 
-## Run minishell with valgrind. readline.supp suppress all LEAKS
-## from readline. All supp rules are readline or add_history 
-## usage.
+## Run minishell with valgrind. readline.supp suppress all leaks
+## from readline. 
 run: all
 	valgrind \
 		--leak-check=full --show-leak-kinds=all \
 		--gen-suppressions=all \
-		--suppressions=readline.supp \
+		--suppressions=tests/readline.supp \
 		--errors-for-leak-kinds=all \
 		--track-fds=yes \
 		./minishell
 
-## Metricas del proyecto
+## Code metrics.
 stats:
 	@lines=$$( \
 		{ \
@@ -99,8 +91,7 @@ stats:
 	echo "  - Total of files: \033[0;32m$$files\033[0m"; \
 	echo ""
 
-## Comando para visualizar minishells anidadas
-## en otra shell abre minishells anidadas para verlo
+## Command to visualize nested minishells processes.
 view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
 

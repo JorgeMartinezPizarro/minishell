@@ -5,7 +5,7 @@ KO="\033[1;31mKO\033[0m "
 
 VALGRIND="valgrind \
 		--leak-check=full --show-leak-kinds=all --gen-suppressions=all \
-		--suppressions=readline.supp --errors-for-leak-kinds=all \
+		--suppressions=tests/readline.supp --errors-for-leak-kinds=all \
 		--quiet"
 
 validate_norm()
@@ -52,7 +52,7 @@ validate_norm ./srcs
 validate_norm ./includes
 validate_norm ./libft
 
-echo -ne "\n\n -> Exit code validation.\n\n "
+echo -ne "\n\n -> Test simple commands.\n\n "
 
 test_command "echo hola"
 test_command "echo"
@@ -73,6 +73,8 @@ test_command "(echo hola | grep h) && (echo mundo || echo falló)"
 test_command '(ls | grep txt) || (echo "no hay txt" && echo "fin")'
 test_command '(echo 1 && echo 2) | (grep 2 || echo "no se encontró 2")'
 test_command "(echo start && false) || (echo retry | grep r && echo done)"
+test_command "echo $HOM\"E\""
+test_command "echo \"$HOME\""
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 
@@ -100,7 +102,7 @@ echo -ne "\n\n -> Not interactive usage.\n\n "
 echo "cd srcs && cd .. && cd srcs && cd .. && cd s*" | ./minishell && echo -ne "$OK"
 echo "./minishell -c 'echo \$MSHLVL'" | ./minishell > /dev/null && echo -ne "$OK"
 
-echo -ne "\n\n -> Command comparison.\n\n "
+echo -ne "\n\n -> Test extended commands.\n\n "
 
 test_command "(echo hola) && echo adios"
 test_command "( echo L1 && ( echo L2 && ( echo L3 && ( echo L4 ) ) ) )"

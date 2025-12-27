@@ -1,56 +1,43 @@
-### Abstract
+### ABSTRACT
 
-The MINISHELL
+MINISHELL – a simple, interactive shell.
 
-### COLORES:
+  - Total of lines: 2514
+  - Total of files: 34
 
-Se puede configurar el color del prompt usando la variable de entorno `COLOR`:
+### USAGE
 
-Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
-
-### Commandos
-
-Use
+To compile the project:
 
 ```sh
 make 
 ```
 
-to compile the latest version of minishell. 
-
-To see the total progress of the repo:
+To run the tests:
 
 ```sh
-make stats
+make test
 ```
 
-The command
+Run the program with:
 
 
 ```sh
 ./minishell
 ```
 
-opens the minishell interactively. Using
+### ADVANCED
+
+The minishell can be used as:
 
 ```sh
 ./minishell -c "command"
 ```
 
-it runs a single command.
-
-Alternatively, you can use:
+To run and check for memory leaks use:
 
 ```sh
 make run
-```
-
-to run the minishell with `valgrind`.
-
-Finally, to run the tests, you can run
-
-```sh
-make test
 ```
 
 You can also see the current minishells openend (with nested view) using:
@@ -70,9 +57,13 @@ export A=15
 echo $A
 ```
 
-Al ejecutar ./script.sh, se ejecutara usando minishell.
+Running that script, the minishell will be used to process the commands.
 
-Esta opcion del shebang es limitada, el parser intenta ejecutar cada linea no vacia asi pues no es exactamente igual que bash pero permite ejecutar scripts!
+It work only for the limited syntaxis of minishell.
+
+The color of the prompt can be managed using the env `COLOR`.
+
+Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
 
 ### TODO:
 
