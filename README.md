@@ -5,6 +5,14 @@ MINISHELL – a simple, interactive shell.
    	* Total of lines: 2132
 	* Total of files: 34
 
+It implements:
+
+	* cd, pwd, export, env, exit.
+	* (), &&, ||, |, <<, >>, >, <.
+	* PATH expansion for other commands.
+	* Interactive usage.
+	* Limited shebang and non-interactive usage.
+
 ### USAGE
 
 To compile the project:
