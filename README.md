@@ -60,6 +60,8 @@ Running that script, the MiniShell will be used to process the commands.
 
 It works only for the limited syntax of MiniShell.
 
+### CONFIG
+
 The color of the prompt can be managed using the environment variable `COLOR`.
 
 Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
