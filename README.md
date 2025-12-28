@@ -34,7 +34,7 @@ export A=15
 echo $A
 ```
 
-Running that script with ./script.sh, the MiniShell will be used to process the commands.
+Running that script with `./script.sh`, the MiniShell will be used to process the commands.
 
 It works only for the limited syntax of MiniShell.
 
