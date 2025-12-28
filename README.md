@@ -2,7 +2,7 @@
 
 MINISHELL – a simple, interactive shell.
 
-   	* Total of lines: 2514
+   	* Total of lines: 2132
 	* Total of files: 34
 
 ### USAGE
@@ -63,12 +63,3 @@ It works only for the limited syntax of MiniShell.
 The color of the prompt can be managed using the environment variable `COLOR`.
 
 Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
-
-### TODO:
-
-* Copy to 42 only the Makefile, *.c, and *.h files:
-
-  * Makefile (remove extra targets for the 42 copy)
-  * includes
-  * srcs
-  * libft

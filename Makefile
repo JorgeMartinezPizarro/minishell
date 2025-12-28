@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/27 02:00:30 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/28 21:24:03 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,12 +61,18 @@ fclean: clean
 
 re: fclean all
 
+###############################################################################
+## DEBUG AND TEST TARGETS
+###############################################################################
+###############################################################################
 ## Run the tests for minishell.
+###############################################################################
 test: all stats
 	@./tests/test.sh
 
-## Run minishell with valgrind. readline.supp suppress all leaks
-## from readline. 
+###############################################################################
+## Run minishell with valgrind.
+###############################################################################
 run: all
 	valgrind \
 		--leak-check=full --show-leak-kinds=all \
@@ -76,7 +82,9 @@ run: all
 		--track-fds=yes \
 		./minishell
 
-## Code metrics.
+###############################################################################
+## Basic code metrics.
+###############################################################################
 stats:
 	@lines=$$( \
 		{ \
@@ -91,7 +99,9 @@ stats:
 	echo "  - Total of files: \033[0;32m$$files\033[0m"; \
 	echo ""
 
-## Command to visualize nested minishells processes.
+###############################################################################
+## Visualize nested minishells processes.
+###############################################################################
 view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
 
