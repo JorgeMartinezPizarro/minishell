@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 22:47:39 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/27 19:42:31 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static int	here_doc(t_redir *redir, t_list *env)
 	pid_t	pid;
 
 	if (pipe(fd) == -1)
-		return (close(fd[0]), close(fd[1]), -1);
+		return (perror("pipe"), close(fd[0]), close(fd[1]), -1);
 	pid = fork();
 	if (pid == -1)
-		return (close(fd[0]), close(fd[1]), -1);
+		return (perror("fork"), close(fd[0]), close(fd[1]), -1);
 	if (pid == 0)
 		here_doc_aux(redir, env, fd);
 	close(fd[1]);
@@ -71,7 +71,7 @@ static int	redir_files(t_redir *redir)
 	else if (redir->redir_type == T_APPEND)
 		fd = open(redir->file->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (perror("open error:"), -1);
+		return (perror("open"), -1);
 	if (redir->redir_type == T_APPEND || redir->redir_type == T_REDIR_TR)
 		dup2(fd, STDOUT_FILENO);
 	else if (redir->redir_type == T_REDIR_IN)
