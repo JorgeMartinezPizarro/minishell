@@ -156,5 +156,6 @@ test_command "A=42 echo hola && env | grep '^A='"
 test_command "A=42 echo hola && env | grep '^A='"
 test_command "A=1 && export | grep ' A=' && echo $A"
 test_command "echo hola | cat | cat | cat | grep h"
+test_command "echo $HOME && echo hola | (grep h) || echo adios"
 
 echo -e "\n"
