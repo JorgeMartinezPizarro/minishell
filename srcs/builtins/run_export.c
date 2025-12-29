@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:28:58 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 13:56:36 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	export_one(t_cmd *com, char *arg)
 	if (eq)
 		set_env_value(&com->env, name, eq + 1, 1);
 	else
-		set_env_value(&com->env, name, "", 1);
+		set_env_value_declare(&com->env, name, "", 1);
 	free(name);
 	return (EXIT_OK);
 }

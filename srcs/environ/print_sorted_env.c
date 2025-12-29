@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 22:44:23 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:07:20 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,13 @@ void	print_sorted_env(t_list *env)
 	while (arr[i])
 	{
 		if (arr[i]->exported == 1)
-			ft_printf("declare -x %s=\"%s\"\n", arr[i]->name, arr[i]->value);
+		{
+			if (arr[i]->assigned)
+				ft_printf("declare -x %s=\"%s\"\n", arr[i]->name,
+					arr[i]->value);
+			else
+				ft_printf("declare -x %s\n", arr[i]->name);
+		}
 		i++;
 	}
 	free(arr);

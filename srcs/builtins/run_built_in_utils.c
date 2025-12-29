@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 03:37:16 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/29 13:59:49 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	run_env(t_cmd *com)
 	while (node)
 	{
 		v = (t_variable *)node->content;
-		ft_printf("%s=%s\n", v->name, v->value);
+		if (v->assigned)
+			ft_printf("%s=%s\n", v->name, v->value);
 		node = node->next;
 	}
 	return (EXIT_OK);

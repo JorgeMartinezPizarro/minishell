@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:22:47 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:47:14 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:10:06 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	*dup_env_var(void *content)
 	copy->name = ft_strdup(v->name);
 	copy->value = ft_strdup(v->value);
 	copy->exported = v->exported;
+	copy->assigned = v->assigned;
 	if (!copy->name || !copy->value)
 	{
 		free(copy->name);
@@ -75,6 +76,7 @@ void	set_env_value(t_list **vars, char *name, char *value, int exported)
 	v_new->name = ft_strdup(name);
 	v_new->value = ft_strdup(value);
 	v_new->exported = exported;
+	v_new->assigned = true;
 	ft_lstadd_back(vars, ft_lstnew(v_new));
 }
 

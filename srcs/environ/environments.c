@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:34:42 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:47:08 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:08:01 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	add_env_var(t_list **vars, char *env_line)
 	v->name = ft_substr(env_line, 0, eq - env_line);
 	v->value = ft_strdup(eq + 1);
 	v->exported = 1;
+	v->assigned = 1;
 	if (!v->name || !v->value)
 		return (free_variable(v), -1);
 	ft_lstadd_back(vars, ft_lstnew(v));

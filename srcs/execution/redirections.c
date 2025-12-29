@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/29 04:03:56 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:17:05 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	here_doc_aux(t_redir *redir, t_shell *shell, int *fd)
 	{
 		line = readline("> ");
 		if (!line)
-			return (ft_putendl_fd("warning: eof not expected"),
+			return (ft_putendl_fd("warning: eof not expected", 2),
 				free(delimiter), free_shell(shell), close(fd[1]), exit(1));
 		if (ft_strcmp(line, delimiter) == 0)
 			break ;

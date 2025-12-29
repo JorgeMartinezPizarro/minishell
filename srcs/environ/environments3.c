@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 12:39:12 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:47:19 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:14:16 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,31 @@ void	init_required_env(t_list **env)
 	if (!get_env_value(*env, "OLDPWD"))
 		set_env_value(env, "OLDPWD", str, 1);
 	free(str);
+}
+
+void	set_env_value_declare(t_list **vars, char *name, char *value
+	, int exported)
+{
+	t_list		*node;
+	t_variable	*v;
+	t_variable	*v_new;
+
+	node = *vars;
+	while (node)
+	{
+		v = (t_variable *)node->content;
+		if (ft_strcmp(v->name, name) == 0)
+		{
+			free(v->value);
+			v->value = ft_strdup(value);
+			return ;
+		}
+		node = node->next;
+	}
+	v_new = malloc(sizeof(t_variable));
+	v_new->name = ft_strdup(name);
+	v_new->value = ft_strdup(value);
+	v_new->exported = exported;
+	v_new->assigned = false;
+	ft_lstadd_back(vars, ft_lstnew(v_new));
 }
