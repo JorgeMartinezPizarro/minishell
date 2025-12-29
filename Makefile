@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
+#    By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/28 21:36:42 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/29 17:32:34 by maanguit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ FILES = \
 	execution/pipes execution/run_program \
 	execution/run_program_utils \
 	signals/signal_utils utils/get_prompt \
-	expanse/expansion_utils
+	expanse/expansion_utils signals/signal_utils2
 
 OBJECTS = $(addprefix srcs/, $(FILES:=.o))
 CC       = cc

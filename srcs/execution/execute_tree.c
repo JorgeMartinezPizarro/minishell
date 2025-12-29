@@ -6,7 +6,7 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 03:11:16 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/29 15:58:12 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,22 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 
 static void	exec_commands(t_tree *node, t_shell *shell)
 {
-	int	fd_in;
-	int	fd_out;
+	int	fds[2];
 
-	fd_in = dup(STDIN_FILENO);
-	fd_out = dup(STDOUT_FILENO);
-	close(fd_in);
-	close(fd_out);
+	fds[0] = dup(STDIN_FILENO);
+	fds[1] = dup(STDOUT_FILENO);
 	expand_cmds(&node->cmd->args, node->cmd->redirs, shell);
 	node->cmd->env = shell->env;
-	if (make_redirections(node->cmd->redirs, shell) == -1)
+	if (make_redirections(node->cmd->redirs, shell, fds) == -1)
 		return (g_exit_code = 1, (void)0);
 	if (node->cmd->is_builtin)
 		g_exit_code = run_built_in(node->cmd, shell);
 	else
 		g_exit_code = run_program(node->cmd, shell);
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	dup2(fds[0], STDIN_FILENO);
+	dup2(fds[1], STDOUT_FILENO);
+	close(fds[0]);
+	close(fds[1]);
 }
 
 void	exec_tree(t_tree *node, t_shell *shell)

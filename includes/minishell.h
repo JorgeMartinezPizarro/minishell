@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 14:42:30 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 17:23:47 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int			run_exit(t_cmd *cmd, t_shell *shell);
 int			run_assign(t_cmd *com, t_shell *shell);
 char		*find_executable(const char *cmd, t_list *env);
 int			is_valid_identifier(const char *name);
-int			make_redirections(t_redir *redirs, t_shell *shell);
+int			make_redirections(t_redir *redirs, t_shell *shell, int *fds);
 void		exec_tree(t_tree *tree, t_shell *shell);
 void		exec_pipe(t_tree *tree, t_shell **shell);
 void		free_shell(t_shell *shell);
@@ -209,7 +209,9 @@ void		init_required_env(t_list **env);
 ///////////////////////////////////////////////////////////////////////////////
 void		setup_signals_interactive(void);
 void		setup_signals_child(void);
+void		setup_signals_heredoc(void);
 void		setup_signals_parent_waiting(void);
+void		sigint_heredoc(int signo);
 
 ///////////////////////////////////////////////////////////////////////////////
 // PARSER

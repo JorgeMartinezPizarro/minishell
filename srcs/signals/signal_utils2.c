@@ -1,55 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_utils.c                                     :+:      :+:    :+:   */
+/*   signal_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/23 14:59:49 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 17:31:27 by maanguit         ###   ########.fr       */
+/*   Created: 2025/12/29 17:31:40 by maanguit          #+#    #+#             */
+/*   Updated: 2025/12/29 17:32:54 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sigint_handler(int signo)
+void	sigint_heredoc(int signo)
 {
 	(void)signo;
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	exit(130);
 }
 
-void	setup_signals_child(void)
+void	setup_signals_heredoc(void)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = SIG_DFL;
+	sa.sa_handler = sigint_heredoc;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	setup_signals_interactive(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = sigint_handler;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	setup_signals_parent_waiting(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
 }
