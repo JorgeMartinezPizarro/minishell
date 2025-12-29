@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:45:03 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 15:19:45 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 15:25:21 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ static void	handle_input(int argc, char **args, t_shell *shell)
 {
 	int	fd;
 
-	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
-	{
+	if (argc >= 2)
 		shell->is_child = true;
+	if (argc > 2 && ft_strcmp(args[1], "-c") == 0)
 		exec_line(shell, args[2]);
-	}
 	else if (argc == 2)
 	{
 		fd = open(args[1], O_RDONLY);
@@ -104,7 +103,6 @@ static void	handle_input(int argc, char **args, t_shell *shell)
 		{
 			dup2(fd, STDIN_FILENO);
 			close(fd);
-			shell->is_child = true;
 			shell_loop(shell);
 		}
 	}
