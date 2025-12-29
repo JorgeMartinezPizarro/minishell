@@ -23,7 +23,10 @@ static void	here_doc_aux(t_redir *redir, t_shell *shell, int *fd)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (!line)
+			return (ft_putendl_fd("warning: eof not expected"),
+				free(delimiter), free_shell(shell), close(fd[1]), exit(1));
+		if (ft_strcmp(line, delimiter) == 0)
 			break ;
 		if (*redir->file->str != '\'')
 			line = expand_vars(line, shell->env);
@@ -42,16 +45,22 @@ static int	here_doc(t_redir *redir, t_shell *shell)
 {
 	int		fd[2];
 	pid_t	pid;
+	int		status;
 
 	if (pipe(fd) == -1)
-		return (perror("pipe"), close(fd[0]), close(fd[1]), -1);
+		return (perror("pipe"), -1);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), close(fd[0]), close(fd[1]), -1);
 	if (pid == 0)
 		here_doc_aux(redir, shell, fd);
 	close(fd[1]);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+	{
+		close(fd[0]);
+		return (-1);
+	}
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
 	return (0);
