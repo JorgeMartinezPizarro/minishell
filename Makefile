@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/28 00:27:12 by jomarti3          #+#    #+#              #
-#    Updated: 2025/12/28 21:36:42 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/29 16:27:36 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ stats:
 	echo ""
 
 ###############################################################################
-## Visualize nested minishells processes.
+## Visualize nested minishell processes.
 ###############################################################################
 view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
