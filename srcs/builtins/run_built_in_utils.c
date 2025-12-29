@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 15:11:06 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 15:21:21 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	run_exit(t_cmd *com, t_shell *shell)
 	}
 	if (shell->is_child == false)
 		ft_putendl_fd("exit", STDERR_FILENO);
-	exit_code = ft_atoi(com->args->next->str) & 0xFF;
+	if (com->args->next)
+		exit_code = ft_atoi(com->args->next->str) & 0xFF;
 	free_shell(shell);
 	exit(exit_code);
 }
