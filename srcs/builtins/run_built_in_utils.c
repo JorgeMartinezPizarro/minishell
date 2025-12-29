@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 21:53:55 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 13:59:49 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 15:11:06 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,19 @@ int	run_exit(t_cmd *com, t_shell *shell)
 	int	exit_code;
 
 	exit_code = 0;
-	if (!is_numeric_arg(com->args->next->str))
+	if (com->args->next && !ft_valid_int(com->args->next->str))
 	{
 		ft_putendl_fd("exit: numeric argument required", STDERR_FILENO);
 		free_shell(shell);
 		exit(2);
 	}
-	if (com->args->next->next)
+	if (com->args->next && com->args->next->next)
 	{
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return (EXIT_GENERAL_ERROR);
 	}
 	if (shell->is_child == false)
-		ft_putendl_fd("exit", STDIN_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 	exit_code = ft_atoi(com->args->next->str) & 0xFF;
 	free_shell(shell);
 	exit(exit_code);

@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 13:57:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:42:30 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ char		*get_prompt(t_list *env);
 char		*join_paths(const char *base, const char *relative);
 void		print_error(const char *str1, const char *str2);
 void		malloc_failed(void);
-bool		is_numeric_arg(char *s);
 char		**str_array_add(char **arr, char *s);
 int			is_directory(const char *path);
 

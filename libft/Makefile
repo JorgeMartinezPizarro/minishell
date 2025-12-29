@@ -6,7 +6,7 @@
 #    By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 12:41:09 by jomarti3          #+#    #+#              #
-#    Updated: 2025/11/21 12:51:48 by jomarti3         ###   ########.fr        #
+#    Updated: 2025/12/29 14:46:11 by jomarti3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FUNCTIONS = \
 	ft_putnbr_fd ft_itoa ft_strjoin ft_strtrim \
 	ft_split ft_strmapi ft_striteri ft_putchar_fd \
 	ft_putstr_fd ft_putendl_fd ft_itoa_base ft_utoa_base \
-	ft_strcmp ft_strreplace ft_lstclone
+	ft_strcmp ft_strreplace ft_lstclone ft_valid_int
 
 BONUS_FUNCTIONS = \
 	ft_lstnew ft_lstadd_front ft_lstsize ft_lstdelone \
