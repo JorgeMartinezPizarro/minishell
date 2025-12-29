@@ -7,7 +7,7 @@ MINISHELL – a simple, interactive shell.
 
 It implements:
 
-- cd, pwd, export, env, exit.
+- cd, echo, pwd, export, env, exit.
 - (), &&, ||, |, <<, >>, >, <.
 - PATH expansion for other commands.
 - Interactive usage.
