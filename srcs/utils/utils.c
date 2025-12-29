@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 16:41:41 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 03:25:05 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	is_numeric_arg(char *s)
+{
+	int	i;
+
+	if (!*s)
+		return (false);
+	i = 0;
+	while (s[i])
+	{
+		if (!ft_isdigit((unsigned char)s[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 void	malloc_failed(void)
 {

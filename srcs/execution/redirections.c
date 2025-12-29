@@ -6,13 +6,13 @@
 /*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 21:48:20 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/27 19:42:31 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/29 04:03:56 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
+static void	here_doc_aux(t_redir *redir, t_shell *shell, int *fd)
 {
 	char	*delimiter;
 	char	*line;
@@ -23,24 +23,22 @@ static void	here_doc_aux(t_redir *redir, t_list *env, int *fd)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line)
+		if (!line || ft_strcmp(line, delimiter) == 0)
 			break ;
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
 		if (*redir->file->str != '\'')
-			line = expand_vars(line, env);
+			line = expand_vars(line, shell->env);
 		ft_putendl_fd(line, fd[1]);
 		free(line);
 	}
+	if (line)
+		free(line);
 	free(delimiter);
+	free_shell(shell);
 	close(fd[1]);
 	exit(0);
 }
 
-static int	here_doc(t_redir *redir, t_list *env)
+static int	here_doc(t_redir *redir, t_shell *shell)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -51,7 +49,7 @@ static int	here_doc(t_redir *redir, t_list *env)
 	if (pid == -1)
 		return (perror("fork"), close(fd[0]), close(fd[1]), -1);
 	if (pid == 0)
-		here_doc_aux(redir, env, fd);
+		here_doc_aux(redir, shell, fd);
 	close(fd[1]);
 	waitpid(pid, NULL, 0);
 	dup2(fd[0], STDIN_FILENO);
@@ -80,7 +78,7 @@ static int	redir_files(t_redir *redir)
 	return (1);
 }
 
-int	make_redirections(t_redir *redirs, t_list *env)
+int	make_redirections(t_redir *redirs, t_shell *shell)
 {
 	while (redirs)
 	{
@@ -88,7 +86,7 @@ int	make_redirections(t_redir *redirs, t_list *env)
 			if (redir_files(redirs) == -1)
 				return (-1);
 		if (redirs->redir_type == T_HEREDOC)
-			if (here_doc(redirs, env) == -1)
+			if (here_doc(redirs, shell) == -1)
 				return (-1);
 		redirs = redirs->next;
 	}

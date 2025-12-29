@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_built_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 22:01:28 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:46:55 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 03:12:53 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	run_built_in(t_cmd *com, t_shell *shell)
 	else if (ft_strcmp(com->args->str, "unset") == 0)
 		return (run_unset(com));
 	else if (ft_strcmp(com->args->str, "exit") == 0)
-		return (run_exit(shell));
+		return (run_exit(com, shell));
 	else if (ft_strchr(com->args->str, '=') != NULL)
 		return (run_assign(com, shell));
 	else

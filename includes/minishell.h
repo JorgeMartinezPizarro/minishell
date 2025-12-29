@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/25 21:44:45 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/27 14:47:18 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/29 03:25:55 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,11 @@ int			run_env(t_cmd *com);
 int			run_pwd(t_cmd *com);
 int			run_export(t_cmd *com);
 int			run_unset(t_cmd *com);
-int			run_exit(t_shell *shell);
+int			run_exit(t_cmd *cmd, t_shell *shell);
 int			run_assign(t_cmd *com, t_shell *shell);
 char		*find_executable(const char *cmd, t_list *env);
 int			is_valid_identifier(const char *name);
-int			make_redirections(t_redir *redirs, t_list *env);
+int			make_redirections(t_redir *redirs, t_shell *shell);
 void		exec_tree(t_tree *tree, t_shell *shell);
 void		exec_pipe(t_tree *tree, t_shell **shell);
 void		free_shell(t_shell *shell);
@@ -184,6 +184,7 @@ char		*get_prompt(t_list *env);
 char		*join_paths(const char *base, const char *relative);
 void		print_error(const char *str1, const char *str2);
 void		malloc_failed(void);
+bool		is_numeric_arg(char *s);
 char		**str_array_add(char **arr, char *s);
 int			is_directory(const char *path);
 
