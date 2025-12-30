@@ -93,6 +93,8 @@ test_command "echo hola > tmpfile && echo adios >> tmpfile && cat tmpfile && rm 
 test_command "echo hola | cat > tmpfile && cat tmpfile && rm -f tmpfile"
 test_command "(echo hola && echo mundo) > tmpfile && cat tmpfile && rm -f tmpfile"
 test_command "(echo hola && echo adios) >> tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "(echo hola && echo mundo > tmpfile) && cat tmpfile && rm -f tmpfile"
+test_command "(echo hola && echo adios >> tmpfile) && cat tmpfile && rm -f tmpfile"
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 
