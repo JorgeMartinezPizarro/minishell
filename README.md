@@ -1,44 +1,85 @@
-### ABSTRACT
+MINISHELL
+=========
 
-MINISHELL – a simple, interactive shell.
+ABSTRACT
+--------
 
-- Total of lines: 2132
-- Total of files: 34
+MiniShell is a simple interactive shell implementing a coherent and well-defined
+subset of POSIX-like shell semantics.
 
-It implements:
+- Total of lines: 2222
+- Total of files: 35
 
-- cd, echo (-n), pwd, export (a=1), env, exit (n).
-- (), &&, ||, |, <<, >>, >, <.
-- PATH expansion for other commands.
-- Interactive usage.
-- Limited shebang and non-interactive usage.
+The project focuses on correct execution semantics rather than full bash
+compatibility. Operator precedence, command grouping, pipelines, redirections
+and exit status propagation are handled consistently and validated against
+`bash -c`.
 
-Limitations:
+SUPPORTED FEATURES
+------------------
 
-- for multiline commands, only the first line is executed.
-- advanced shell usage may not work.
+Built-in commands:
+- cd
+- echo (with -n)
+- pwd
+- export (including assignments like a=1)
+- env
+- exit (with optional numeric argument)
 
-### USAGE
+Operators and grouping:
+- Command grouping with parentheses: ( )
+- Logical operators: &&, ||
+- Pipelines: |
+- Redirections: <, >, >>, <<
 
-To compile the project:
+Execution model:
+- Proper operator precedence between |, && and ||
+- Correct exit status propagation across pipelines and grouped commands
+- Environment scoping for temporary assignments (e.g. A=42 command)
+- PATH-based command resolution for external programs
+
+Usage modes:
+- Interactive shell
+- Non-interactive execution using -c
+- Limited shebang support
+
+LIMITATIONS
+-----------
+
+This project does not aim to fully replicate bash or POSIX shells.
+
+Known limitations include:
+- No job control
+- No background execution
+- No advanced globbing or expansion
+- No multiline command parsing (only the first line is executed)
+- Partial POSIX compliance by design
+
+USAGE
+-----
+
+Compile the project:
 
 ```sh
 make
 ```
 
-Run the program with:
+Run the shell interactively:
 
 ```sh
 ./minishell
 ```
 
-The MiniShell can be used as:
+Run a single command:
 
 ```sh
 ./minishell -c "command"
 ```
 
-You can also use shebang as usual:
+SHEBANG USAGE
+-------------
+
+MiniShell can be used as an interpreter via shebang:
 
 ```sh
 #!/path/to/minishell
@@ -47,34 +88,45 @@ export A=15
 echo $A
 ```
 
-Running that script with `./script.sh`, the MiniShell will be used to process the commands.
+Running the script with:
 
-It works only for the limited syntax of MiniShell.
+```sh
+./script.sh
+```
 
-### TESTS
+will execute it using MiniShell. Only the supported MiniShell syntax is guaranteed
+to work.
 
-To run the tests:
+TESTS
+-----
+
+To run the full test suite:
 
 ```sh
 make test
 ```
 
-To run and check for memory leaks, use:
+The test suite acts as an executable specification of the supported shell
+semantics and compares MiniShell behavior against `bash`.
+
+To run with memory leak checks:
 
 ```sh
 make run
 ```
 
-You can also see the current MiniShells opened (with nested view) using:
+To visualize currently running MiniShell instances (nested view):
 
 ```sh
 make view
 ```
 
-For it, open some nested MiniShells and run the command in another tab.
+For this, open several nested MiniShells and run the command in another terminal.
 
-### COLORS
+COLORS
+------
 
-The color of the prompt can be managed using the environment variable `COLOR`.
+The prompt color can be configured using the `COLOR` environment variable.
 
-Allowed values: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
+Allowed values:
+BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
