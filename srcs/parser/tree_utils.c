@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 22:42:22 by maanguit          #+#    #+#             */
-/*   Updated: 2025/12/26 22:50:36 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/30 02:32:37 by maanguit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_tokens	*division_point(t_tokens *start, t_tokens *end)
 	{
 		if (start->type == T_O_PAREN)
 			iter_paren(&start);
-		if (!start)
+		if (!start || start == end)
 			break ;
 		if (start->type == T_OR || start->type == T_AND)
 			last_b_op = start;
