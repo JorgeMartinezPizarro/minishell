@@ -88,6 +88,11 @@ test_command '(echo 1 && echo 2) | (grep 2 || echo "no se encontró 2")'
 test_command "(echo start && false) || (echo retry | grep r && echo done)"
 test_command "echo $HOM\"E\""
 test_command "echo \"$HOME\""
+test_command "echo hola > tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "echo hola > tmpfile && echo adios >> tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "echo hola | cat > tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "(echo hola && echo mundo) > tmpfile && cat tmpfile && rm -f tmpfile"
+test_command "(echo hola && echo adios) >> tmpfile && cat tmpfile && rm -f tmpfile"
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 
