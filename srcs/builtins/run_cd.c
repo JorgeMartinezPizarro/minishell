@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/26 22:46:43 by jomarti3         ###   ########.fr       */
+/*   Updated: 2025/12/31 21:20:35 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	run_cd(t_cmd *com)
 		ft_putstr_fd("cd: too many arguments\n", 2);
 		return (EXIT_GENERAL_ERROR);
 	}
-	old = get_env_value(com->env, "PWD");
+	old = getcwd(NULL, 0);
 	target = get_cd_target(com);
 	if (!target)
 		return (EXIT_GENERAL_ERROR);
@@ -64,5 +64,6 @@ int	run_cd(t_cmd *com)
 	set_env_value(&com->env, "OLDPWD", old, 1);
 	set_env_value(&com->env, "PWD", new_path, 1);
 	free(new_path);
+	free(old);
 	return (EXIT_OK);
 }

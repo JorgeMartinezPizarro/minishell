@@ -95,6 +95,9 @@ test_command "(echo hola && echo mundo) > tmpfile && cat tmpfile && rm -f tmpfil
 test_command "(echo hola && echo adios) >> tmpfile && cat tmpfile && rm -f tmpfile"
 test_command "(echo hola && echo mundo > tmpfile) && cat tmpfile && rm -f tmpfile"
 test_command "(echo hola && echo adios >> tmpfile) && cat tmpfile && rm -f tmpfile"
+test_command "unset PWD && cd .. && echo *"
+test_command "unset PWD && cd .. && pwd && echo sr*/*"
+test_command "unset PATH && ls || echo failure"
 
 echo -ne "\n\n -> Testing memory leaks.\n\n "
 

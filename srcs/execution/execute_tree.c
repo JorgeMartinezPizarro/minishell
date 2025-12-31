@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_tree.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maanguit <maanguit@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 12:41:48 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/29 15:58:12 by maanguit         ###   ########.fr       */
+/*   Updated: 2025/12/31 21:25:08 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 {
 	t_tokens	*tmp_args;
 	t_redir		*tmp;
+	char		*pwd;
 
+	pwd = getcwd(NULL, 0);
 	tmp = redirs;
 	while (tmp)
 	{
@@ -66,13 +68,14 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 		tmp = tmp->next;
 	}
 	expand_env_tokens(args, shell->env);
-	expand_wildcard_tokens(args, get_env_value(shell->env, "PWD"));
+	expand_wildcard_tokens(args, pwd);
 	tmp_args = *args;
 	while (tmp_args)
 	{
 		tmp_args->str = trim_quotes(tmp_args->str);
 		tmp_args = tmp_args->next;
 	}
+	free(pwd);
 }
 
 static void	exec_commands(t_tree *node, t_shell *shell)
