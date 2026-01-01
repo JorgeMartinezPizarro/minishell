@@ -1,6 +1,3 @@
-MINISHELL
-=========
-
 ABSTRACT
 --------
 
@@ -130,3 +127,10 @@ The prompt color can be configured using the `COLOR` environment variable.
 
 Allowed values:
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE.
+
+TODO
+----
+
+Fix redirect from outside subshell, (echo hola) > temp.
+
+Fix ~ usage. Expansion before *, error if no HOME defined.
