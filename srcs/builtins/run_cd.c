@@ -6,7 +6,7 @@
 /*   By: jomarti3 <jomarti3@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 11:48:53 by jomarti3          #+#    #+#             */
-/*   Updated: 2025/12/31 21:20:35 by jomarti3         ###   ########.fr       */
+/*   Updated: 2026/01/01 01:29:49 by jomarti3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static char	*get_cd_target(t_cmd *com)
 		return (get_env_value(com->env, "HOME"));
 	else if (ft_strcmp(com->args->next->str, "-") == 0)
 	{
-		ft_printf("%s\n", get_env_value(com->env, "OLDPWD"));
+		if (get_env_value(com->env, "OLDPWD"))
+			ft_printf("%s\n", get_env_value(com->env, "OLDPWD"));
+		else
+			ft_putstr_fd("cd: OLDPWD not set", 2);
 		return (get_env_value(com->env, "OLDPWD"));
 	}
 	return (com->args->next->str);
