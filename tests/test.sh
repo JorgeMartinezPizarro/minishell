@@ -177,5 +177,6 @@ test_command "(echo hola && false) | cat || echo fallback"
 test_command "(false || echo hola) | grep h && echo bien"
 test_command "(echo hola && echo mundo) | grep mundo && echo ok"
 test_command "(echo hola | grep x) && echo nunca || echo siempre"
+test_command "unset OLDPATH && cd - && echo hola || echo adios"
 
 echo -e "\n"
