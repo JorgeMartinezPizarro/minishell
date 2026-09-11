@@ -72,6 +72,22 @@ t_tokens	*remove_paren(t_tree **tree, t_tokens **start, t_tokens *end)
 	return (tmp);
 }
 
+t_tokens	*find_matching_close(t_tokens *start, t_tokens *end)
+{
+	int	opened;
+
+	opened = 0;
+	while (start && start != end)
+	{
+		if (start->type == T_O_PAREN)
+			opened++;
+		else if (start->type == T_C_PAREN && --opened == 0)
+			return (start);
+		start = start->next;
+	}
+	return (NULL);
+}
+
 bool	everything_inside_paren(t_tokens *start, t_tokens *end)
 {
 	int	opened;

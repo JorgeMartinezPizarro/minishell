@@ -60,6 +60,8 @@ validate_norm ./libft
 
 echo -ne "\n\n -> Test simple commands.\n\n "
 
+test_command '$A'
+test_command '${HOLA}'
 test_command "echo hola"
 test_command "echo"
 test_command "export | grep -v SHLVL | grep -v ' _='"

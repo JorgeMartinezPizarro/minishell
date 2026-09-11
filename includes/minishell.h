@@ -28,7 +28,7 @@
 # include <dirent.h>
 # include <stdlib.h>
 
-# define MAX_MINISHELL_LEVEL 1000
+# define MAX_MINISHELL_LEVEL 1001
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -122,6 +122,7 @@ typedef struct s_tree
 	t_node_type		n_type;
 	t_cmd			*cmd;
 	bool			subshell;
+	t_redir			*redirs;
 }	t_tree;
 
 typedef struct s_shell
@@ -226,6 +227,10 @@ void		add_redir(t_redir **redirs, t_tokens *token);
 void		assign_node_type(t_tree **node, t_tokens *token);
 bool		everything_inside_paren(t_tokens *start, t_tokens *end);
 t_tokens	*remove_paren(t_tree **tree, t_tokens **start, t_tokens *end);
+t_tokens	*extract_paren_redirs(t_tree *node, t_tokens *start,
+				t_tokens *end);
+t_tokens	*find_matching_close(t_tokens *start, t_tokens *end);
+void		free_redirs(t_redir *redirs);
 
 ///////////////////////////////////////////////////////////////////////////////
 // TOKENIZER

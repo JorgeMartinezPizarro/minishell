@@ -35,10 +35,11 @@ FILES = \
 	expanse/expansion_utils signals/signal_utils2
 
 OBJECTS = $(addprefix srcs/, $(FILES:=.o))
+DEPENDENCIES = $(addprefix srcs/, $(FILES:=.d))
 CC       = cc
 
-CFLAGS   = -Wall -Wextra -Werror \
-	-I./includes -I./$(LIBFT_DIR)/src -g
+CFLAGS   = -Wall -Wextra -Werror -MMD -MP \
+	-I./includes -I./$(LIBFT_DIR)/src -g 
 
 all: $(NAME)
 
@@ -53,7 +54,7 @@ $(LIBFT):
 
 clean:
 	make -C libft clean
-	rm -f $(OBJECTS)
+	rm -f $(OBJECTS) $(DEPENDENCIES)
 
 fclean: clean
 	make -C libft fclean
@@ -107,3 +108,5 @@ view:
 	@watch -n 1 "ps -ef --forest | grep minishell | grep -v grep"
 
 .PHONY: test view stats run re all clean fclean
+
+-include $(DEPENDENCIES)

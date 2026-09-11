@@ -38,6 +38,16 @@ void	*parse_cmd(t_tree **node, t_tokens *start, t_tokens *end)
 	return (&(*node)->cmd);
 }
 
+static t_tree	*strip_parens(t_tree *node, t_tokens **start, t_tokens **end)
+{
+	*end = extract_paren_redirs(node, *start, *end);
+	while (everything_inside_paren(*start, *end))
+		*end = remove_paren(&node, start, *end);
+	if (!*start || *start == *end)
+		return (free_redirs(node->redirs), free(node), NULL);
+	return (node);
+}
+
 t_tree	*make_tree(t_tokens *start, t_tokens *end)
 {
 	t_tokens	*div_p;
@@ -48,21 +58,19 @@ t_tree	*make_tree(t_tokens *start, t_tokens *end)
 	node = ft_calloc(sizeof(t_tree), 1);
 	if (!node)
 		return (perror("malloc error"), NULL);
-	while (everything_inside_paren(start, end))
-		end = remove_paren(&node, &start, end);
-	if (!start || start == end)
+	if (!strip_parens(node, &start, &end))
 		return (NULL);
 	div_p = division_point(start, end);
 	assign_node_type(&node, div_p);
 	if (node->n_type == N_CMND)
 	{
 		if (!parse_cmd(&node, start, end))
-			return (free(node), NULL);
+			return (free_redirs(node->redirs), free(node), NULL);
 		return (node);
 	}
 	node->left = make_tree(start, div_p);
 	node->right = make_tree(div_p->next, end);
 	if (!node->left || !node->right)
-		return (free(node), NULL);
+		return (free_redirs(node->redirs), free(node), NULL);
 	return (node);
 }

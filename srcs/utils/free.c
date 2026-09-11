@@ -44,6 +44,8 @@ void	free_cmnd(t_cmd *cmd)
 
 void	free_tree(t_tree *tree)
 {
+	if (tree->redirs)
+		free_redirs(tree->redirs);
 	if (tree->n_type == N_CMND)
 		free_cmnd(tree->cmd);
 	if (tree->left)

@@ -87,6 +87,9 @@ char	*find_executable(const char *cmd, t_list *env)
 {
 	char	*path_env;
 
+	if (!*cmd)
+		return (g_exit_code = EXIT_NOT_FOUND,
+			print_error(cmd, "command not found"), NULL);
 	if (ft_strchr(cmd, '/'))
 		return (check_file(cmd));
 	path_env = get_env_value(env, "PATH");

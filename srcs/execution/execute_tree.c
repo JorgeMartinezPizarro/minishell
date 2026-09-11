@@ -12,44 +12,6 @@
 
 #include "minishell.h"
 
-static void	exec_b_op(t_tree *node, t_shell *shell)
-{
-	if (node->n_type == N_OR)
-	{
-		exec_tree(node->left, shell);
-		if (g_exit_code != 0)
-			exec_tree(node->right, shell);
-	}
-	if (node->n_type == N_AND)
-	{
-		exec_tree(node->left, shell);
-		if (g_exit_code == 0)
-			exec_tree(node->right, shell);
-	}
-}
-
-static void	exec_subprocces(t_tree **node, t_shell *shell)
-{
-	pid_t	pid;
-	int		status;
-
-	if ((*node)->subshell == false)
-		return ;
-	(*node)->subshell = false;
-	pid = fork();
-	if (pid == -1)
-		return (free_shell(shell), exit(1));
-	if (pid == 0)
-	{
-		shell->is_child = true;
-		exec_tree(*node, shell);
-		free_shell(shell);
-		exit(g_exit_code);
-	}
-	waitpid(pid, &status, 0);
-	g_exit_code = WEXITSTATUS(status);
-}
-
 static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 {
 	t_tokens	*tmp_args;
@@ -78,6 +40,40 @@ static void	expand_cmds(t_tokens **args, t_redir *redirs, t_shell *shell)
 	free(pwd);
 }
 
+static void	subshell_child(t_tree **node, t_shell *shell)
+{
+	int			fds[2];
+	t_tokens	*dummy;
+
+	shell->is_child = true;
+	fds[0] = STDIN_FILENO;
+	fds[1] = STDOUT_FILENO;
+	dummy = NULL;
+	expand_cmds(&dummy, (*node)->redirs, shell);
+	if (make_redirections((*node)->redirs, shell, fds) == -1)
+		exit(g_exit_code = 1);
+	exec_tree(*node, shell);
+	free_shell(shell);
+	exit(g_exit_code);
+}
+
+static void	exec_subprocces(t_tree **node, t_shell *shell)
+{
+	pid_t	pid;
+	int		status;
+
+	if ((*node)->subshell == false)
+		return ;
+	(*node)->subshell = false;
+	pid = fork();
+	if (pid == -1)
+		return (free_shell(shell), exit(1));
+	if (pid == 0)
+		subshell_child(node, shell);
+	waitpid(pid, &status, 0);
+	g_exit_code = WEXITSTATUS(status);
+}
+
 static void	exec_commands(t_tree *node, t_shell *shell)
 {
 	int	fds[2];
@@ -88,7 +84,9 @@ static void	exec_commands(t_tree *node, t_shell *shell)
 	node->cmd->env = shell->env;
 	if (make_redirections(node->cmd->redirs, shell, fds) == -1)
 		return (g_exit_code = 1, (void)0);
-	if (node->cmd->is_builtin)
+	if (!node->cmd->args)
+		g_exit_code = 0;
+	else if (node->cmd->is_builtin)
 		g_exit_code = run_built_in(node->cmd, shell);
 	else
 		g_exit_code = run_program(node->cmd, shell);
@@ -104,7 +102,18 @@ void	exec_tree(t_tree *node, t_shell *shell)
 		return (exec_subprocces(&node, shell), (void)0);
 	if (node->n_type == N_PIPE)
 		exec_pipe(node, &shell);
-	exec_b_op(node, shell);
+	if (node->n_type == N_OR)
+	{
+		exec_tree(node->left, shell);
+		if (g_exit_code != 0)
+			exec_tree(node->right, shell);
+	}
+	if (node->n_type == N_AND)
+	{
+		exec_tree(node->left, shell);
+		if (g_exit_code == 0)
+			exec_tree(node->right, shell);
+	}
 	if (node->n_type == N_CMND)
 		exec_commands(node, shell);
 }

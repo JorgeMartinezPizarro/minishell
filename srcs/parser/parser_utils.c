@@ -74,3 +74,25 @@ void	iter_paren(t_tokens **tokens)
 			break ;
 	}
 }
+
+t_tokens	*extract_paren_redirs(t_tree *node, t_tokens *start, t_tokens *end)
+{
+	t_tokens	*close;
+	t_tokens	*tail;
+
+	if (start->type != T_O_PAREN)
+		return (end);
+	close = find_matching_close(start, end);
+	if (!close || close->next == end)
+		return (end);
+	tail = close->next;
+	while (tail != end)
+	{
+		if (!is_redir(tail) || !tail->next || tail->next == end
+			|| tail->next->type != T_WORD)
+			return (free_redirs(node->redirs), node->redirs = NULL, end);
+		add_redir(&node->redirs, tail);
+		tail = tail->next->next;
+	}
+	return (close->next);
+}
